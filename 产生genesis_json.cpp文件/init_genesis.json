@@ -1,0 +1,340 @@
+{
+  "timestamp": "2015-05-31T16:00:00",
+  "market_assets": [],
+  "delegates": [{
+      "name": "gop0",
+      "owner": "GOP6yZnaQSQPN27QTYZKjNCpKRRN2szL6f7xzXxKH1wcSh3dg6pYo"
+    },{
+      "name": "gop1",
+      "owner": "GOP5uKxfyeBBuNChRgaQR9Y8STmZGhtJmuqaTVQWmeH63QN3hMpsY"
+    },{
+      "name": "gop2",
+      "owner": "GOP8Lfae3RPaANqx2TgVn2ZhuU7foFcgKcEtjcSuNhXcaZG8zxLdT"
+    },{
+      "name": "gop3",
+      "owner": "GOP5uh7YX317iBr94SCB99GZkERm5qSjngUzbagqao3nnj7KpuL46"
+    },{
+      "name": "gop4",
+      "owner": "GOP6YLTifbfKLKH1QkF1cYRunEdhGK68L4L4suTfhg4QW5A2Ne8tS"
+    },{
+      "name": "gop5",
+      "owner": "GOP58sQMhoH3C9mU2N7vA55t6eGTwCjW6Fiu8x1e3uA8yohxCYNut"
+    },{
+      "name": "gop6",
+      "owner": "GOP5FRHh7m16aZeFXvG5R2P7W4fDDcAmWFWupBiLc6bX1Z62zfXV2"
+    },{
+      "name": "gop7",
+      "owner": "GOP7k8B4ueFFVVMFFrXNAWBb2mEcFkYJZB5Uz3BUQ12goVZbes6Ey"
+    },{
+      "name": "gop8",
+      "owner": "GOP7hhcMbmp4ELLbBatnAFe87nMDuEnZ3fJK5d92Ke1Snb87BJ95w"
+    },{
+      "name": "gop9",
+      "owner": "GOP8CgfoD8cVmd7NHgSt89MpY9LDCufPuiidZcQuGH4MkNPC4fXoi"
+    },{
+      "name": "gop10",
+      "owner": "GOP6khNLvCD5gVod98iCsCHVNk2BmVcmGcQLDAM6n9YZGhY1njRYf"
+    },{
+      "name": "gop11",
+      "owner": "GOP87xkYseDyyann7Me2r5VmJGHvNb8oMZNWGLaAuhP1KHNJHsw9H"
+    },{
+      "name": "gop12",
+      "owner": "GOP7YqfMc4ZaAuTijeNSRA9cwBLKSXha4ux3TdMYPkkuREqB7LtxF"
+    },{
+      "name": "gop13",
+      "owner": "GOP6xBKnV1VNvvm9hWVSR9cjbNYJAJaHLYCqFcjd3QccEhDc8yr2x"
+    },{
+      "name": "gop14",
+      "owner": "GOP6EufDPWUFDEp1AAEckZj384jcnAYHQw1L1Fe56jfApsZ4QFUMr"
+    },{
+      "name": "gop15",
+      "owner": "GOP6Z3Pwv5hZ9BG4vWJQ5qy1FePHX1QcJAVTkp4CTw2WAg6QmPHo5"
+    },{
+      "name": "gop16",
+      "owner": "GOP7Ln15tj5yT6GZUwmUFtoHMvTEEGYZXFtk826UtRmWbkgbQZzoE"
+    },{
+      "name": "gop17",
+      "owner": "GOP7rCcDGdL4gzczVqcekE7rv2xC2acmvjY9qqobhMjxwHDWy97qo"
+    },{
+      "name": "gop18",
+      "owner": "GOP6ttGZJjfCehAhk9VK4xff6oJK8aUvthKAPAtkpfxfQUpttWuqD"
+    },{
+      "name": "gop19",
+      "owner": "GOP7ddtTQyD9btmPBessdSPEC1S5an6rA7FFQhWwZakwNdmUU7BHH"
+    },{
+      "name": "gop20",
+      "owner": "GOP7xmuxHu8GcVgfDXNvUgTrtH84SeQ3A8DBGpm5UXAPTCnyonSgS"
+    },{
+      "name": "gop21",
+      "owner": "GOP5oVd8CwYxjzGkZG7zap2fau2kuQP3fi3eSPJFo6Mk1NpzgxMu1"
+    },{
+      "name": "gop22",
+      "owner": "GOP4yhA9GvZBkip2WxrAecZL3HVCQTccXJGntGNVxfuF9uVNg3Jsd"
+    },{
+      "name": "gop23",
+      "owner": "GOP5xysQ55hBrd7VTES2kMc6g94ec4b5AeBQ9PGToLeHf9ziustT2"
+    },{
+      "name": "gop24",
+      "owner": "GOP8FJr8mwHMzTYmLr8PHm6hh3MiKD9rvYRGznMjPZusxnrofAnQj"
+    },{
+      "name": "gop25",
+      "owner": "GOP8UsARbtWQuFTsVGXvZJWTjE4woZfDeUfdYZjH472rR2H71XniG"
+    },{
+      "name": "gop26",
+      "owner": "GOP8JcMvcnEuMNMhRDcLA17kkbDixM7UVusxq5NC6etiqdq8K77WG"
+    },{
+      "name": "gop27",
+      "owner": "GOP84HHHeR57MjSWe8okNLahCq6i7FFVMnpupQqFSpqDA6kQhXvki"
+    },{
+      "name": "gop28",
+      "owner": "GOP7ndyHYYhbVPANBCeHcjB2sVxw7WtZnv2gJwbr17YgJ6RW2r2Hi"
+    },{
+      "name": "gop29",
+      "owner": "GOP7Pri85QC4zzWuifQPRmy4GDNqT2pbCUvm3P7pG8AWoCzeNCZ7q"
+    },{
+      "name": "gop30",
+      "owner": "GOP5Q26YCXefgWibMFYYQRPUKJVetDdNFKUkML1EwvW8LdyZqYinp"
+    },{
+      "name": "gop31",
+      "owner": "GOP5yigiQUDh8V57XpJ1vzU8TRyXDcKigYm8KVGHpXwCSKjeHZ659"
+    },{
+      "name": "gop32",
+      "owner": "GOP822cJcWfSqzwoYZdspCWY73DCrSXiJSBBVaPKm8yfTeWE6qkLZ"
+    },{
+      "name": "gop33",
+      "owner": "GOP7y3ytzz1W8aro99w5CQ2KQQ37Hzmd3k8kUMpNJrRFtWKnoGqqe"
+    },{
+      "name": "gop34",
+      "owner": "GOP816gfYT5yi6qSLeLhF6f1sNWnB1CDy23m9mvoAGy6BzkYRhZJe"
+    },{
+      "name": "gop35",
+      "owner": "GOP7qfEBwyMmb3S5GxvU4g59H5bc4mnMZuWfEFs6tsmdPobKi6Yj5"
+    },{
+      "name": "gop36",
+      "owner": "GOP4ybUCa1auHZzRECRxocYopZjQng9QUP8GtkAsvuvUs6FtE7RYG"
+    },{
+      "name": "gop37",
+      "owner": "GOP7htMqxrztYrxH8dmY41gZ3ZbbzkLCsyTW4nvFcZa5o9hLsGEnc"
+    },{
+      "name": "gop38",
+      "owner": "GOP8hSh3vuU5vnzNP6Xq4SwpwYSXdje1rk4jK7SALP8f96XSvn7qo"
+    },{
+      "name": "gop39",
+      "owner": "GOP5bcSbiWqM5xiXYTRrn9RPVAMyXifdietgehsJCwSPvNfcB9xaY"
+    },{
+      "name": "gop40",
+      "owner": "GOP7s68FeYPrbVZoPNxcNaGpgX1WpMoPASszy4wjjxkSSZYDUiJPb"
+    },{
+      "name": "gop41",
+      "owner": "GOP7bUCvEmvdjsNRUTk3taGFG8P1AMYV1z4oZnBAxVZhgnW2BgG5a"
+    },{
+      "name": "gop42",
+      "owner": "GOP7KZTXkJb5xcadKxU7qg7BzvYN3Q47A6mHd1wHKQHV96WzDsSky"
+    },{
+      "name": "gop43",
+      "owner": "GOP6TgNo51oN5XYAyMSrXDmzHVcQw1srfxJTNu3fKLnNToPpTiXJC"
+    },{
+      "name": "gop44",
+      "owner": "GOP5BdkF3vSBVVRZzhXMdSze5LqXcPK11Rr2w6WrGuFKgPA3jRCRL"
+    },{
+      "name": "gop45",
+      "owner": "GOP5wX2bcaeuTCPst2ouYCiTNWyGA3jyb28BVY7hhhaazSdwW65tQ"
+    },{
+      "name": "gop46",
+      "owner": "GOP6kTcXz75E1nTmKHyqUwkdebbrKxHXf5KDo3uJkXNCxr8Ss3kTh"
+    },{
+      "name": "gop47",
+      "owner": "GOP79uT7yLV7xCbtJYXzu9yojVECcCXWkBLTq36KkVHwua7kiNYtK"
+    },{
+      "name": "gop48",
+      "owner": "GOP5GM4NpFBj1dgZAENQuyRuU891iVpxTfgeeG1WP6Fen681FCNLo"
+    },{
+      "name": "gop49",
+      "owner": "GOP8UJcQM5UPP2sLajca1KNTiKfRF88G16LtvwfP8ede42hstzcQ2"
+    },{
+      "name": "gop50",
+      "owner": "GOP5Jze5nPgojXT9hRyqK9GE8NF4FmevtnF7x7RHX6WVCm2UwFS3Z"
+    },{
+      "name": "gop51",
+      "owner": "GOP6W9wrUMz7WWNFncMxZsUnsGsyfafQY9GAW8xGubXshUPQRDDez"
+    },{
+      "name": "gop52",
+      "owner": "GOP7SUbdad2GUxgy23NJN5jnyBRWGuH1AdXAMAUWgoZ1S83Lnz3mn"
+    },{
+      "name": "gop53",
+      "owner": "GOP8DGBAZ2ULoG8VHSFiBjk1fgZNDcrUHNEX5EvHxH4DsXCN3fx9M"
+    },{
+      "name": "gop54",
+      "owner": "GOP5LJywSy75Rio1tbQNbXJQBF7PL9WKr2pNrt43VgsxXMhbvNotx"
+    },{
+      "name": "gop55",
+      "owner": "GOP7KtxwBQw5jLUsdZdkryn6oDXYZfBuXY1Sc1aQ7AnA3hQSAB56J"
+    },{
+      "name": "gop56",
+      "owner": "GOP7MUHBLwLrVQ6YzLo8HycziWSvixJvdhoTZHJguSLJPjmxPuj1c"
+    },{
+      "name": "gop57",
+      "owner": "GOP8Ubq11C8SQLURQU4GJRHpirb6CrnvABZJYAWh9urodUVtqvv3G"
+    },{
+      "name": "gop58",
+      "owner": "GOP82NK3HMatMM9WsPGQfTpE5SXRdSSk8JNhMPN8UzHjYWGmTLN13"
+    },{
+      "name": "gop59",
+      "owner": "GOP8eSZyuqVXZq1gnNEMV1bitc9qrpU2z95WSEg4nnoDfsZS16Sj5"
+    },{
+      "name": "gop60",
+      "owner": "GOP4wsSXuRC4x5MmFwkodz2m8oXg6VA1aVp6mHKW2rNjiN2EVXvNX"
+    },{
+      "name": "gop61",
+      "owner": "GOP63t4tS4eeCBqNGa7VRajCA5njzcVThGa7AYC9GceWZuFEt63N5"
+    },{
+      "name": "gop62",
+      "owner": "GOP8KAZU4sumRNkDhWdwrtsDX56JkcmnfGogEKBmH5pWS7ugQ4MvH"
+    },{
+      "name": "gop63",
+      "owner": "GOP7USCKVgyzpdnTEtMbzDbd2rkYknk18ihGeTm7wpGDn5CgWC6tv"
+    },{
+      "name": "gop64",
+      "owner": "GOP6RMthPwLN5n1KZ3Djq2SQ7L4sJWxz9qXFFYyzLJGG4pHYbnYyb"
+    },{
+      "name": "gop65",
+      "owner": "GOP8hxZEC8Ya9CbmFgdBCU71xa5FqUtBBxFvF7ZJNA4oK4pZ4SXBT"
+    },{
+      "name": "gop66",
+      "owner": "GOP5b47VJxncmrqa1gN284RC5L8heFcMt5oi2rkMnVNi7kqsch6Uu"
+    },{
+      "name": "gop67",
+      "owner": "GOP7sE6GGn7ZxvxdVD1vBgXuven6Spyk6EAiLN9XvAUsrBrqAPNtV"
+    },{
+      "name": "gop68",
+      "owner": "GOP5BQts7H6mkBNA8SCRQAjUmr78yYFEZCMmrZS3hGeyTvUGgQVfe"
+    },{
+      "name": "gop69",
+      "owner": "GOP8J7iZfMkTo1ipvedbPSweoRLhhLMMJWWVZMD7bkbFcznD8eGmb"
+    },{
+      "name": "gop70",
+      "owner": "GOP77qq2o3hHeR8BaqpoK5HYqxoPuDqj8Sew6DzyWQbxFiuzfaMkK"
+    },{
+      "name": "gop71",
+      "owner": "GOP6EYXtqjdgigwgMj6jCXaNzwuY9qHwGCivrh1EbM9psNrMYPNQN"
+    },{
+      "name": "gop72",
+      "owner": "GOP6SJVL4R8neNANMEjtR5ZkgqPnVqTB3ckcn5PbxA1Z3X8dGXNyV"
+    },{
+      "name": "gop73",
+      "owner": "GOP6EkN98ZVcpDFA68TWgkoThNwyY3chouqd1dhRYybpSmARYcYhG"
+    },{
+      "name": "gop74",
+      "owner": "GOP7CmZC8pLyqY2kgVuj5gQhAXn64czVXWkRb8JekhdV629LzjbU8"
+    },{
+      "name": "gop75",
+      "owner": "GOP5TGtbRFB2NDKwwYsCmLBC5eaEUgKygwzCBEXy5DivaiPt5wurZ"
+    },{
+      "name": "gop76",
+      "owner": "GOP5HLYLUtHoyhZUxvnT2pQQw34wpwk5Qp6mFbZF5wtyjFgtX17pU"
+    },{
+      "name": "gop77",
+      "owner": "GOP5Qp2RQCGXbYmr7Y7z2Yha7MQmrqmC3CzWbbiqnWqAHQx5A1DXL"
+    },{
+      "name": "gop78",
+      "owner": "GOP6AAasx3gD5CtCAxYSwJvWGQHhfM81RwHzME5YyyERuvnuKsYUf"
+    },{
+      "name": "gop79",
+      "owner": "GOP7zXYxFi5PfBFP2dhPz42PAmB2JyyrpXX6pNATCxh323ytENSSV"
+    },{
+      "name": "gop80",
+      "owner": "GOP6N6EMvoCQs6tp4PPtTWVzWo3wFcRmgpe2Smi2hahtCcJQ9Z3X6"
+    },{
+      "name": "gop81",
+      "owner": "GOP7E8CAPYfBR4CFjLvkuneAJFAmS8RRnYK9n4dZJwERGZaHauVwx"
+    },{
+      "name": "gop82",
+      "owner": "GOP8Gb6FcfeTxqTbZPvaPZMhW6ionRwvD7xt4nUEXftTstRnV4jMb"
+    },{
+      "name": "gop83",
+      "owner": "GOP6kiXP78eotTRk1kcJbi6JTeUUVrhpUL8t2GWoqqqqU5g44bYF6"
+    },{
+      "name": "gop84",
+      "owner": "GOP7FLf6aBfrwxHpdXPVamKdWTaxjRicKHcTHErU5NjS9Ca3JtFN2"
+    },{
+      "name": "gop85",
+      "owner": "GOP7mGmWVDdPCXMJgjri7iBQadpcjWBPh1QqMzan3v1m5FBHkpjpj"
+    },{
+      "name": "gop86",
+      "owner": "GOP8ga7MToNWNPEQthy8JFu178zFdzQ2b3QboVhNBVwj8j9gwXCE3"
+    },{
+      "name": "gop87",
+      "owner": "GOP7V8WByBvT2do82VswjeHWrtiiXPzfGE6G7KfAWGFL4GkQfgyuA"
+    },{
+      "name": "gop88",
+      "owner": "GOP4wQtPvfPmToA2e2BT4YF58p7CQFuZXo5335CYQmZqkj13UKhac"
+    },{
+      "name": "gop89",
+      "owner": "GOP5JHjHYSRaTMQggQ2sef25GDB7YNGGvA5v9QtAusqkrTZD5gLzf"
+    },{
+      "name": "gop90",
+      "owner": "GOP5jYCJk6N5V9nsVW9Jg323PD9UK8qyvA2FNyjPVqS4apmTm5jot"
+    },{
+      "name": "gop91",
+      "owner": "GOP6hxZTmCJPtDTogFeriXQYBDMwS9kzC7XnS1H9kyS7qxrnYxj7H"
+    },{
+      "name": "gop92",
+      "owner": "GOP6MrnAkUzUehD5wsM9GPhJJLEQTPFJjwhSLuQynSYBnhqgqbAR2"
+    },{
+      "name": "gop93",
+      "owner": "GOP5JeJjt5H4iw7t9RKgYBvECxnqZT6roVqMQHjemBUWDFr1nvDaa"
+    },{
+      "name": "gop94",
+      "owner": "GOP8WTX8yJzY8WVdQqaE8hEX4qoyEpsL4oVhZs9W8DhN8phNu1wnq"
+    },{
+      "name": "gop95",
+      "owner": "GOP5s7wrXoNkCgowNBXh6Rn6d5ZKsMzqkcvZVkMGs8NATtacCMiBH"
+    },{
+      "name": "gop96",
+      "owner": "GOP5svj2iH9yN2gv5fqoeAWe65EqJyRrNsNdmuLAABGYGJNdCmGmb"
+    },{
+      "name": "gop97",
+      "owner": "GOP5vJpK2vp49KXBmUhS6GNdjMiDLGejaXNszoXrSMBRj6PiEhisW"
+    },{
+      "name": "gop98",
+      "owner": "GOP5ERYDomUqrnVkcAA3BrhYiHZMyvf1sngevcWDiy5Re3bjwaRZs"
+    }
+  ],
+  "initial_balances": [{
+      "raw_address": "GOPN3B1kfbUbzFiyCYWVxgg6GfdQVJFfMfdk",
+      "balance": 1000000000000
+    },{
+      "raw_address": "GOP3p75yYrjUHPgzg4GcWVzVDeWjmwQMke5a",
+      "balance": 1000000000000
+    },{
+      "raw_address": "GOPGkRtAtjyQD3CdWYANpar3zGdfAzJPYqcK",
+      "balance": 1000000000000
+    },{
+      "raw_address": "GOP9DxBwPkYPVS3TteFgzioBWfFr8jvts14z",
+      "balance": 1000000000000
+    },{
+      "raw_address": "GOPQbPjVGXhkTv8MenFeUKKT2Bny9ebL8hV",
+      "balance": 1000000000000
+    },{
+      "raw_address": "GOP6Y3qD9pSMmvpM1jaxtDY7qyDeayadpSFL",
+      "balance": 1000000000000
+    },{
+      "raw_address": "GOP8TejLNmsc9DF7YCmt373BCdh8ty14QfVH",
+      "balance": 1000000000000
+    },{
+      "raw_address": "GOP2Xrj6py15XGwqMei5jVcBVKzkRKb29S1i",
+      "balance": 1000000000000
+    },{
+      "raw_address": "GOPBicHPmi2WZGvrAKHNzvmA87WKGtwLarPk",
+      "balance": 1000000000000
+    },{
+      "raw_address": "GOP9eSxtKe6Ey68qhdfmkVPbLPxpTyDb4h6Q",
+      "balance": 1000000000000
+    }
+  ],
+  "sharedrop_balances": {
+    "start_time": "1970-01-01T00:00:00",
+    "duration_days": 0,
+    "vesting_balances": []
+  }
+}

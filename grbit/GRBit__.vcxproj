@@ -1,0 +1,426 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{7673F3E9-A5E0-4355-ABA7-CF0A08C70ED8}</ProjectGuid>
+    <RootNamespace>GRBit</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>..\boost_1.55.x64;..\fc\include;..\leveldb\include;..\db\include;..\include;.\libraries\include;..\vendor\miniupnp;.\libraries\include\lua</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_WINSOCK_DEPRECATED_NO_WARNINGS;_MBCS;_DEBUG;WIN32;_WINDOWS;NOMINMAX;_WIN32_WINNT=0x0501;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;BOOST_ALL_NO_LIB;_SECURE_SCL=0;GOP_GLOBAL_API_LOG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MinimalRebuild>false</MinimalRebuild>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\boost_1.55.x64\stage\lib;..\libs_debug;..\OpenSSL.x64\lib;..\libs_win_x64</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;leveldb.lib;fc_debug.lib;easylzma_static_debug.lib;udt_debug.lib;libboost_thread-vc120-mt-gd-1_55.lib;libboost_date_time-vc120-mt-gd-1_55.lib;libboost_system-vc120-mt-gd-1_55.lib;libboost_filesystem-vc120-mt-gd-1_55.lib;libboost_program_options-vc120-mt-gd-1_55.lib;libboost_signals-vc120-mt-gd-1_55.lib;libboost_serialization-vc120-mt-gd-1_55.lib;libboost_chrono-vc120-mt-gd-1_55.lib;libboost_unit_test_framework-vc120-mt-gd-1_55.lib;libboost_context-vc120-mt-gd-1_55.lib;libboost_locale-vc120-mt-gd-1_55.lib;libboost_iostreams-vc120-mt-gd-1_55.lib;libboost_coroutine-vc120-mt-gd-1_55.lib;ssleay32MDd.lib;libeay32MDd.lib;WS2_32.lib;Userenv.lib;Rpcrt4.lib;crypt32.lib;shlwapi.lib;miniupnpc.lib;WS2_32.Lib;IPHlpApi.Lib;secp256k1_debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <UACExecutionLevel>AsInvoker</UACExecutionLevel>
+      <UACUIAccess>true</UACUIAccess>
+      <EnableUAC>false</EnableUAC>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>..\boost_1.55.x64;..\fc\include;..\leveldb\include;..\db\include;..\include;.\libraries\include;..\vendor\miniupnp;.\libraries\include\lua</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUGWIN32;_CONSOLE;NDEBUG;NOMINMAX;_WIN32_WINNT=0x0501;_CRT_SECURE_NO_WARNINGS;_SCL_SERCURE_NO_WARNINGS;BOOST_ALL_NO_LIB;CMAKE_INTDIR="Release";GOP_GLOBAL_API_LOG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;leveldb.lib;fc.lib;easylzma_static.lib;udt.lib;libboost_thread-vc120-mt-1_55.lib;libboost_date_time-vc120-mt-1_55.lib;libboost_system-vc120-mt-1_55.lib;libboost_filesystem-vc120-mt-1_55.lib;libboost_program_options-vc120-mt-1_55.lib;libboost_signals-vc120-mt-1_55.lib;libboost_serialization-vc120-mt-1_55.lib;libboost_chrono-vc120-mt-1_55.lib;libboost_unit_test_framework-vc120-mt-1_55.lib;libboost_context-vc120-mt-1_55.lib;libboost_locale-vc120-mt-1_55.lib;libboost_iostreams-vc120-mt-1_55.lib;libboost_coroutine-vc120-mt-1_55.lib;ssleay32MD.lib;libeay32MD.lib;WS2_32.lib;Userenv.lib;Rpcrt4.lib;crypt32.lib;shlwapi.lib;miniupnpc.lib;WS2_32.Lib;IPHlpApi.Lib;secp256k1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\boost_1.55.x64\stage\lib;..\libs_release_3;..\OpenSSL.x64\lib;..\libs_win_x64</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="libraries\api\ConversionFunctions.cpp" />
+    <ClCompile Include="libraries\api\GlobalApiLogger.cpp" />
+    <ClCompile Include="libraries\blockchain\AccountEntry.cpp" />
+    <ClCompile Include="libraries\blockchain\AccountOperations.cpp" />
+    <ClCompile Include="libraries\blockchain\Address.cpp" />
+    <ClCompile Include="libraries\blockchain\applink.c" />
+    <ClCompile Include="libraries\blockchain\Asset.cpp" />
+    <ClCompile Include="libraries\blockchain\AssetEntry.cpp" />
+    <ClCompile Include="libraries\blockchain\AssetOperations.cpp" />
+    <ClCompile Include="libraries\blockchain\BalanceEntry.cpp" />
+    <ClCompile Include="libraries\blockchain\BalanceOperations.cpp" />
+    <ClCompile Include="libraries\blockchain\Block.cpp" />
+    <ClCompile Include="libraries\blockchain\ChainDatabase.cpp" />
+    <ClCompile Include="libraries\blockchain\ChainDatabaseV1.cpp" />
+    <ClCompile Include="libraries\blockchain\ChainDatabaseV2.cpp" />
+    <ClCompile Include="libraries\blockchain\ChainInterface.cpp" />
+    <ClCompile Include="libraries\blockchain\ChainInterfaceV1.cpp" />
+    <ClCompile Include="libraries\blockchain\ContractEntry.cpp" />
+    <ClCompile Include="libraries\blockchain\ContractOperations.cpp" />
+    <ClCompile Include="libraries\blockchain\EventOperations.cpp" />
+    <ClCompile Include="libraries\blockchain\ExtendedAddress.cpp" />
+    <ClCompile Include="libraries\blockchain\ForkBlocks.cpp" />
+    <ClCompile Include="libraries\blockchain\GenesisJson.cpp" />
+    <ClCompile Include="libraries\blockchain\ImessageOperations.cpp" />
+    <ClCompile Include="libraries\blockchain\Operations.cpp" />
+    <ClCompile Include="libraries\blockchain\PendingChainState.cpp" />
+    <ClCompile Include="libraries\blockchain\PropertyEntry.cpp" />
+    <ClCompile Include="libraries\blockchain\PtsAddress.cpp" />
+    <ClCompile Include="libraries\blockchain\SlateEntry.cpp" />
+    <ClCompile Include="libraries\blockchain\SlateOperations.cpp" />
+    <ClCompile Include="libraries\blockchain\SlotEntry.cpp" />
+    <ClCompile Include="libraries\blockchain\StorageOperations.cpp" />
+    <ClCompile Include="libraries\blockchain\StorageTypes.cpp" />
+    <ClCompile Include="libraries\blockchain\Time.cpp" />
+    <ClCompile Include="libraries\blockchain\Transaction.cpp" />
+    <ClCompile Include="libraries\blockchain\TransactionCreationState.cpp" />
+    <ClCompile Include="libraries\blockchain\TransactionEntry.cpp" />
+    <ClCompile Include="libraries\blockchain\TransactionEvaluationState.cpp" />
+    <ClCompile Include="libraries\blockchain\TransactionOperations.cpp" />
+    <ClCompile Include="libraries\blockchain\Types.cpp" />
+    <ClCompile Include="libraries\blockchain\WithdrawTypes.cpp" />
+    <ClCompile Include="libraries\client\ApiLogger.cpp" />
+    <ClCompile Include="libraries\client\BlockchainApi.cpp" />
+    <ClCompile Include="libraries\client\Client.cpp" />
+    <ClCompile Include="libraries\client\ContractApi.cpp" />
+    <ClCompile Include="libraries\client\DebugApi.cpp" />
+    <ClCompile Include="libraries\client\DelegateApi.cpp" />
+    <ClCompile Include="libraries\client\GeneralApi.cpp" />
+    <ClCompile Include="libraries\client\Messages.cpp" />
+    <ClCompile Include="libraries\client\NetworkApi.cpp" />
+    <ClCompile Include="libraries\client\Notifier.cpp" />
+    <ClCompile Include="libraries\client\SandboxContractApi.cpp" />
+    <ClCompile Include="libraries\client\ScriptApi.cpp" />
+    <ClCompile Include="libraries\client\WalletApi.cpp" />
+    <ClCompile Include="libraries\cli\Cli.cpp" />
+    <ClCompile Include="libraries\cli\Pretty.cpp" />
+    <ClCompile Include="libraries\cli\PrintResult.cpp" />
+    <ClCompile Include="libraries\db\UpgradeLeveldb.cpp" />
+    <ClCompile Include="libraries\lua\goopal_ltests.cpp" />
+    <ClCompile Include="libraries\lua\goopal_lua_api.cpp" />
+    <ClCompile Include="libraries\lua\goopal_lua_lib.cpp" />
+    <ClCompile Include="libraries\lua\goopal_lutil.cpp" />
+    <ClCompile Include="libraries\lua\lapi.cpp" />
+    <ClCompile Include="libraries\lua\lauxlib.cpp" />
+    <ClCompile Include="libraries\lua\lbaselib.cpp" />
+    <ClCompile Include="libraries\lua\lbitlib.cpp" />
+    <ClCompile Include="libraries\lua\lcode.cpp" />
+    <ClCompile Include="libraries\lua\lcompile.cpp" />
+    <ClCompile Include="libraries\lua\lcorolib.cpp" />
+    <ClCompile Include="libraries\lua\lctype.cpp" />
+    <ClCompile Include="libraries\lua\ldblib.cpp" />
+    <ClCompile Include="libraries\lua\ldebug.cpp" />
+    <ClCompile Include="libraries\lua\ldo.cpp" />
+    <ClCompile Include="libraries\lua\ldump.cpp" />
+    <ClCompile Include="libraries\lua\lfunc.cpp" />
+    <ClCompile Include="libraries\lua\lgc.cpp" />
+    <ClCompile Include="libraries\lua\lgoopallib.cpp" />
+    <ClCompile Include="libraries\lua\lhashmap.cpp" />
+    <ClCompile Include="libraries\lua\linit.cpp" />
+    <ClCompile Include="libraries\lua\liolib.cpp" />
+    <ClCompile Include="libraries\lua\ljsonlib.cpp" />
+    <ClCompile Include="libraries\lua\llex.cpp" />
+    <ClCompile Include="libraries\lua\lmath2lib.cpp" />
+    <ClCompile Include="libraries\lua\lmathlib.cpp" />
+    <ClCompile Include="libraries\lua\lmem.cpp" />
+    <ClCompile Include="libraries\lua\loadlib.cpp" />
+    <ClCompile Include="libraries\lua\lobject.cpp" />
+    <ClCompile Include="libraries\lua\lopcodes.cpp" />
+    <ClCompile Include="libraries\lua\loslib.cpp" />
+    <ClCompile Include="libraries\lua\lparser.cpp" />
+    <ClCompile Include="libraries\lua\lparsercombinator.cpp" />
+    <ClCompile Include="libraries\lua\lprefix.cpp" />
+    <ClCompile Include="libraries\lua\lrepl.cpp" />
+    <ClCompile Include="libraries\lua\lstate.cpp" />
+    <ClCompile Include="libraries\lua\lstring.cpp" />
+    <ClCompile Include="libraries\lua\lstrlib.cpp" />
+    <ClCompile Include="libraries\lua\ltable.cpp" />
+    <ClCompile Include="libraries\lua\ltablib.cpp" />
+    <ClCompile Include="libraries\lua\ltimelib.cpp" />
+    <ClCompile Include="libraries\lua\ltm.cpp" />
+    <ClCompile Include="libraries\lua\ltypechecker.cpp" />
+    <ClCompile Include="libraries\lua\lua.cpp" />
+    <ClCompile Include="libraries\lua\luac.cpp" />
+    <ClCompile Include="libraries\lua\lua_astparser.cpp" />
+    <ClCompile Include="libraries\lua\lua_loader.cpp" />
+    <ClCompile Include="libraries\lua\lua_state_scope.cpp" />
+    <ClCompile Include="libraries\lua\lua_tokenparser.cpp" />
+    <ClCompile Include="libraries\lua\lundump.cpp" />
+    <ClCompile Include="libraries\lua\lutf8lib.cpp" />
+    <ClCompile Include="libraries\lua\lvm.cpp" />
+    <ClCompile Include="libraries\lua\lzio.cpp" />
+    <ClCompile Include="libraries\net\ChainDownloader.cpp" />
+    <ClCompile Include="libraries\net\ChainServer.cpp" />
+    <ClCompile Include="libraries\net\CoreMessages.cpp" />
+    <ClCompile Include="libraries\net\MessageOrientedConnection.cpp" />
+    <ClCompile Include="libraries\net\Node.cpp" />
+    <ClCompile Include="libraries\net\PeerConnection.cpp" />
+    <ClCompile Include="libraries\net\PeerDatabase.cpp" />
+    <ClCompile Include="libraries\net\StcpSocket.cpp" />
+    <ClCompile Include="libraries\net\Upnp.cpp" />
+    <ClCompile Include="libraries\rpc\RpcClient.cpp" />
+    <ClCompile Include="libraries\rpc\RpcServer.cpp" />
+    <ClCompile Include="libraries\rpc_stubs\CommonApiClient.cpp" />
+    <ClCompile Include="libraries\rpc_stubs\CommonApiRpcClient.cpp" />
+    <ClCompile Include="libraries\rpc_stubs\CommonApiRpcServer.cpp" />
+    <ClCompile Include="libraries\utilities\GitRevision.cpp" />
+    <ClCompile Include="libraries\utilities\KeyConversion.cpp" />
+    <ClCompile Include="libraries\utilities\StringEscape.cpp" />
+    <ClCompile Include="libraries\utilities\Words.cpp" />
+    <ClCompile Include="libraries\wallet\Login.cpp" />
+    <ClCompile Include="libraries\wallet\TransactionBuilder.cpp" />
+    <ClCompile Include="libraries\wallet\TransactionLedger.cpp" />
+    <ClCompile Include="libraries\wallet\TransactionLedgerExperimental.cpp" />
+    <ClCompile Include="libraries\wallet\Wallet.cpp" />
+    <ClCompile Include="libraries\wallet\WalletDb.cpp" />
+    <ClCompile Include="libraries\wallet\WalletEntrys.cpp" />
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="libraries\include\api\ApiMetadata.hpp" />
+    <ClInclude Include="libraries\include\api\CommonApi.hpp" />
+    <ClInclude Include="libraries\include\api\ConversionFunctions.hpp" />
+    <ClInclude Include="libraries\include\api\GlobalApiLogger.hpp" />
+    <ClInclude Include="libraries\include\blockchain\AccountEntry.hpp" />
+    <ClInclude Include="libraries\include\blockchain\AccountOperations.hpp" />
+    <ClInclude Include="libraries\include\blockchain\Address.hpp" />
+    <ClInclude Include="libraries\include\blockchain\Asset.hpp" />
+    <ClInclude Include="libraries\include\blockchain\AssetEntry.hpp" />
+    <ClInclude Include="libraries\include\blockchain\AssetOperations.hpp" />
+    <ClInclude Include="libraries\include\blockchain\BalanceEntry.hpp" />
+    <ClInclude Include="libraries\include\blockchain\BalanceOperations.hpp" />
+    <ClInclude Include="libraries\include\blockchain\Block.hpp" />
+    <ClInclude Include="libraries\include\blockchain\BlockEntry.hpp" />
+    <ClInclude Include="libraries\include\blockchain\ChainDatabase.hpp" />
+    <ClInclude Include="libraries\include\blockchain\ChainDatabaseImpl.hpp" />
+    <ClInclude Include="libraries\include\blockchain\ChainInterface.hpp" />
+    <ClInclude Include="libraries\include\blockchain\Checkpoints.hpp" />
+    <ClInclude Include="libraries\include\blockchain\Condition.hpp" />
+    <ClInclude Include="libraries\include\blockchain\Config.hpp" />
+    <ClInclude Include="libraries\include\blockchain\ContractEntry.hpp" />
+    <ClInclude Include="libraries\include\blockchain\ContractOperations.hpp" />
+    <ClInclude Include="libraries\include\blockchain\DelegateConfig.hpp" />
+    <ClInclude Include="libraries\include\blockchain\EventOperations.hpp" />
+    <ClInclude Include="libraries\include\blockchain\Exceptions.hpp" />
+    <ClInclude Include="libraries\include\blockchain\ExtendedAddress.hpp" />
+    <ClInclude Include="libraries\include\blockchain\ForkBlocks.hpp" />
+    <ClInclude Include="libraries\include\blockchain\GenesisJson.hpp" />
+    <ClInclude Include="libraries\include\blockchain\GenesisState.hpp" />
+    <ClInclude Include="libraries\include\blockchain\ImessageOperations.hpp" />
+    <ClInclude Include="libraries\include\blockchain\OperationFactory.hpp" />
+    <ClInclude Include="libraries\include\blockchain\Operations.hpp" />
+    <ClInclude Include="libraries\include\blockchain\PendingChainState.hpp" />
+    <ClInclude Include="libraries\include\blockchain\PropertyEntry.hpp" />
+    <ClInclude Include="libraries\include\blockchain\PtsAddress.hpp" />
+    <ClInclude Include="libraries\include\blockchain\SlateEntry.hpp" />
+    <ClInclude Include="libraries\include\blockchain\SlateOperations.hpp" />
+    <ClInclude Include="libraries\include\blockchain\SlotEntry.hpp" />
+    <ClInclude Include="libraries\include\blockchain\Time.hpp" />
+    <ClInclude Include="libraries\include\blockchain\Transaction.hpp" />
+    <ClInclude Include="libraries\include\blockchain\TransactionCreationState.hpp" />
+    <ClInclude Include="libraries\include\blockchain\TransactionEntry.hpp" />
+    <ClInclude Include="libraries\include\blockchain\TransactionEvaluationState.hpp" />
+    <ClInclude Include="libraries\include\blockchain\TransactionOperations.hpp" />
+    <ClInclude Include="libraries\include\blockchain\Types.hpp" />
+    <ClInclude Include="libraries\include\blockchain\WithdrawTypes.hpp" />
+    <ClInclude Include="libraries\include\client\ApiLogger.hpp" />
+    <ClInclude Include="libraries\include\client\Client.hpp" />
+    <ClInclude Include="libraries\include\client\ClientImpl.hpp" />
+    <ClInclude Include="libraries\include\client\Messages.hpp" />
+    <ClInclude Include="libraries\include\client\Notifier.hpp" />
+    <ClInclude Include="libraries\include\client\SeedNodes.hpp" />
+    <ClInclude Include="libraries\include\cli\Cli.hpp" />
+    <ClInclude Include="libraries\include\cli\Pretty.hpp" />
+    <ClInclude Include="libraries\include\cli\PrintResult.hpp" />
+    <ClInclude Include="libraries\include\db\CachedLevelMap.hpp" />
+    <ClInclude Include="libraries\include\db\Exception.hpp" />
+    <ClInclude Include="libraries\include\db\FastLevelMap.hpp" />
+    <ClInclude Include="libraries\include\db\FsHashMap.hpp" />
+    <ClInclude Include="libraries\include\db\Fwd.hpp" />
+    <ClInclude Include="libraries\include\db\LevelMap.hpp" />
+    <ClInclude Include="libraries\include\db\LevelPodMap.hpp" />
+    <ClInclude Include="libraries\include\db\UpgradeLeveldb.hpp" />
+    <ClInclude Include="libraries\include\lua\exceptions.h" />
+    <ClInclude Include="libraries\include\lua\goopal_ltests.h" />
+    <ClInclude Include="libraries\include\lua\goopal_lua_api.h" />
+    <ClInclude Include="libraries\include\lua\goopal_lua_lib.h" />
+    <ClInclude Include="libraries\include\lua\goopal_lua_parser.h" />
+    <ClInclude Include="libraries\include\lua\goopal_lutil.h" />
+    <ClInclude Include="libraries\include\lua\lapi.h" />
+    <ClInclude Include="libraries\include\lua\lauxlib.h" />
+    <ClInclude Include="libraries\include\lua\lcode.h" />
+    <ClInclude Include="libraries\include\lua\lcompile.h" />
+    <ClInclude Include="libraries\include\lua\lctype.h" />
+    <ClInclude Include="libraries\include\lua\ldebug.h" />
+    <ClInclude Include="libraries\include\lua\ldo.h" />
+    <ClInclude Include="libraries\include\lua\lfunc.h" />
+    <ClInclude Include="libraries\include\lua\lgc.h" />
+    <ClInclude Include="libraries\include\lua\lhashmap.h" />
+    <ClInclude Include="libraries\include\lua\llex.h" />
+    <ClInclude Include="libraries\include\lua\llimits.h" />
+    <ClInclude Include="libraries\include\lua\lmem.h" />
+    <ClInclude Include="libraries\include\lua\lnetlib.h" />
+    <ClInclude Include="libraries\include\lua\lobject.h" />
+    <ClInclude Include="libraries\include\lua\lopcodes.h" />
+    <ClInclude Include="libraries\include\lua\lparser.h" />
+    <ClInclude Include="libraries\include\lua\lparsercombinator.h" />
+    <ClInclude Include="libraries\include\lua\lprefix.h" />
+    <ClInclude Include="libraries\include\lua\lrepl.h" />
+    <ClInclude Include="libraries\include\lua\lstate.h" />
+    <ClInclude Include="libraries\include\lua\lstring.h" />
+    <ClInclude Include="libraries\include\lua\ltable.h" />
+    <ClInclude Include="libraries\include\lua\ltm.h" />
+    <ClInclude Include="libraries\include\lua\ltypechecker.h" />
+    <ClInclude Include="libraries\include\lua\lua.h" />
+    <ClInclude Include="libraries\include\lua\lua.hpp" />
+    <ClInclude Include="libraries\include\lua\luaconf.h" />
+    <ClInclude Include="libraries\include\lua\lualib.h" />
+    <ClInclude Include="libraries\include\lua\lua_astparser.h" />
+    <ClInclude Include="libraries\include\lua\lua_debug_file.h" />
+    <ClInclude Include="libraries\include\lua\lua_loader.h" />
+    <ClInclude Include="libraries\include\lua\lua_tokenparser.h" />
+    <ClInclude Include="libraries\include\lua\lundump.h" />
+    <ClInclude Include="libraries\include\lua\lvm.h" />
+    <ClInclude Include="libraries\include\lua\lzio.h" />
+    <ClInclude Include="libraries\include\net\ChainConnection.hpp" />
+    <ClInclude Include="libraries\include\net\ChainDownloader.hpp" />
+    <ClInclude Include="libraries\include\net\ChainMessages.hpp" />
+    <ClInclude Include="libraries\include\net\ChainServer.hpp" />
+    <ClInclude Include="libraries\include\net\ChainServerCommands.hpp" />
+    <ClInclude Include="libraries\include\net\Config.hpp" />
+    <ClInclude Include="libraries\include\net\Connection.hpp" />
+    <ClInclude Include="libraries\include\net\CoreMessages.hpp" />
+    <ClInclude Include="libraries\include\net\Exceptions.hpp" />
+    <ClInclude Include="libraries\include\net\Message.hpp" />
+    <ClInclude Include="libraries\include\net\MessageOrientedConnection.hpp" />
+    <ClInclude Include="libraries\include\net\Node.hpp" />
+    <ClInclude Include="libraries\include\net\PeerConnection.hpp" />
+    <ClInclude Include="libraries\include\net\PeerDatabase.hpp" />
+    <ClInclude Include="libraries\include\net\StcpSocket.hpp" />
+    <ClInclude Include="libraries\include\net\Upnp.hpp" />
+    <ClInclude Include="libraries\include\rpc\Exceptions.hpp" />
+    <ClInclude Include="libraries\include\rpc\RpcClient.hpp" />
+    <ClInclude Include="libraries\include\rpc\RpcClientApi.hpp" />
+    <ClInclude Include="libraries\include\rpc\RpcServer.hpp" />
+    <ClInclude Include="libraries\include\rpc_stubs\CommonApiClient.hpp" />
+    <ClInclude Include="libraries\include\rpc_stubs\CommonApiRpcClient.hpp" />
+    <ClInclude Include="libraries\include\rpc_stubs\CommonApiRpcServer.hpp" />
+    <ClInclude Include="libraries\include\utilities\GitRevision.hpp" />
+    <ClInclude Include="libraries\include\utilities\KeyConversion.hpp" />
+    <ClInclude Include="libraries\include\utilities\PaddingOstream.hpp" />
+    <ClInclude Include="libraries\include\utilities\StringEscape.hpp" />
+    <ClInclude Include="libraries\include\utilities\Words.hpp" />
+    <ClInclude Include="libraries\include\wallet\Config.hpp" />
+    <ClInclude Include="libraries\include\wallet\Exceptions.hpp" />
+    <ClInclude Include="libraries\include\wallet\Pretty.hpp" />
+    <ClInclude Include="libraries\include\wallet\TransactionBuilder.hpp" />
+    <ClInclude Include="libraries\include\wallet\Url.hpp" />
+    <ClInclude Include="libraries\include\wallet\Wallet.hpp" />
+    <ClInclude Include="libraries\include\wallet\WalletDb.hpp" />
+    <ClInclude Include="libraries\include\wallet\WalletEntrys.hpp" />
+    <ClInclude Include="libraries\include\wallet\WalletImpl.hpp" />
+    <ClInclude Include="libraries\lua\lua_loader.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="libraries\include\rpc_stubs\common_api_overrides.ipp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="libraries\lua\CMakeLists.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

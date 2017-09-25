@@ -1,0 +1,645 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" assignedExecutableTargets="true" buildAllGenerated="false">
+    <generated />
+  </component>
+  <component name="CMakeSettings" AUTO_RELOAD="false" GENERATION_PASS_SYSTEM_ENVIRONMENT="true">
+    <ADDITIONAL_GENERATION_ENVIRONMENT>
+      <envs />
+    </ADDITIONAL_GENERATION_ENVIRONMENT>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="7935334a-75f6-48cd-95a4-875c8d682f7c" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/libraries/blockchain/ContractEntry.cpp.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/libraries/blockchain/ContractOperations.cpp.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/libraries/include/blockchain/ContractEntry.hpp.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/libraries/include/blockchain/ContractOperations.hpp.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/libraries/include/client/ClientImpl.hpp.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/libraries/wallet/Wallet.cpp.bak" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GRBit.v12.suo" afterPath="$PROJECT_DIR$/GRBit.v12.suo" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GRBit.vcxproj" afterPath="$PROJECT_DIR$/GRBit.vcxproj" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GRBit.vcxproj.filters" afterPath="$PROJECT_DIR$/GRBit.vcxproj.filters" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/blockchain/BalanceOperations.cpp" afterPath="$PROJECT_DIR$/libraries/blockchain/BalanceOperations.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/blockchain/ChainDatabase.cpp" afterPath="$PROJECT_DIR$/libraries/blockchain/ChainDatabase.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/blockchain/ChainInterface.cpp" afterPath="$PROJECT_DIR$/libraries/blockchain/ChainInterface.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/blockchain/ContractOperations.cpp" afterPath="$PROJECT_DIR$/libraries/blockchain/ContractOperations.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/blockchain/GenesisJson.cpp" afterPath="$PROJECT_DIR$/libraries/blockchain/GenesisJson.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/blockchain/Operations.cpp" afterPath="$PROJECT_DIR$/libraries/blockchain/Operations.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/blockchain/PendingChainState.cpp" afterPath="$PROJECT_DIR$/libraries/blockchain/PendingChainState.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/blockchain/StorageOperations.cpp" afterPath="$PROJECT_DIR$/libraries/blockchain/StorageOperations.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/blockchain/Transaction.cpp" afterPath="$PROJECT_DIR$/libraries/blockchain/Transaction.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/blockchain/Transaction.cpp.bak" afterPath="$PROJECT_DIR$/libraries/blockchain/Transaction.cpp.bak" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/blockchain/TransactionEvaluationState.cpp" afterPath="$PROJECT_DIR$/libraries/blockchain/TransactionEvaluationState.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/cli/Cli.cpp" afterPath="$PROJECT_DIR$/libraries/cli/Cli.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/cli/PrintResult.cpp" afterPath="$PROJECT_DIR$/libraries/cli/PrintResult.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/client/BlockchainApi.cpp" afterPath="$PROJECT_DIR$/libraries/client/BlockchainApi.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/client/Client.cpp" afterPath="$PROJECT_DIR$/libraries/client/Client.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/client/ContractApi.cpp" afterPath="$PROJECT_DIR$/libraries/client/ContractApi.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/include/api/ApiMetadata.hpp" afterPath="$PROJECT_DIR$/libraries/include/api/ApiMetadata.hpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/include/api/CommonApi.hpp" afterPath="$PROJECT_DIR$/libraries/include/api/CommonApi.hpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/include/blockchain/BalanceOperations.hpp" afterPath="$PROJECT_DIR$/libraries/include/blockchain/BalanceOperations.hpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/include/blockchain/ChainDatabase.hpp" afterPath="$PROJECT_DIR$/libraries/include/blockchain/ChainDatabase.hpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/include/blockchain/ChainDatabaseImpl.hpp" afterPath="$PROJECT_DIR$/libraries/include/blockchain/ChainDatabaseImpl.hpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/include/blockchain/ChainInterface.hpp" afterPath="$PROJECT_DIR$/libraries/include/blockchain/ChainInterface.hpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/include/blockchain/Config.hpp" afterPath="$PROJECT_DIR$/libraries/include/blockchain/Config.hpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/include/blockchain/Exceptions.hpp" afterPath="$PROJECT_DIR$/libraries/include/blockchain/Exceptions.hpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/include/blockchain/Operations.hpp" afterPath="$PROJECT_DIR$/libraries/include/blockchain/Operations.hpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/include/blockchain/PendingChainState.hpp" afterPath="$PROJECT_DIR$/libraries/include/blockchain/PendingChainState.hpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/include/blockchain/Transaction.hpp" afterPath="$PROJECT_DIR$/libraries/include/blockchain/Transaction.hpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/include/blockchain/Transaction.hpp.bak" afterPath="$PROJECT_DIR$/libraries/include/blockchain/Transaction.hpp.bak" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/include/blockchain/TransactionEvaluationState.hpp" afterPath="$PROJECT_DIR$/libraries/include/blockchain/TransactionEvaluationState.hpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/include/blockchain/Types.hpp" afterPath="$PROJECT_DIR$/libraries/include/blockchain/Types.hpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/include/client/ClientImpl.hpp" afterPath="$PROJECT_DIR$/libraries/include/client/ClientImpl.hpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/include/client/SeedNodes.hpp" afterPath="$PROJECT_DIR$/libraries/include/client/SeedNodes.hpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/include/lua/goopal_lua_api.h" afterPath="$PROJECT_DIR$/libraries/include/lua/goopal_lua_api.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/include/lua/goopal_lua_lib.h" afterPath="$PROJECT_DIR$/libraries/include/lua/goopal_lua_lib.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/include/lua/lapi.h" afterPath="$PROJECT_DIR$/libraries/include/lua/lapi.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/include/lua/lauxlib.h" afterPath="$PROJECT_DIR$/libraries/include/lua/lauxlib.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/include/lua/lualib.h" afterPath="$PROJECT_DIR$/libraries/include/lua/lualib.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/include/rpc/RpcServer.hpp" afterPath="$PROJECT_DIR$/libraries/include/rpc/RpcServer.hpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/include/rpc_stubs/CommonApiClient.hpp" afterPath="$PROJECT_DIR$/libraries/include/rpc_stubs/CommonApiClient.hpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/include/rpc_stubs/CommonApiOverrides.ipp" afterPath="$PROJECT_DIR$/libraries/include/rpc_stubs/CommonApiOverrides.ipp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/include/rpc_stubs/CommonApiRpcClient.hpp" afterPath="$PROJECT_DIR$/libraries/include/rpc_stubs/CommonApiRpcClient.hpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/include/rpc_stubs/CommonApiRpcServer.hpp" afterPath="$PROJECT_DIR$/libraries/include/rpc_stubs/CommonApiRpcServer.hpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/include/wallet/Wallet.hpp" afterPath="$PROJECT_DIR$/libraries/include/wallet/Wallet.hpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/include/wallet/WalletEntrys.hpp" afterPath="$PROJECT_DIR$/libraries/include/wallet/WalletEntrys.hpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/include/wallet/WalletImpl.hpp" afterPath="$PROJECT_DIR$/libraries/include/wallet/WalletImpl.hpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/lua/cdemo1.cpp" afterPath="$PROJECT_DIR$/libraries/lua/cdemo1.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/lua/goopal_lua_api.cpp" afterPath="$PROJECT_DIR$/libraries/lua/goopal_lua_api.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/lua/goopal_lua_api.demo.cpp" afterPath="$PROJECT_DIR$/libraries/lua/goopal_lua_api.demo.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/lua/goopal_lua_lib.cpp" afterPath="$PROJECT_DIR$/libraries/lua/goopal_lua_lib.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/lua/lauxlib.cpp" afterPath="$PROJECT_DIR$/libraries/lua/lauxlib.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/lua/lbaselib.cpp" afterPath="$PROJECT_DIR$/libraries/lua/lbaselib.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/lua/lgoopallib.cpp" afterPath="$PROJECT_DIR$/libraries/lua/lgoopallib.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/lua/linit.cpp" afterPath="$PROJECT_DIR$/libraries/lua/linit.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/lua/lmathlib.cpp" afterPath="$PROJECT_DIR$/libraries/lua/lmathlib.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/lua/loadlib.cpp" afterPath="$PROJECT_DIR$/libraries/lua/loadlib.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/lua/lua_state_scope.cpp" afterPath="$PROJECT_DIR$/libraries/lua/lua_state_scope.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/lua/lvm.cpp" afterPath="$PROJECT_DIR$/libraries/lua/lvm.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/lua/tests_lua/test3.lua" afterPath="$PROJECT_DIR$/libraries/lua/tests_lua/test3.lua" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/lua/tests_lua/test_load_contract.lua" afterPath="$PROJECT_DIR$/libraries/lua/tests_lua/test_load_contract.lua" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/lua/tests_lua/test_storage.lua" afterPath="$PROJECT_DIR$/libraries/lua/tests_lua/test_storage.lua" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/rpc/RpcServer.cpp" afterPath="$PROJECT_DIR$/libraries/rpc/RpcServer.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/rpc_stubs/CommonApiClient.cpp" afterPath="$PROJECT_DIR$/libraries/rpc_stubs/CommonApiClient.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/rpc_stubs/CommonApiRpcClient.cpp" afterPath="$PROJECT_DIR$/libraries/rpc_stubs/CommonApiRpcClient.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/rpc_stubs/CommonApiRpcServer.cpp" afterPath="$PROJECT_DIR$/libraries/rpc_stubs/CommonApiRpcServer.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/wallet/Wallet.cpp" afterPath="$PROJECT_DIR$/libraries/wallet/Wallet.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/wallet/WalletEntrys.cpp" afterPath="$PROJECT_DIR$/libraries/wallet/WalletEntrys.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.cpp" afterPath="$PROJECT_DIR$/main.cpp" />
+    </list>
+    <ignored path="grbit.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="ErrorTreeViewConfiguration">
+    <option name="hideWarnings" value="true" />
+    <option name="HIDE_WARNINGS" value="true" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="grbit" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-285">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GeneralApi.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libraries/client/GeneralApi.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="399">
+              <caret line="21" column="18" selection-start-line="21" selection-start-column="18" selection-end-line="21" selection-end-column="18" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SandboxContractApi.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libraries/client/SandboxContractApi.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DelegateApi.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libraries/client/DelegateApi.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ContractApi.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libraries/client/ContractApi.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BlockchainApi.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libraries/client/BlockchainApi.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libraries/client/CMakeLists.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="475">
+              <caret line="25" column="41" selection-start-line="25" selection-start-column="41" selection-end-line="25" selection-end-column="41" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CMakeTestCCompiler.cmake" pinned="false" current-in-tab="true">
+        <entry file="file://$APPLICATION_HOME_DIR$/bin/cmake/share/cmake-3.5/Modules/CMakeTestCCompiler.cmake">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="203">
+              <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Notifier.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libraries/client/Notifier.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NetworkApi.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libraries/client/NetworkApi.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1932" />
+    <option name="height" value="1056" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="grbit" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="grbit" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="grbit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="grbit" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="grbit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="grbit" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="grbit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="client" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="settings.editor.selected.configurable" value="web.server" />
+    <property name="settings.editor.splitter.proportion" value="0.2" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="CMakeGoogleTestRunConfigurationType" factoryName="Google Test" PASS_PARENT_ENVS_2="true" TEST_MODE="SUITE_TEST">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" WORKING_DIR="" PASS_PARENT_ENVS_2="true" EXPLICIT_BUILD_TARGET_NAME="all">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="grbit" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Tox" factoryName="Tox">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="grbit" />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.npm" factoryName="npm">
+      <command value="run-script" />
+      <scripts />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Attests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="grbit" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Doctests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="grbit" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Nosetests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="grbit" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Unittests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="grbit" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="PUREUNITTEST" value="true" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="py.test">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="grbit" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="testToRun" value="" />
+      <option name="keywords" value="" />
+      <option name="params" value="" />
+      <option name="USE_PARAM" value="false" />
+      <option name="USE_KEYWORD" value="false" />
+      <method />
+    </configuration>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7935334a-75f6-48cd-95a4-875c8d682f7c" name="Default" comment="" />
+      <created>1470207235013</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1470207235013</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1932" height="1056" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32911393" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libraries/client/Messages.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libraries/client/GeneralApi.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libraries/client/Messages.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libraries/client/GeneralApi.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="21" column="18" selection-start-line="21" selection-start-column="18" selection-end-line="21" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libraries/client/Notifier.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libraries/client/NetworkApi.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libraries/client/SandboxContractApi.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libraries/client/DelegateApi.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libraries/client/ContractApi.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libraries/client/BlockchainApi.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libraries/client/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="475">
+          <caret line="25" column="41" selection-start-line="25" selection-start-column="41" selection-end-line="25" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-285">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/bin/cmake/share/cmake-3.5/Modules/CMakeTestCCompiler.cmake">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="203">
+          <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

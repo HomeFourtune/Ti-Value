@@ -1,0 +1,236 @@
+{
+  "category": "script Methods",
+  "methods" :
+    [ 
+	  {
+        "method_name": "compile_script",
+        "description": "compile script source code to byte code, and store to binary file",
+        "cached"      : true,
+        "return_type": "filename",
+        "parameters" : [
+            {
+                "name" : "filename",
+                "type" : "filename",
+                "description" : "script source file name"
+            }
+        ],
+        "is_const"   : true,
+        "prerequisites" : ["no_prerequisites"],
+        "aliases" : []
+      }
+	  ,
+      {
+        "method_name": "add_script",
+        "description": "Add a compiled script to database",
+        "return_type": "string",
+        "parameters" :
+          [
+            {
+              "name" : "filename",
+              "type" : 	"filename",
+              "description" : "filename of the specified script"
+            },
+			{
+              "name" : "description",
+              "type" : 	"information",
+              "description" : "description of the script"
+            }
+          ],
+        "prerequisites" : ["wallet_unlocked"],
+        "aliases" : []
+      },
+	  {
+        "method_name": "remove_script",
+        "description": "Remove a compiled script form database",
+        "return_type": "void",
+        "parameters" :
+          [
+            {
+              "name" : "scriptid",
+              "type" : "string",
+              "description" : "scriptid of the specified script"
+            }
+          ],
+        "prerequisites" : ["wallet_unlocked"],
+        "aliases" : []
+      },
+	  {
+        "method_name": "get_script_info",
+        "description": "Get info of a script specified by script_id ",
+        "return_type": "scriptentry_printable",
+        "parameters" :
+          [
+            {
+              "name" : "scriptid",
+              "type" : "string",
+              "description" : "scriptid of the specified script"
+            }
+          ],
+        "prerequisites" : ["wallet_unlocked"],
+        "aliases" : []
+      },
+	  	{
+        "method_name": "list_scripts",
+        "description": "List all scripts in database ",
+        "return_type": "scriptentry_printable_list",
+        "parameters" :
+          [
+          ],
+        "prerequisites" : ["wallet_unlocked"],
+        "aliases" : []
+      },
+	  {
+        "method_name": "disable_script",
+        "description": "disable a compiled script from database",
+        "return_type": "void",
+        "parameters" :
+          [
+            {
+              "name" : "scriptid",
+              "type" : "string",
+              "description" : "scriptid of the specified script"
+            }
+          ],
+        "prerequisites" : ["wallet_unlocked"],
+        "aliases" : []
+      }
+	  ,
+	  {
+        "method_name": "enable_script",
+        "description": "enable a compiled script from database",
+        "return_type": "void",
+        "parameters" :
+          [
+            {
+              "name" : "scriptid",
+              "type" : "string",
+              "description" : "scriptid of the specified script"
+            }
+          ],
+        "prerequisites" : ["wallet_unlocked"],
+        "aliases" : []
+      }
+	  ,
+	  {
+        "method_name": "import_script_db",
+        "description": "import scripts from a database directory",
+        "return_type": "void",
+        "parameters" :
+          [
+            {
+              "name" : "dbfile",
+              "type" : "filename",
+              "description" : "path of database for importing from"
+            }
+          ],
+        "prerequisites" : ["wallet_unlocked"],
+        "aliases" : []
+      },
+	  {
+        "method_name": "export_script_db",
+        "description": "export scripts to a database directory",
+        "return_type": "void",
+        "parameters" :
+          [
+            {
+              "name" : "dbfile",
+              "type" : "filename",
+              "description" : "path of database for exporting to"
+            }
+          ],
+        "prerequisites" : ["wallet_unlocked"],
+        "aliases" : []
+      },
+      {
+        "method_name": "get_events_bound",
+        "description": "get contract id and event which binded with specific script",
+        "return_type": "string_array",
+        "parameters" :
+          [
+            {
+              "name" : "script_id",
+              "type" : "string",
+              "description" : "id of specific script"
+              }
+          ],
+        "prerequisites" : ["wallet_unlocked"],
+        "aliases" : []
+      },
+      
+	  {
+        "method_name": "list_event_handler",
+        "description": "list all event handlers related with the specified contract id and event type",
+        "return_type": "scriptid_list",
+        "parameters" :
+          [
+            {
+              "name" : "contract_id_str",
+              "type" : "string",
+              "description" : "id of the binding contract at blockchain"
+            },
+            {
+              "name" : "event_type",
+              "type" : "string",
+              "description" : "type of the binding event at blockchain"
+            }
+          ],
+        "prerequisites" : ["wallet_unlocked"],
+        "aliases" : []
+      },
+	  {
+        "method_name": "add_event_handler",
+        "description": "set a new relation with a script to the specified contract id and event type",
+        "return_type": "void",
+        "parameters" :
+          [
+            {
+              "name" : "contract_id_str",
+              "type" : "string",
+              "description" : "id of contract at blockchain want to bind"
+            },
+            {
+              "name" : "event_type",
+              "type" : "string",
+              "description" : "type of event at blockchain want to bind"
+            },
+            {
+              "name" : "script_id",
+              "type" : "string",
+              "description" : "id of local script want to bind with"
+            },
+            {
+              "name" : "index",
+              "type" : "uint32_t",
+              "description" : "the position of script vector want to insert"
+            }
+          ],
+        "prerequisites" : ["wallet_unlocked"],
+        "aliases" : []
+      },
+	  {
+        "method_name": "delete_event_handler",
+        "description": "drop the relation with a script to the specified contract id and event type",
+        "return_type": "void",
+        "parameters" :
+          [
+            {
+              "name" : "contract_id_str",
+              "type" : "string",
+              "description" : "id of contract at blockchain want to delete"
+            },
+            {
+              "name" : "event_type",
+              "type" : "string",
+              "description" : "type of event at blockchain want to delete"
+            },
+            {
+              "name" : "script_id",
+              "type" : "string",
+              "description" : "id of local script want to delete with"
+            }
+          ],
+        "prerequisites" : ["wallet_unlocked"],
+        "aliases" : []
+      }
+	]
+}

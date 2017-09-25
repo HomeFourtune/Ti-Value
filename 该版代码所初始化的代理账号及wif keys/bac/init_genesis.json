@@ -1,0 +1,73 @@
+{
+  "timestamp": "1970-04-26T17:46:40",
+  "market_assets": [],
+  "delegates": [{
+      "name": "init0",
+      "owner": "BTS7N1jFeWB1hL7n3Dw2uZa54HvXEM1AQw5KttfXbLE7aZKdRhiVf"
+    },{
+      "name": "init1",
+      "owner": "BTS59fQjCBWrrBEz85wXjpJnnQLYT3LJwc7LjCFbLc7EfF4FGUVsL"
+    },{
+      "name": "init2",
+      "owner": "BTS8Fz2n8H3kvB1CB3zfJQfRsYR8nSJAS6gdXEHDTNvnpSi51sp2U"
+    },{
+      "name": "init3",
+      "owner": "BTS5ZTSbrQp68VQi7RbV6TU8NLquDRLh8xBKpm5aFUSD1Uor8FWqS"
+    },{
+      "name": "init4",
+      "owner": "BTS7ibed5q5HpCoCxarF2htrjnXCyUvJnR2vdBksbrqGUWmP8dcuJ"
+    },{
+      "name": "init5",
+      "owner": "BTS6Yk3sjUzDTFDPkFuSecRULwXL4B2g5mMEnjBUaT3qoThmcLTzV"
+    },{
+      "name": "init6",
+      "owner": "BTS5m1Kaz55cpnqyGryQpC63nBjNdL7xHDMUbrMWXNK86zpDCeMd7"
+    },{
+      "name": "init7",
+      "owner": "BTS8Un3K8N6GaJBFRQvSgV2jVLrzhtQuUjGnbBZv9QjFN42vvQMo5"
+    },{
+      "name": "init8",
+      "owner": "BTS8Xp1rHUT365NSiZiqUD95RbZuYJTmpq1udoJ8TJskpGDGjSN7z"
+    },{
+      "name": "init9",
+      "owner": "BTS65j2w8hDEdA8nuwbFq3cN8wizWXCt5oVqEoTG4UxejiNavmV8W"
+    }
+  ],
+  "initial_balances": [{
+      "raw_address": "PduYQ44UFKyktZw4M5wS2RkcFYij6ccsps",
+      "balance": 500000000000
+    },{
+      "raw_address": "PZqDXcNqfqt6Bs7rL9smuSak95fYCPaQ66",
+      "balance": 500000000000
+    },{
+      "raw_address": "Pnvu6i5AXAWrgoPCRK7rRAhzq6XbWvPV18",
+      "balance": 500000000000
+    },{
+      "raw_address": "PeH6Jqj2mrvz5Gg8DvWmRgTuswcpU1MxEE",
+      "balance": 500000000000
+    },{
+      "raw_address": "PkBAiDsXNxGehcQ8ErKXxDFSWBd1ErMvi3",
+      "balance": 500000000000
+    },{
+      "raw_address": "Pap7BGwuPCPsSVhyUZiJVAnh11Et6ZEnAF",
+      "balance": 500000000000
+    },{
+      "raw_address": "PcMNFVGrG16N2rwYs9NjTAQAcUKWF2rEFd",
+      "balance": 500000000000
+    },{
+      "raw_address": "PfQam59nKA29ZF7vMvY87ejXJELHrgs4Xa",
+      "balance": 500000000000
+    },{
+      "raw_address": "PevEnA2UdYCmvTLs4XeqPwxjw9qkN3PYra",
+      "balance": 500000000000
+    },{
+      "raw_address": "PqxHjQTpJ4932ZkSdRj5wCH8HkeCFAYEuW",
+      "balance": 500000000000
+    }
+  ],
+  "sharedrop_balances": {
+    "start_time": "1970-01-01T00:00:00",
+    "duration_days": 0,
+    "vesting_balances": []
+  }
+}

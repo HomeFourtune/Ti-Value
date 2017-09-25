@@ -1,0 +1,812 @@
+{
+  "category": "Contract Methods",
+  "methods" :
+    [
+      {
+        "method_name": "compile_contract",
+        "description": "compile contract source code to byte code, and store to binary file",
+        "cached"      : true,
+        "return_type": "filename",
+        "parameters" : [
+            {
+                "name" : "filename",
+                "type" : "filename",
+                "description" : "contract source file name"
+            }
+        ],
+        "is_const"   : true,
+        "prerequisites" : ["no_prerequisites"],
+        "aliases" : []
+      },
+      {
+         "method_name" : "register_contract",
+         "description" : "register a temporary contract",
+         "return_type" : "string",
+         "parameters"  : [
+            {
+              "name" : "owner",
+              "type" : "string",
+              "description" : "contract register owner address"
+            },
+            {
+              "name" : "codefile",
+              "type" : "filename",
+              "description" : "contract bytesfile name"
+            },
+            {
+              "name" : "asset_symbol",
+              "type" : "string",
+              "description" : "asset symbol name"
+            },
+            {
+              "name" : "init_limit",
+              "type" : "optional_double",
+              "description" : "the limit of asset amount used to init contract "
+            }
+         ],
+         "prerequisites" : ["wallet_unlocked"]
+      },    
+      {
+         "method_name" : "register_contract_testing",
+         "description" : "register a temporary contract on local endpoint, and do not spread it on P2P network",
+         "return_type" : "asset_array",
+         "parameters"  : [
+            {
+              "name" : "owner",
+              "type" : "string",
+              "description" : "contract register owner address"
+            },
+            {
+              "name" : "codefile",
+              "type" : "filename",
+              "description" : "contract bytesfile name"
+            }
+         ],
+         "prerequisites" : ["wallet_unlocked"]
+      },
+      {
+         "method_name" : "upgrade_contract",
+         "description" : "upgrade temporary contract to permanent contract",
+         "return_type" : "transaction_entry",
+         "parameters"  : [
+            {
+              "name" : "contract_address",
+              "type" : "string",
+              "description" : "contract address need to upgrade"
+            },
+            {
+              "name" : "upgrader_name",
+              "type" : "string",
+              "description" : "upgrader name"
+            },
+            {
+              "name" : "new_contract_name",
+              "type" : "string",
+              "description" : "permanent contract name"
+            },
+            {
+              "name" : "new_contract_desc",
+              "type" : "information",
+              "description" : "permanent contract description"
+            },
+			{
+				"name":"asset_symbol",
+				"type":"string",
+				"description":"symbol of asset used to destroy"
+			},
+			{
+              "name" : "exec_limit",
+              "type" : "optional_double",
+              "description" : "the limit of asset amount used to destroy contract "
+            }
+			
+			
+         ],
+         "prerequisites" : ["wallet_unlocked"]
+      },
+	  {
+         "method_name" : "upgrade_contract_testing",
+         "description" : "test upgrade temporary contract to permanent contract",
+         "return_type" : "asset_array",
+         "parameters"  : [
+            {
+              "name" : "contract_address",
+              "type" : "string",
+              "description" : "contract address need to upgrade"
+            },
+            {
+              "name" : "upgrader_name",
+              "type" : "string",
+              "description" : "upgrader name"
+            },
+            {
+              "name" : "new_contract_name",
+              "type" : "string",
+              "description" : "permanent contract name"
+            },
+            {
+              "name" : "new_contract_desc",
+              "type" : "information",
+              "description" : "permanent contract description"
+            }
+         ],
+         "prerequisites" : ["wallet_unlocked"]
+      },
+      {
+         "method_name" : "destroy_contract",
+         "description" : "destroy temporary contract",
+         "return_type" : "transaction_entry",
+         "parameters"  : [
+            {
+              "name" : "contract_address",
+              "type" : "string",
+              "description" : "contract address need to destroy"
+            },
+            {
+              "name" : "destroyer_name",
+              "type" : "string",
+              "description" : "destroyer name"
+            },
+			{
+				"name":"asset_symbol",
+				"type":"string",
+				"description":"symbol of asset used to destroy"
+			},
+			{
+              "name" : "exec_limit",
+              "type" : "optional_double",
+              "description" : "the limit of asset amount used to destroy contract "
+            }
+         ],
+         "prerequisites" : ["wallet_unlocked"]
+      },
+	  {
+         "method_name" : "destroy_contract_testing",
+         "description" : "testing destroy temporary contract",
+         "return_type" : "asset_array",
+         "parameters"  : [
+            {
+              "name" : "contract_address",
+              "type" : "string",
+              "description" : "contract address need to destroy"
+            },
+            {
+              "name" : "destroyer_name",
+              "type" : "string",
+              "description" : "destroyer name"
+            }
+         ],
+         "prerequisites" : ["wallet_unlocked"]
+      },
+      {
+         "method_name" : "call_contract",
+         "description" : "call contract by contract name or contract address",
+         "return_type" : "transaction_entry",
+         "parameters"  : [            
+			{
+              "name" : "contract",
+              "type" : "string",
+              "description" : "contract name or contract address need to be called"
+            },
+            {
+              "name" : "caller_name",
+              "type" : "string",
+              "description" : "caller name"
+            },
+			{
+              "name" : "function_name",
+              "type" : "string",
+              "description" : "function in contract "
+            },
+			{
+              "name" : "params",
+              "type" : "string",
+              "description" : "parameters which would be passed to function"
+            },
+			{
+				"name":"asset_symbol",
+				"type":"string",
+				"description":"symbol of asset used to call"
+			},
+			{
+              "name" : "call_limit",
+              "type" : "optional_double",
+              "description" : "the limit of asset amount used to call contract "
+            }
+         ],
+         "prerequisites" : ["wallet_unlocked"]
+      },
+      {
+         "method_name" : "get_contract_info",
+         "description" : "get contract entry by contract name or contract address",
+         "return_type" : "contract_entry_printable",
+         "parameters"  : [
+            {
+              "name" : "contract",
+              "type" : "string",
+              "description" : "contract name or contract address"
+            }
+         ],
+         "prerequisites" : ["no_prerequisites"]
+      },
+      {
+         "method_name" : "get_contract_balance",
+         "description" : "get contract balance entry and margin balance entry by contract name or contract address",
+         "return_type" : "balance_entry_list",
+         "parameters"  : [
+            {
+              "name" : "contract",
+              "type" : "string",
+              "description" : "contract name or contract address"
+            }
+         ],
+         "prerequisites" : ["no_prerequisites"]
+      },
+      {
+         "method_name" : "call_contract_testing",
+         "description" : "call contract function by contract name or contract address on local endpoint, and do not spread it on P2P network",
+         "return_type" : "asset_array",
+         "parameters"  : [            
+			{
+              "name" : "contract",
+              "type" : "string",
+              "description" : "contract name or contract address need to be called"
+            },
+            {
+              "name" : "caller_name",
+              "type" : "string",
+              "description" : "caller name"
+            },
+			{
+              "name" : "function_name",
+              "type" : "string",
+              "description" : "function in contract "
+            },
+			{
+              "name" : "params",
+              "type" : "string",
+              "description" : "parameters which would be passed to function"
+            }
+         ],
+         "prerequisites" : ["wallet_unlocked"]
+      },
+      {
+         "method_name" : "call_contract_offline",
+         "description" : "call contract offline function by contract name or contract address",
+         "return_type" : "string",
+         "parameters"  : [            
+			{
+              "name" : "contract",
+              "type" : "string",
+              "description" : "contract name or contract address need to be called"
+            },
+            {
+              "name" : "caller_name",
+              "type" : "string",
+              "description" : "caller name"
+            },
+			{
+              "name" : "function_name",
+              "type" : "string",
+              "description" : "offline function in contract "
+            },
+			{
+              "name" : "params",
+              "type" : "string",
+              "description" : "parameters which would be passed to offline function"
+            }
+         ],
+         "prerequisites" : ["wallet_unlocked"]
+      }, 
+	  
+	  {
+         "method_name" : "load_contract_to_file",
+         "description" : "save contract to file",
+         "return_type" : "contract_entry_printable",
+         "parameters"  : [            
+			{
+              "name" : "contract",
+              "type" : "string",
+              "description" : "contract name or contract address need to be saved"
+            },
+            {
+              "name" : "file",
+              "type" : "filename",
+              "description" : "the file name with full path"
+            }
+         ],
+         "prerequisites" : ["no_prerequisites"]
+      },
+	  
+	  {
+         "method_name" : "get_result_trx_id",
+         "description" : "get result tranraction id according to request trx id",
+         "return_type" : "transaction_id",
+         "parameters"  : [            
+			  {
+              "name" : "request_id",
+              "type" : "transaction_id",
+              "description" : "transaction id  of request"
+            }
+         ],
+         "prerequisites" : ["no_prerequisites"]
+      },	  
+
+     {
+         "method_name" : "get_request_trx_id",
+         "description" : "get request tranraction id according to result trx id",
+         "return_type" : "transaction_id",
+         "parameters"  : [            
+			  {
+              "name" : "request_id",
+              "type" : "transaction_id",
+              "description" : "transaction id  of result"
+            }
+         ],
+         "prerequisites" : ["no_prerequisites"]
+      },	  
+
+	  {
+         "method_name" : "sandbox_open",
+         "description" : "open sandbox, let the state in sandbox related state",
+         "return_type" : "void",
+         "parameters"  : [            
+         ],
+		 "is_const"   : true,
+         "prerequisites" : ["wallet_unlocked"]
+      },  
+
+	  {
+         "method_name" : "sandbox_close",
+         "description" : "close sandbox, clear sandbox related state",
+         "return_type" : "void",
+         "parameters"  : [            
+         ],
+		 "is_const"   : true,
+         "prerequisites" : ["wallet_unlocked"]
+      },
+
+	  {
+         "method_name" : "sandbox_register_contract",
+         "description" : "in sandbox state: register a temporary contract",
+         "return_type" : "string",
+         "parameters"  : [
+            {
+              "name" : "owner",
+              "type" : "string",
+              "description" : "contract register owner address"
+            },
+            {
+              "name" : "codefile",
+              "type" : "filename",
+              "description" : "contract bytesfile name"
+            },
+            {
+              "name" : "asset_symbol",
+              "type" : "string",
+              "description" : "asset symbol name"
+            },
+            {
+              "name" : "initLimit",
+              "type" : "optional_double",
+              "description" : "the limit of asset amount used to init contract "
+            }
+         ],
+         "prerequisites" : ["sandbox_open"]
+      },
+
+	  {
+         "method_name" : "sandbox_call_contract",
+         "description" : "in sandbox state: call contract by contract name or contract address",
+         "return_type" : "transaction_entry",
+         "parameters"  : [            
+			{
+              "name" : "contract",
+              "type" : "string",
+              "description" : "contract name or contract address need to be called"
+            },
+            {
+              "name" : "caller_name",
+              "type" : "string",
+              "description" : "destroyer name"
+            },
+			{
+              "name" : "function_name",
+              "type" : "string",
+              "description" : "function in contract "
+            },
+			{
+              "name" : "params",
+              "type" : "string",
+              "description" : "parameters which would be passed to function"
+            },
+			{
+				"name":"cost_asset",
+				"type":"string",
+				"description":"symbol of asset used to call"
+			},
+			{
+              "name" : "callLimit",
+              "type" : "optional_double",
+              "description" : "the limit of asset amount used to call contract "
+            }
+         ],
+         "prerequisites" : ["sandbox_open"]
+      },
+	  
+	  {
+         "method_name" : "sandbox_upgrade_contract",
+         "description" : "in sandbox state: upgrade temporary contract to permanent contract",
+         "return_type" : "transaction_entry",
+         "parameters"  : [
+            {
+              "name" : "contract_address",
+              "type" : "string",
+              "description" : "contract address need to upgrade"
+            },
+            {
+              "name" : "upgrader_name",
+              "type" : "string",
+              "description" : "upgrader name"
+            },
+            {
+              "name" : "new_contract_name",
+              "type" : "string",
+              "description" : "permanent contract name"
+            },
+            {
+              "name" : "new_contract_desc",
+              "type" : "information",
+              "description" : "permanent contract description"
+            },
+			{
+				"name":"asset_symbol",
+				"type":"string",
+				"description":"symbol of asset used to destroy"
+			},
+			{
+              "name" : "exec_limit",
+              "type" : "optional_double",
+              "description" : "the limit of asset amount used to destroy contract "
+            }
+         ],
+         "prerequisites" : ["sandbox_open"]
+      },
+	  
+	  {
+         "method_name" : "sandbox_upgrade_contract_testing",
+         "description" : "in sandbox state: upgrade temporary contract to permanent contract",
+         "return_type" : "asset_array",
+         "parameters"  : [
+            {
+              "name" : "contract_address",
+              "type" : "string",
+              "description" : "contract address need to upgrade"
+            },
+            {
+              "name" : "upgrader_name",
+              "type" : "string",
+              "description" : "upgrader name"
+            },
+            {
+              "name" : "new_contract_name",
+              "type" : "string",
+              "description" : "permanent contract name"
+            },
+            {
+              "name" : "new_contract_desc",
+              "type" : "information",
+              "description" : "permanent contract description"
+            }
+         ],
+         "prerequisites" : ["sandbox_open"]
+      },
+	  
+	  
+	  {
+         "method_name" : "sandbox_destroy_contract",
+         "description" : "in sandbox state: destroy temporary contract",
+         "return_type" : "transaction_entry",
+         "parameters"  : [
+            {
+              "name" : "contract_address",
+              "type" : "string",
+              "description" : "contract address need to destroy"
+            },
+            {
+              "name" : "destroyer_name",
+              "type" : "string",
+              "description" : "destroyer name"
+            },
+			{
+				"name":"asset_symbol",
+				"type":"string",
+				"description":"symbol of asset used to destroy"
+			},
+			{
+              "name" : "exec_limit",
+              "type" : "optional_double",
+              "description" : "the limit of asset amount used to destroy contract "
+            }
+         ],
+         "prerequisites" : ["sandbox_open"]
+      },
+	  
+	  {
+         "method_name" : "sandbox_destroy_contract_testing",
+         "description" : "in sandbox state: test destroy temporary contract",
+         "return_type" : "asset_array",
+         "parameters"  : [
+            {
+              "name" : "contract_address",
+              "type" : "string",
+              "description" : "contract address need to destroy"
+            },
+            {
+              "name" : "destroyer_name",
+              "type" : "string",
+              "description" : "destroyer name"
+            }
+         ],
+         "prerequisites" : ["sandbox_open"]
+      },
+	  
+	  {
+         "method_name" : "sandbox_get_contract_info",
+         "description" : "in sandbox state: get contract entry by contract name or contract address",
+         "return_type" : "contract_entry_printable",
+         "parameters"  : [
+            {
+              "name" : "contract",
+              "type" : "string",
+              "description" : "contract name or contract address"
+            }
+         ],
+         "prerequisites" : ["sandbox_open"]
+      },
+	  
+	  {
+         "method_name" : "sandbox_get_contract_balance",
+         "description" : "in sandbox state: get contract balance entry and margin balance entry by contract name or contract address",
+         "return_type" : "balance_entry_list",
+         "parameters"  : [
+            {
+              "name" : "contract",
+              "type" : "string",
+              "description" : "contract name or contract address"
+            }
+         ],
+         "prerequisites" : ["sandbox_open"]
+      },
+	  
+	  {
+         "method_name" : "sandbox_transfer_to_contract",
+         "description" : "in sandbox state: transfer to contract",
+         "return_type" : "transaction_entry",
+         "parameters"  : [            
+			{
+              "name" : "amount_to_transfer",
+              "type" : "real_amount",
+              "description" : "the amount of shares to transfer"
+            },
+            {
+              "name" : "asset_symbol",
+              "type" : "asset_symbol",
+              "description" : "the asset to transfer"
+            },
+            {
+              "name" : "from_account_name",
+              "type" : "account_name",
+              "description" : "the source account to draw the shares from"
+            },
+            {
+              "name" : "to_contract",
+              "type" : "string",
+              "description" : "the contract name or contract address to transfer to"
+            },
+			{
+              "name" : "amount_for_exec",
+              "type" : "real_amount",
+              "description" : "the amount of shares to exec"
+            }
+         ],
+         "prerequisites" : ["sandbox_open"]
+      },
+	  
+	  {
+         "method_name" : "sandbox_account_balance",
+         "description" : "in sandbox state: lookup balance of account",
+         "return_type" : "account_balance_summary_type",
+         "parameters"  : [            
+            {
+              "name" : "account_name",
+              "type" : "account_name",
+              "description" : "the account to lookup balance",
+			        "default_value" : ""
+            }
+    
+         ],
+		 
+         "prerequisites" : ["sandbox_open"],
+		 "aliases": []
+      },
+	  
+	  {
+	   "method_name": "sandbox_compile_contract",
+        "description": "in sandbox compile contract source code to byte code, and store to binary file",
+        "cached"      : true,
+        "return_type": "filename",
+        "parameters" : [
+            {
+                "name" : "filename",
+                "type" : "filename",
+                "description" : "contract source file name"
+            },
+        ],
+        "is_const"   : true,
+        "prerequisites" : ["sandbox_open"],
+        "aliases" : []
+
+	  },
+	  
+	  {
+	   "method_name": "sandbox_load_contract_to_file",
+        "description": "in sandbox save contract to a gpc file",
+        "cached"      : true,
+        "return_type": "contract_entry_printable",
+        "parameters" : [
+           {
+              "name" : "contract",
+              "type" : "string",
+              "description" : "contract name or contract address need to be saved"
+            },
+            {
+              "name" : "file",
+              "type" : "filename",
+              "description" : "the file name with full path"
+            }
+        ],
+       
+        "prerequisites" : ["sandbox_open"],
+        "aliases" : []
+
+	  },
+	  
+	  {
+         "method_name" : "sandbox_register_contract_testing",
+         "description" : "in sandbox register a temporary contract on local endpoint, and do not spread it on P2P network",
+         "return_type" : "asset_array",
+         "parameters"  : [
+            {
+              "name" : "owner",
+              "type" : "string",
+              "description" : "contract register owner address"
+            },
+            {
+              "name" : "codefile",
+              "type" : "filename",
+              "description" : "contract bytesfile name"
+            }
+         ],
+         "prerequisites" : ["sandbox_open"]
+      },
+	  
+	  {
+         "method_name" : "sandbox_call_contract_testing",
+         "description" : "in sandbox call contract function by contract name or contract address on local endpoint, and do not spread it on P2P network",
+         "return_type" : "asset_array",
+         "parameters"  : [            
+			{
+              "name" : "contract",
+              "type" : "string",
+              "description" : "contract name or contract address need to be called"
+            },
+            {
+              "name" : "caller_name",
+              "type" : "string",
+              "description" : "caller name"
+            },
+			{
+              "name" : "function_name",
+              "type" : "string",
+              "description" : "function in contract "
+            },
+			{
+              "name" : "params",
+              "type" : "string",
+              "description" : "parameters which would be passed to function"
+            }
+         ],
+         "prerequisites" : ["sandbox_open"]
+      },
+	  
+	  {
+         "method_name" : "sandbox_transfer_to_contract_testing",
+         "description" : "in sandbox Do a simple transfer to a contract (name or address) on local endpoint, and do not spread it on P2P network",
+         "return_type" : "asset_array",
+         "parameters"  : [
+            {
+              "name" : "amount_to_transfer",
+              "type" : "real_amount",
+              "description" : "the amount of shares to transfer"
+            },
+            {
+              "name" : "asset_symbol",
+              "type" : "asset_symbol",
+              "description" : "the asset to transfer"
+            },
+            {
+              "name" : "from_account_name",
+              "type" : "account_name",
+              "description" : "the source account to draw the shares from"
+            },
+            {
+              "name" : "to_contract",
+              "type" : "string",
+              "description" : "the contract name or contract address to transfer to"
+            }
+         ],
+         "prerequisites" : ["sandbox_open"]
+      },
+	  
+	   {
+         "method_name" : "sandbox_list_my_addresses",
+         "description" : "list the account info of the wallet",
+         "return_type" : "sandbox_account_info_list",
+         "parameters"  : [
+			{
+              "name" : "account_name",
+              "type" : "string",
+              "description" : "the account in wallet",
+			        "default_value" : ""
+            }
+         ],
+         "prerequisites" : ["sandbox_open"]
+      },
+	  {
+         "method_name" : "get_contract_registered_in_transaction",
+         "description" : "get id of contract registered in specific transaction",
+         "return_type" : "string",
+         "parameters"  : [
+            {
+              "name" : "trx_id",
+              "type" : "transaction_id",
+              "description" : "specific contract id"
+            }
+         ],
+         "prerequisites" : ["no_prerequisites"]
+      },
+      {
+         "method_name" : "get_transaction_id_contract_registered",
+         "description" : "get id of transaction that specific contract registered in ",
+         "return_type" : "transaction_id",
+         "parameters"  : [
+            {
+              "name" : "contract_id",
+              "type" : "string",
+              "description" : "specific contract id"
+            }
+         ],
+         "prerequisites" : ["no_prerequisites"]
+      },
+	  {
+	   "method_name": "get_contract_info_from_gpc_file",
+        "description": "get contract info from gpc file",
+        "cached"      : true,
+        "return_type": "code_printable",
+        "parameters" : [
+            {
+                "name" : "file",
+                "type" : "filename",
+                "description" : "contract gpc file name"
+            }
+		
+        ],
+       
+        "prerequisites" : [],
+        "aliases" : []
+
+	  }
+
+    ]
+}

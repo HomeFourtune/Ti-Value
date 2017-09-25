@@ -1,0 +1,760 @@
+{
+  "category": "Blockchain Methods",
+  "methods" :
+    [
+      {
+        "method_name": "blockchain_get_info",
+        "description": "Returns current blockchain information and parameters",
+        "cached"      : true,
+        "return_type": "json_object",
+        "parameters" : [],
+        "is_const"   : true,
+        "prerequisites" : ["no_prerequisites"],
+        "aliases" : ["getconfig","get_config", "config", "blockchain_get_config"]
+      },
+      {
+        "method_name": "blockchain_generate_snapshot",
+        "description": "Save snapshot of current base asset balances to specified file",
+        "return_type": "void",
+        "parameters" : [
+            {
+              "name" : "filename",
+              "type" : "string",
+              "description" : "filename to save snapshot to"
+            }
+        ],
+        "is_const"   : true,
+        "prerequisites" : ["no_prerequisites"],
+        "aliases" : []
+      },
+      {
+	"method_name" : "blockchain_get_alp_account_balance_entry",
+	"description" : "fetch all AlpTrxidBalance from block where blocknum of the block lower than block_num or equal to block_num.",
+	"return_type" : "vector<alp_trxid_balance>",
+	"parameters" : [
+		{
+			"name" : "block_num",
+			"type" : "uint32_t",
+			"description" : ""
+		}
+	],
+	"prerequisites" : []
+      },
+      {
+        "method_name": "blockchain_generate_issuance_map",
+        "description": "A utility to help verify UIA distribution. Returns a snapshot map of all issuances for a particular UIA.",
+        "return_type": "void",
+        "parameters" : [
+            {
+              "name" : "symbol",
+              "type" : "string",
+              "description" : "the UIA for which to compute issuance map"
+            },
+            {
+              "name" : "filename",
+              "type" : "string",
+              "description" : "filename to save snapshot to"
+            }
+        ],
+        "is_const"   : true,
+        "prerequisites" : ["no_prerequisites"],
+        "aliases" : []
+      },
+      {
+        "method_name": "blockchain_calculate_supply",
+        "description": "Calculate the total supply of an asset from the current blockchain database state",
+        "cached"      : true,
+        "return_type": "asset",
+        "parameters" : [
+            {
+              "name" : "asset",
+              "type" : "string",
+              "description" : "asset ticker symbol or ID to calculate supply for"
+            }
+        ],
+        "is_const" : true,
+        "prerequisites" : ["no_prerequisites"],
+        "aliases" : ["supply", "calculate_supply"]
+      },
+      {
+        "method_name": "blockchain_is_synced",
+        "description": "Returns true if the local blockchain is synced with the network; false otherwise",
+        "return_type": "bool",
+        "parameters" : [],
+        "is_const" : true,
+        "prerequisites" : ["no_prerequisites"],
+        "aliases" : ["synced"]
+      },
+      {
+        "method_name": "blockchain_get_block_count",
+        "description": "Returns the current head block number",
+        "return_type": "uint32_t",
+        "cached"   : true,
+        "parameters" : [],
+        "is_const" : true,
+        "prerequisites" : ["no_prerequisites"],
+        "aliases" : ["blockchain_get_blockcount", "getblockcount"]
+      },
+      {
+        "method_name": "blockchain_get_security_state",
+        "description": "Returns information about blockchain security level",
+        "return_type": "blockchain_security_state",
+        "cached"   : true,
+        "parameters" : [],
+        "is_const" : true,
+        "prerequisites" : ["no_prerequisites"],
+        "aliases" : ["alert_state", "security_state"]
+      },
+      {
+        "method_name": "blockchain_list_accounts",
+        "description": "Returns registered accounts starting with a given name upto a the limit provided",
+        "return_type": "account_entry_array",
+        "cached"   : true,
+        "parameters" : [
+            {
+              "name" : "first_account_name",
+              "type" : "account_name",
+              "description" : "the first account name to include",
+              "default_value" : ""
+            },
+            {
+              "name" : "limit",
+              "type" : "uint32_t",
+              "description" : "the maximum number of items to list",
+              "default_value" : 20
+            }
+        ],
+        "is_const" : true,
+        "prerequisites" : ["no_prerequisites"]
+      },
+      {
+        "method_name": "blockchain_list_recently_updated_accounts",
+        "description": "Returns a list of recently updated accounts",
+        "cached"   : true,
+        "return_type": "account_entry_array",
+        "parameters" : [],
+        "is_const" : true,
+        "prerequisites" : ["no_prerequisites"]
+      },
+      {
+        "method_name": "blockchain_list_recently_registered_accounts",
+        "description": "Returns a list of recently registered accounts",
+        "cached"   : true,
+        "return_type": "account_entry_array",
+        "parameters" : [],
+        "is_const" : true,
+        "prerequisites" : ["no_prerequisites"]
+      },
+      {
+        "method_name": "blockchain_list_assets",
+        "description": "Returns registered assets starting with a given name upto a the limit provided",
+        "cached"   : true,
+        "return_type": "asset_entry_array",
+        "parameters" : [
+            {
+              "name" : "first_symbol",
+              "type" : "asset_symbol",
+              "description" : "the prefix of the first asset symbol name to include",
+              "default_value" : ""
+            },
+            {
+              "name" : "limit",
+              "type" : "uint32_t",
+              "description" : "the maximum number of items to list",
+              "default_value" : 20
+            }
+        ],
+        "is_const" : true,
+        "prerequisites" : ["no_prerequisites"]
+      },
+      {
+        "method_name": "blockchain_list_pending_transactions",
+        "description": "Return a list of transactions that are not yet in a block.",
+        "return_type": "signed_transaction_pair_array",
+        "parameters" : [],
+        "is_const" : true,
+        "prerequisites" : ["no_prerequisites"],
+        "aliases" : ["blockchain_get_pending_transactions", "list_pending"]
+      },
+      {
+        "method_name": "blockchain_get_transaction",
+        "description": "Get detailed information about an in-wallet transaction",
+        "cached"   : true,
+        "return_type": "transaction_entry_pair",
+        "parameters" : [
+            {
+              "name" : "transaction_id_prefix",
+              "type" : "string",
+              "description" : "the base58 transaction ID to return"
+            },
+            {
+               "name" : "exact",
+               "type" : "bool",
+               "description" : "whether or not a partial match is ok",
+               "default_value" : false
+            }
+        ],
+        "is_const" : true,
+        "prerequisites" : ["no_prerequisites"]
+      },
+      {
+        "method_name": "blockchain_get_pretty_transaction",
+        "description": "Get pretty information about an in-wallet transaction",
+        "cached"   : true,
+        "return_type": "pretty_transaction",
+        "parameters" : [
+            {
+              "name" : "transaction_id_prefix",
+              "type" : "string",
+              "description" : "the base16 transaction ID to return"
+            },
+            {
+               "name" : "exact",
+               "type" : "bool",
+               "description" : "whether or not a partial match is ok",
+               "default_value" : false
+            }
+        ],
+        "is_const" : true,
+        "prerequisites" : ["no_prerequisites"]
+      },
+      {
+        "method_name": "blockchain_get_pretty_contract_transaction",
+        "description": "Get pretty information about an in-wallet contract transaction",
+        "cached"   : true,
+        "return_type": "pretty_contract_transaction",
+        "parameters" : [
+            {
+              "name" : "transaction_id_prefix",
+              "type" : "string",
+              "description" : "the base16 transaction ID to return"
+            },
+            {
+               "name" : "exact",
+               "type" : "bool",
+               "description" : "whether or not a partial match is ok",
+               "default_value" : false
+            }
+        ],
+        "is_const" : true,
+        "prerequisites" : ["no_prerequisites"]
+      },
+      {
+        "method_name": "blockchain_get_block",
+        "description": "Retrieves the block entry for the given block number or ID",
+        "cached"   : true,
+        "return_type": "oblock_entry",
+        "parameters" : [
+            {
+              "name" : "block",
+              "type" : "string",
+              "description" : "block number or ID to retrieve"
+            }
+        ],
+        "is_const" : true,
+        "prerequisites" : ["no_prerequisites"],
+        "aliases" : ["get_block", "getblock", "blockchain_get_block_hash", "blockchain_get_blockhash", "getblockhash"]
+      },
+      {
+        "method_name": "blockchain_get_block_transactions",
+        "description": "Retrieves the detailed transaction information for a block",
+        "cached"   : true,
+        "return_type": "transaction_entry_map",
+        "parameters" : [
+            {
+              "name" : "block",
+              "type" : "string",
+              "description" : "the number or id of the block to get transactions from"
+            }
+        ],
+        "is_const" : true,
+        "prerequisites" : ["no_prerequisites"]
+      },
+      {
+        "method_name": "blockchain_get_account",
+        "description": "Retrieves the entry for the given account name or ID",
+        "cached"   : true,
+        "return_type": "optional_account_entry",
+        "parameters" : [
+            {
+              "name" : "account",
+              "type" : "string",
+              "description" : "account name, ID, or public key to retrieve the entry for"
+            }
+        ],
+        "is_const" : true,
+        "prerequisites" : ["no_prerequisites"],
+        "aliases" : ["get_account"]
+      },
+      {
+        "method_name": "blockchain_get_slate",
+        "description": "Retrieves a map of delegate IDs and names defined by the given slate ID or recommending account",
+        "cached"   : true,
+        "return_type": "map<account_id_type, string>",
+        "parameters" : [
+            {
+              "name" : "slate",
+              "type" : "string",
+              "description" : "slate ID or recommending account name for which to retrieve the slate of delegates"
+            }
+        ],
+        "is_const" : true,
+        "prerequisites" : ["no_prerequisites"],
+        "aliases" : ["get_slate"]
+      },
+      {
+        "method_name": "blockchain_get_balance",
+        "description": "Retrieves the specified balance entry",
+        "cached"   : true,
+        "return_type": "balance_entry",
+        "parameters" : [
+            {
+              "name" : "balance_id",
+              "type" : "address",
+              "description" : "the ID of the balance entry"
+            }
+        ],
+        "is_const" : true,
+        "prerequisites" : ["no_prerequisites"],
+        "aliases" : ["get_balance"]
+      },
+      {
+        "method_name": "blockchain_list_balances",
+        "description": "Lists balance entrys starting at the given balance ID",
+        "cached"   : true,
+        "return_type": "balance_entry_map",
+        "parameters" : [
+            {
+              "name" : "first_balance_id",
+              "type" : "string",
+              "description" : "the first balance id to start at",
+              "default_value" : ""
+            },
+            {
+              "name" : "limit",
+              "type" : "uint32_t",
+              "description" : "the maximum number of items to list",
+              "default_value" : 20
+            }
+        ],
+        "is_const" : true,
+        "prerequisites" : ["no_prerequisites"],
+        "aliases" : ["list_balances"]
+      },
+      {
+        "method_name": "blockchain_list_address_balances",
+        "description": "Lists balance entrys which are the balance IDs or which can be claimed by signature for this address",
+        "cached"   : true,
+        "return_type": "balance_entry_map",
+        "parameters" : [
+            {
+              "name" : "addr",
+              "type" : "string",
+              "description" : "address to scan for"
+            },
+            {
+               "name" : "chanced_since",
+               "type" : "timestamp",
+               "description" : "Filter all balances that haven't chanced since the provided timestamp",
+               "default_value" : "1970-1-1T00:00:01"
+            }
+        ],
+        "is_const" : true,
+        "prerequisites" : ["no_prerequisites"],
+        "aliases" : ["list_address_balances"]
+      },
+      {
+        "method_name": "blockchain_list_address_transactions",
+        "description": "Lists all transactions that involve the provided address after the specified time",
+        "cached"   : true,
+        "return_type": "variant_object",
+        "parameters" : [
+            {
+              "name" : "addr",
+              "type" : "string",
+              "description" : "address to scan for"
+            },
+            {
+               "name" : "filter_before",
+               "type" : "uint32_t",
+               "description" : "Filter all transactions that occured prior to the specified block number",
+               "default_value" : "0"
+            }
+        ],
+        "is_const" : true,
+        "prerequisites" : ["no_prerequisites"],
+        "aliases" : ["list_address_transactions"]
+      },
+      {
+         "method_name" : "blockchain_get_account_public_balance",
+         "description" : "Get the account entry for a given name",
+        "cached"   : true,
+         "return_type" : "account_balance_summary_type",
+         "parameters"  : [
+               {
+                  "name" : "account_name",
+                  "type" : "account_name",
+                  "description" : "the name of the account whose public address you want"
+               }
+            ],
+         "is_const" : true,
+         "prerequisites" : ["wallet_open"]
+      },
+      {
+        "method_name": "blockchain_list_key_balances",
+        "description": "Lists balance entrys which can be claimed by signature for this key",
+        "cached"   : true,
+        "return_type": "balance_entry_map",
+        "parameters" : [
+            {
+              "name" : "key",
+              "type" : "public_key",
+              "description" : "Key to scan for"
+            }
+        ],
+        "is_const" : true,
+        "prerequisites" : ["no_prerequisites"],
+        "aliases" : ["list_key_balances"]
+      },
+      {
+        "method_name": "blockchain_get_asset",
+        "description": "Retrieves the entry for the given asset ticker symbol or ID",
+        "cached"   : true,
+        "return_type": "optional_asset_entry",
+        "parameters" : [
+            {
+              "name" : "asset",
+              "type" : "string",
+              "description" : "asset ticker symbol or ID to retrieve"
+            }
+        ],
+        "is_const" : true,
+        "prerequisites" : ["no_prerequisites"],
+        "aliases" : ["get_asset"]
+      },
+      {
+         "method_name" : "blockchain_list_active_delegates",
+         "description" : "Returns a list of the current round's active delegates in signing order",
+         "cached"      : true,
+         "return_type" : "account_entry_array",
+         "parameters" : [
+             {
+               "name" : "first",
+               "type" : "uint32_t",
+               "description" : "",
+               "default_value" : 0
+             },
+             {
+               "name" : "count",
+               "type" : "uint32_t",
+               "description" : "",
+               "default_value" : 20
+             }
+         ],
+         "is_const" : true,
+         "aliases" : ["blockchain_get_active_delegates"],
+         "prerequisites" : ["no_prerequisites"]
+      },
+      {
+        "method_name": "blockchain_list_delegates",
+        "description": "Returns a list of all the delegates sorted by vote",
+         "cached"      : true,
+        "return_type": "account_entry_array",
+        "parameters" : [
+            {
+              "name" : "first",
+              "type" : "uint32_t",
+              "description" : "",
+              "default_value" : 0
+            },
+            {
+              "name" : "count",
+              "type" : "uint32_t",
+              "description" : "",
+              "default_value" : 20
+            }
+        ],
+        "is_const" : true,
+        "aliases" : ["blockchain_get_delegates"],
+        "prerequisites" : ["no_prerequisites"]
+      },
+      {
+         "method_name" : "blockchain_list_blocks",
+         "description" : "Returns a descending list of block entrys starting from the specified block number",
+         "cached"      : true,
+         "return_type" : "block_entry_array",
+         "parameters"  : [
+            {
+               "name" : "max_block_num",
+               "type" : "uint32_t",
+               "description" : "the block num to start from; negative to count backwards from the current head block",
+               "default_value" : -1
+            },
+            {
+               "name" : "limit",
+               "type" : "uint32_t",
+               "description" : "max number of blocks to return",
+               "default_value" : 20
+            }
+         ],
+         "aliases" : ["list_blocks"],
+         "prerequisites" : ["no_prerequisites"]
+      },
+      {
+         "method_name" : "blockchain_list_missing_block_delegates",
+         "description" : "Returns any delegates who were supposed to produce a given block number but didn't",
+         "cached"      : true,
+         "return_type" : "account_name_array",
+         "parameters"  : [
+            {
+               "name" : "block_number",
+               "type" : "uint32_t",
+               "description" : "The block to examine"
+            }
+         ],
+         "prerequisites" : ["no_prerequisites"]
+      },
+      {
+         "method_name" : "blockchain_export_fork_graph",
+         "description" : "dumps the fork data to graphviz format",
+         "return_type" : "string",
+         "parameters"  : [
+            {
+               "name" : "start_block",
+               "type" : "uint32_t",
+               "description" : "the first block number to consider",
+               "default_value" : 1
+            },
+            {
+               "name" : "end_block",
+               "type" : "uint32_t",
+               "description" : "the last block number to consider",
+               "default_value" : -1
+            },
+            {
+               "name" : "filename",
+               "type" : "path",
+               "description" : "the filename to save to",
+               "default_value" : ""
+            }
+         ],
+         "is_const" : true,
+         "aliases" : ["export_forks"],
+         "prerequisites" : ["no_prerequisites"]
+      },
+      {
+         "method_name" : "blockchain_list_forks",
+         "description" : "returns a list of all blocks for which there is a fork off of the main chain",
+         "cached"      : true,
+         "return_type" : "map<uint32_t, vector<fork_entry>>",
+         "parameters"  : [],
+         "is_const" : true,
+         "aliases" : ["list_forks"],
+         "prerequisites" : ["no_prerequisites"]
+      },
+      {
+        "method_name": "blockchain_get_delegate_slot_entrys",
+        "description": "Query the most recent block production slot entrys for the specified delegate",
+         "cached"      : true,
+        "return_type": "slot_entrys_list",
+        "parameters" : [
+            {
+              "name" : "delegate_name",
+              "type" : "string",
+              "description" : "Delegate whose block production slot entrys to query"
+            },
+            {
+              "name" : "limit",
+              "type" : "uint32_t",
+              "description" : "The maximum number of slot entrys to return",
+              "default_value" : "10"
+            }
+        ],
+        "is_const" : true,
+         "aliases" : ["get_slot"],
+        "prerequisites" : ["no_prerequisites"]
+      },
+      {
+        "method_name": "blockchain_get_block_signee",
+        "description": "Get the delegate that signed a given block",
+         "cached"      : true,
+        "return_type": "string",
+        "parameters" : [
+            {
+              "name" : "block",
+              "type" : "string",
+              "description" : "block number or ID to retrieve the signee for"
+            }
+        ],
+        "is_const" : true,
+        "prerequisites" : ["no_prerequisites"]
+      },
+      {
+        "method_name": "blockchain_unclaimed_genesis",
+        "description": "Returns the total shares in the genesis block which have never been fully or partially claimed.",
+         "cached"      : true,
+        "return_type": "asset",
+        "parameters" : [],
+        "is_const" : true,
+        "prerequisites" : ["no_prerequisites"]
+      },
+      {
+        "method_name": "blockchain_verify_signature",
+        "description": "Verify that the given signature proves the given hash was signed by the given account.",
+         "cached"      : true,
+        "return_type": "bool",
+        "parameters" : [
+            {
+                "name" : "signer",
+                "type" : "string",
+                "description" : "A public key, address, or account name whose signature to check"
+            },
+            {
+                "name" : "hash",
+                "type" : "sha256",
+                "description" : "The hash the signature claims to be for"
+            },
+            {
+                "name" : "signature",
+                "type" : "compact_signature",
+                "description" : "A signature produced by wallet_sign_hash"
+            }
+        ],
+        "is_const"   : true,
+        "prerequisites" : ["no_prerequisites"],
+        "aliases" : ["verify_signature", "verify_sig", "blockchain_verify_sig"]
+      },
+      {
+        "method_name": "blockchain_dump_state",
+        "description": "TODO",
+         "cached"      : true,
+        "return_type": "void",
+        "parameters"  : [
+           {
+              "name" : "path",
+              "type" : "string",
+              "description" : "the directory to dump the state into"
+           }
+        ],
+        "is_const"   : true,
+        "prerequisites" : ["no_prerequisites"]
+      },
+      {
+        "method_name": "blockchain_broadcast_transaction",
+        "description": "Takes a signed transaction and broadcasts it to the network.",
+         "cached"      : true,
+        "return_type": "void",
+        "parameters"  : [
+           {
+              "name" : "trx",
+              "type" : "signed_transaction",
+              "description" : "The transaction to broadcast"
+           }
+        ],
+        "is_const"   : false,
+        "prerequisites" : ["no_prerequisites"]
+      },
+	  {
+        "method_name": "blockchain_btc_address_convert",
+        "description": "Convert bitcoin address file to TiValue address file.",
+        "cached"      : true,
+        "return_type": "void",
+        "parameters"  : [
+           {
+              "name" : "path",
+              "type" : "string",
+              "description" : "The bitcoin address file path."
+           }
+        ],
+        "is_const"   : true,
+        "prerequisites" : ["no_prerequisites"]
+      },
+      {
+        "method_name": "blockchain_get_transaction_rpc",
+        "description": "Get detailed information about an in-wallet transaction",
+        "cached"   : true,
+        "return_type": "string",
+        "parameters" : [
+            {
+              "name" : "transaction_id_prefix",
+              "type" : "string",
+              "description" : "the base58 transaction ID to return"
+            },
+            {
+               "name" : "exact",
+               "type" : "bool",
+               "description" : "whether or not a partial match is ok",
+               "default_value" : false
+            }
+        ],
+        "is_const" : true,
+        "prerequisites" : ["no_prerequisites"]
+      },
+      {
+        "method_name": "blockchain_set_node_vm_enabled",
+        "description": "set the vm enabled flag of normal node, no effect for the delegate",
+        "cached"      : true,
+        "return_type": "void",
+        "parameters" : [
+            {
+                "name" : "enabled",
+                "type" : "bool",
+                "description" : "vm enabled flag"
+            }
+        ],
+        "is_const"   : false,
+        "prerequisites" : ["no_prerequisites"],
+        "aliases" : []
+      }, 
+      {
+        "method_name": "blockchain_get_node_vm_enabled",
+        "description": "get the vm enabled flag of normal node",
+        "cached"      : true,
+        "return_type": "bool",
+        "parameters" : [],
+        "is_const"   : true,
+        "prerequisites" : ["no_prerequisites"],
+        "aliases" : []
+      },
+	  
+	   {
+        "method_name": "blockchain_get_all_contracts",
+        "description": "get all contracts on the chain",
+        "cached"      : true,
+        "return_type": "contract_id_list",
+        "parameters" : [],
+        "is_const"   : true,
+        "prerequisites" : ["no_prerequisites"],
+        "aliases" : []
+      },
+	  
+	  {
+        "method_name": "blockchain_get_forever_contracts",
+        "description": "get all forever contracts on the chain",
+        "cached"      : true,
+        "return_type": "contract_id_name_map",
+        "parameters" : [],
+        "is_const"   : true,
+        "prerequisites" : ["no_prerequisites"],
+        "aliases" : []
+      },
+      {
+        "method_name": "blockchain_list_pub_all_address",
+        "description": "list all address converted by public",
+        "cached"      : true,
+        "return_type": "string_array",
+        "parameters" : 
+        [
+          {
+            "name":"pub_key",
+            "type":"string",
+            "description":"public key need to list all addresses"
+          }
+        ],
+        "is_const"   : true,
+        "prerequisites" : ["no_prerequisites"],
+        "aliases" : []
+      }
+	  
+    ]
+}
