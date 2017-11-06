@@ -1,0 +1,23 @@
+diff a/libraries/wallet/TransactionLedger.cpp b/libraries/wallet/TransactionLedger.cpp	(rejected hunks)
+@@ -933,12 +933,15 @@
+                     {
+                         for (auto& entry : trx_rec.ledger_entries)
+                         {
+-                            if (!entry.from_account.valid()) continue;
+-                            const auto a1 = self->get_key_label(*entry.from_account);
+-                            const auto a2 = self->get_key_label(recipient_key->get_public_key());
+-                            if (a1 != a2) continue;
+-
+-                            new_entry = false;
++							if (!entry.from_account.valid()) continue;
++
++							if (!entry.memo_from_account.valid())
++							{
++								const auto a1 = self->get_key_label(*entry.from_account);
++								const auto a2 = self->get_key_label(status->from);
++								if (a1 != a2) continue;
++							}
++							new_entry = false;
+                             entry.from_account = recipient_key->get_public_key();
+                             entry.to_account = status->from;
+                             entry.amount = amount;

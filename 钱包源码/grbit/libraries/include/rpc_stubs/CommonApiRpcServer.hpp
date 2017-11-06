@@ -501,6 +501,8 @@ namespace TiValue {
     fc::variant store_file_piece_named(fc::rpc::json_connection* json_connection, const fc::variant_object& parameters);
     fc::variant store_reject_positional(fc::rpc::json_connection* json_connection, const fc::variants& parameters);
     fc::variant store_reject_named(fc::rpc::json_connection* json_connection, const fc::variant_object& parameters);
+    fc::variant confirm_piece_saved_positional(fc::rpc::json_connection* json_connection, const fc::variants& parameters);
+    fc::variant confirm_piece_saved_named(fc::rpc::json_connection* json_connection, const fc::variant_object& parameters);
     fc::variant wallet_set_node_id_positional(fc::rpc::json_connection* json_connection, const fc::variants& parameters);
     fc::variant wallet_set_node_id_named(fc::rpc::json_connection* json_connection, const fc::variant_object& parameters);
     fc::variant blockchain_list_file_saved_positional(fc::rpc::json_connection* json_connection, const fc::variants& parameters);
@@ -515,6 +517,8 @@ namespace TiValue {
     fc::variant wallet_get_my_access_named(fc::rpc::json_connection* json_connection, const fc::variant_object& parameters);
     fc::variant wallet_get_my_upload_requests_positional(fc::rpc::json_connection* json_connection, const fc::variants& parameters);
     fc::variant wallet_get_my_upload_requests_named(fc::rpc::json_connection* json_connection, const fc::variant_object& parameters);
+    fc::variant blockchain_get__upload_requests_positional(fc::rpc::json_connection* json_connection, const fc::variants& parameters);
+    fc::variant blockchain_get__upload_requests_named(fc::rpc::json_connection* json_connection, const fc::variant_object& parameters);
     fc::variant wallet_get_my_store_request_positional(fc::rpc::json_connection* json_connection, const fc::variants& parameters);
     fc::variant wallet_get_my_store_request_named(fc::rpc::json_connection* json_connection, const fc::variant_object& parameters);
     fc::variant wallet_get_my_store_confirmed_positional(fc::rpc::json_connection* json_connection, const fc::variants& parameters);
@@ -523,6 +527,14 @@ namespace TiValue {
     fc::variant wallet_get_my_store_rejected_named(fc::rpc::json_connection* json_connection, const fc::variant_object& parameters);
     fc::variant blockchain_get_file_save_node_positional(fc::rpc::json_connection* json_connection, const fc::variants& parameters);
     fc::variant blockchain_get_file_save_node_named(fc::rpc::json_connection* json_connection, const fc::variant_object& parameters);
+    fc::variant download_validation_positional(fc::rpc::json_connection* json_connection, const fc::variants& parameters);
+    fc::variant download_validation_named(fc::rpc::json_connection* json_connection, const fc::variant_object& parameters);
+    fc::variant generate_download_validation_positional(fc::rpc::json_connection* json_connection, const fc::variants& parameters);
+    fc::variant generate_download_validation_named(fc::rpc::json_connection* json_connection, const fc::variant_object& parameters);
+    fc::variant declare_piece_saved_positional(fc::rpc::json_connection* json_connection, const fc::variants& parameters);
+    fc::variant declare_piece_saved_named(fc::rpc::json_connection* json_connection, const fc::variant_object& parameters);
+    fc::variant blockchain_list_file_save_declare_positional(fc::rpc::json_connection* json_connection, const fc::variants& parameters);
+    fc::variant blockchain_list_file_save_declare_named(fc::rpc::json_connection* json_connection, const fc::variant_object& parameters);
   };
 
 } } // end namespace TiValue::rpc_stubs

@@ -196,7 +196,7 @@ namespace TiValue {
 					_piece_saved_db.open(data_dir / "index/_piece_saved_db");
 					_file_saved_db.open(data_dir / "index/_file_saved_db");
 					_enable_access_db.open(data_dir / "index/_enable_access_db");
-
+					_save_decl_db.open(data_dir / "index/_save_decl_db");
                     _pending_trx_state = std::make_shared<PendingChainState>(self->shared_from_this());
 
                     clear_invalidation_of_future_blocks();
@@ -1462,6 +1462,7 @@ namespace TiValue {
 							my->_piece_saved_db.toggle_leveldb(enabled);
 							my->_file_saved_db.toggle_leveldb(enabled);
 							my->_enable_access_db.toggle_leveldb(enabled);
+							my->_save_decl_db.toggle_leveldb(enabled);
 
                         };
 
@@ -3766,6 +3767,11 @@ namespace TiValue {
 			my->_reject_store_db.store(file_id, entry);
 		}
 
+		void ChainDatabase::savedecl_insert_into_id_map(const FilePieceIdType & file_id, const PieceSavedDeclEntry & entry)
+		{
+			my->_save_decl_db.store(file_id, entry);
+		}
+
 		oUploadRequestEntry TiValue::blockchain::ChainDatabase::uploadrequest_lookup_by_id(const FileIdType & file_id)const
 		{
 			auto it = my->_upload_request_db.unordered_find(file_id);
@@ -3814,6 +3820,14 @@ namespace TiValue {
 			return oRejectStoreEntry();
 		}
 
+		oPieceSavedDeclEntry ChainDatabase::savedecl_lookup_by_id(const FilePieceIdType & file_id) const
+		{
+			auto it = my->_save_decl_db.unordered_find(file_id);
+			if (it != my->_save_decl_db.unordered_end())
+				return it->second;
+			return oPieceSavedDeclEntry();
+		}
+
 		void TiValue::blockchain::ChainDatabase::uploadrequest_remove_by_id(const FileIdType & file_id)
 		{
 			my->_upload_request_db.remove(file_id);
@@ -3842,6 +3856,19 @@ namespace TiValue {
 		void TiValue::blockchain::ChainDatabase::rejectstore_remove_by_id(const FilePieceIdType & file_id)
 		{
 			my->_reject_store_db.remove(file_id);
+		}
+
+		void ChainDatabase::savedecl_remove_by_id(const FilePieceIdType & file_id)
+		{
+			my->_save_decl_db.remove(file_id);
+		}
+
+		std::vector<UploadRequestEntry> ChainDatabase::list_upload_requests()
+		{
+			std::vector<UploadRequestEntry> res;
+			for (auto it = my->_upload_request_db.unordered_begin(); it != my->_upload_request_db.unordered_end(); it++)
+				res.push_back(it->second);
+			return res;
 		}
 
 		std::vector<FileIdType> TiValue::blockchain::ChainDatabase::get_file_saved() const

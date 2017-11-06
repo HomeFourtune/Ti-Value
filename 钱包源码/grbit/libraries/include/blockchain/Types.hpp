@@ -45,8 +45,8 @@ namespace TiValue {
         typedef std::string						  ContractName;
         typedef Address							  ContractIdType;
 		typedef unsigned char                      ContractChar;
-		typedef Address								FileContentIdType;
-		typedef Address								FilePieceIdType;
+		typedef std::string								FileContentIdType;
+		typedef std::string								FilePieceIdType;
 
 		typedef  std::string NodeIdType;
         

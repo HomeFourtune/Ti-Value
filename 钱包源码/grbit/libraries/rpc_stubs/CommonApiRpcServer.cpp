@@ -7487,28 +7487,40 @@ fc::variant CommonApiRpcServer::store_file_to_network_positional(fc::rpc::json_c
     FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 2 (AuthorizatingContractId)");
   std::string AuthorizatingContractId = parameters[1].as<std::string>();
   if (parameters.size() <= 2)
-    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 3 (file)");
-  TiValue::blockchain::FilePath file = parameters[2].as<TiValue::blockchain::FilePath>();
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 3 (filename)");
+  TiValue::blockchain::FilePath filename = parameters[2].as<TiValue::blockchain::FilePath>();
   if (parameters.size() <= 3)
-    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 4 (asset_symbol)");
-  std::string asset_symbol = parameters[3].as<std::string>();
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 4 (filesize)");
+  uint32_t filesize = parameters[3].as<uint32_t>();
   if (parameters.size() <= 4)
-    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 5 (price)");
-  double price = parameters[4].as<double>();
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 5 (description)");
+  std::string description = parameters[4].as<std::string>();
   if (parameters.size() <= 5)
-    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 6 (numofcopy)");
-  uint32_t numofcopy = parameters[5].as<uint32_t>();
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 6 (piecesinfo)");
+  std::string piecesinfo = parameters[5].as<std::string>();
   if (parameters.size() <= 6)
-    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 7 (numofpiece)");
-  uint32_t numofpiece = parameters[6].as<uint32_t>();
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 7 (asset_symbol)");
+  std::string asset_symbol = parameters[6].as<std::string>();
   if (parameters.size() <= 7)
-    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 8 (payterm)");
-  uint32_t payterm = parameters[7].as<uint32_t>();
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 8 (price)");
+  double price = parameters[7].as<double>();
   if (parameters.size() <= 8)
-    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 9 (exec_limit)");
-  double exec_limit = parameters[8].as<double>();
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 9 (numofcopy)");
+  uint32_t numofcopy = parameters[8].as<uint32_t>();
+  if (parameters.size() <= 9)
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 10 (numofpiece)");
+  uint32_t numofpiece = parameters[9].as<uint32_t>();
+  if (parameters.size() <= 10)
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 11 (payterm)");
+  uint32_t payterm = parameters[10].as<uint32_t>();
+  if (parameters.size() <= 11)
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 12 (node_id)");
+  std::string node_id = parameters[11].as<std::string>();
+  if (parameters.size() <= 12)
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 13 (exec_limit)");
+  double exec_limit = parameters[12].as<double>();
 
-  TiValue::blockchain::UploadRequestEntry result = get_client()->store_file_to_network(owner, AuthorizatingContractId, file, asset_symbol, price, numofcopy, numofpiece, payterm, exec_limit);
+  TiValue::blockchain::UploadRequestEntry result = get_client()->store_file_to_network(owner, AuthorizatingContractId, filename, filesize, description, piecesinfo, asset_symbol, price, numofcopy, numofpiece, payterm, node_id, exec_limit);
   return fc::variant(result);
 }
 
@@ -7526,9 +7538,18 @@ fc::variant CommonApiRpcServer::store_file_to_network_named(fc::rpc::json_connec
   if (!parameters.contains("AuthorizatingContractId"))
     FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 'AuthorizatingContractId'");
   std::string AuthorizatingContractId = parameters["AuthorizatingContractId"].as<std::string>();
-  if (!parameters.contains("file"))
-    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 'file'");
-  TiValue::blockchain::FilePath file = parameters["file"].as<TiValue::blockchain::FilePath>();
+  if (!parameters.contains("filename"))
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 'filename'");
+  TiValue::blockchain::FilePath filename = parameters["filename"].as<TiValue::blockchain::FilePath>();
+  if (!parameters.contains("filesize"))
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 'filesize'");
+  uint32_t filesize = parameters["filesize"].as<uint32_t>();
+  if (!parameters.contains("description"))
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 'description'");
+  std::string description = parameters["description"].as<std::string>();
+  if (!parameters.contains("piecesinfo"))
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 'piecesinfo'");
+  std::string piecesinfo = parameters["piecesinfo"].as<std::string>();
   if (!parameters.contains("asset_symbol"))
     FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 'asset_symbol'");
   std::string asset_symbol = parameters["asset_symbol"].as<std::string>();
@@ -7544,11 +7565,14 @@ fc::variant CommonApiRpcServer::store_file_to_network_named(fc::rpc::json_connec
   if (!parameters.contains("payterm"))
     FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 'payterm'");
   uint32_t payterm = parameters["payterm"].as<uint32_t>();
+  if (!parameters.contains("node_id"))
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 'node_id'");
+  std::string node_id = parameters["node_id"].as<std::string>();
   if (!parameters.contains("exec_limit"))
     FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 'exec_limit'");
   double exec_limit = parameters["exec_limit"].as<double>();
 
-  TiValue::blockchain::UploadRequestEntry result = get_client()->store_file_to_network(owner, AuthorizatingContractId, file, asset_symbol, price, numofcopy, numofpiece, payterm, exec_limit);
+  TiValue::blockchain::UploadRequestEntry result = get_client()->store_file_to_network(owner, AuthorizatingContractId, filename, filesize, description, piecesinfo, asset_symbol, price, numofcopy, numofpiece, payterm, node_id, exec_limit);
   return fc::variant(result);
 }
 
@@ -7561,10 +7585,16 @@ fc::variant CommonApiRpcServer::get_file_access_positional(fc::rpc::json_connect
   // done checking prerequisites
 
   if (parameters.size() <= 0)
-    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 1 (file_id)");
-  std::string file_id = parameters[0].as<std::string>();
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 1 (requester)");
+  std::string requester = parameters[0].as<std::string>();
+  if (parameters.size() <= 1)
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 2 (file_id)");
+  std::string file_id = parameters[1].as<std::string>();
+  if (parameters.size() <= 2)
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 3 (exec_limit)");
+  double exec_limit = parameters[2].as<double>();
 
-  TiValue::wallet::WalletTransactionEntry result = get_client()->get_file_access(file_id);
+  TiValue::wallet::WalletTransactionEntry result = get_client()->get_file_access(requester, file_id, exec_limit);
   return fc::variant(result);
 }
 
@@ -7576,11 +7606,17 @@ fc::variant CommonApiRpcServer::get_file_access_named(fc::rpc::json_connection* 
   verify_wallet_is_unlocked();
   // done checking prerequisites
 
+  if (!parameters.contains("requester"))
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 'requester'");
+  std::string requester = parameters["requester"].as<std::string>();
   if (!parameters.contains("file_id"))
     FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 'file_id'");
   std::string file_id = parameters["file_id"].as<std::string>();
+  if (!parameters.contains("exec_limit"))
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 'exec_limit'");
+  double exec_limit = parameters["exec_limit"].as<double>();
 
-  TiValue::wallet::WalletTransactionEntry result = get_client()->get_file_access(file_id);
+  TiValue::wallet::WalletTransactionEntry result = get_client()->get_file_access(requester, file_id, exec_limit);
   return fc::variant(result);
 }
 
@@ -7593,16 +7629,22 @@ fc::variant CommonApiRpcServer::store_file_piece_positional(fc::rpc::json_connec
   // done checking prerequisites
 
   if (parameters.size() <= 0)
-    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 1 (file_id)");
-  std::string file_id = parameters[0].as<std::string>();
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 1 (requester)");
+  std::string requester = parameters[0].as<std::string>();
   if (parameters.size() <= 1)
-    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 2 (file_piece_id)");
-  std::string file_piece_id = parameters[1].as<std::string>();
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 2 (file_id)");
+  std::string file_id = parameters[1].as<std::string>();
   if (parameters.size() <= 2)
-    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 3 (beneficiary)");
-  std::string beneficiary = parameters[2].as<std::string>();
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 3 (file_piece_id)");
+  std::string file_piece_id = parameters[2].as<std::string>();
+  if (parameters.size() <= 3)
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 4 (node_id)");
+  std::string node_id = parameters[3].as<std::string>();
+  if (parameters.size() <= 4)
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 5 (exec_limit)");
+  double exec_limit = parameters[4].as<double>();
 
-  TiValue::wallet::WalletTransactionEntry result = get_client()->store_file_piece(file_id, file_piece_id, beneficiary);
+  TiValue::wallet::WalletTransactionEntry result = get_client()->store_file_piece(requester, file_id, file_piece_id, node_id, exec_limit);
   return fc::variant(result);
 }
 
@@ -7614,17 +7656,23 @@ fc::variant CommonApiRpcServer::store_file_piece_named(fc::rpc::json_connection*
   verify_wallet_is_unlocked();
   // done checking prerequisites
 
+  if (!parameters.contains("requester"))
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 'requester'");
+  std::string requester = parameters["requester"].as<std::string>();
   if (!parameters.contains("file_id"))
     FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 'file_id'");
   std::string file_id = parameters["file_id"].as<std::string>();
   if (!parameters.contains("file_piece_id"))
     FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 'file_piece_id'");
   std::string file_piece_id = parameters["file_piece_id"].as<std::string>();
-  if (!parameters.contains("beneficiary"))
-    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 'beneficiary'");
-  std::string beneficiary = parameters["beneficiary"].as<std::string>();
+  if (!parameters.contains("node_id"))
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 'node_id'");
+  std::string node_id = parameters["node_id"].as<std::string>();
+  if (!parameters.contains("exec_limit"))
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 'exec_limit'");
+  double exec_limit = parameters["exec_limit"].as<double>();
 
-  TiValue::wallet::WalletTransactionEntry result = get_client()->store_file_piece(file_id, file_piece_id, beneficiary);
+  TiValue::wallet::WalletTransactionEntry result = get_client()->store_file_piece(requester, file_id, file_piece_id, node_id, exec_limit);
   return fc::variant(result);
 }
 
@@ -7645,8 +7693,11 @@ fc::variant CommonApiRpcServer::store_reject_positional(fc::rpc::json_connection
   if (parameters.size() <= 2)
     FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 3 (node_id)");
   std::string node_id = parameters[2].as<std::string>();
+  if (parameters.size() <= 3)
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 4 (exec_limit)");
+  double exec_limit = parameters[3].as<double>();
 
-  TiValue::wallet::WalletTransactionEntry result = get_client()->store_reject(file_id, file_piece_id, node_id);
+  TiValue::wallet::WalletTransactionEntry result = get_client()->store_reject(file_id, file_piece_id, node_id, exec_limit);
   return fc::variant(result);
 }
 
@@ -7667,8 +7718,67 @@ fc::variant CommonApiRpcServer::store_reject_named(fc::rpc::json_connection* jso
   if (!parameters.contains("node_id"))
     FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 'node_id'");
   std::string node_id = parameters["node_id"].as<std::string>();
+  if (!parameters.contains("exec_limit"))
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 'exec_limit'");
+  double exec_limit = parameters["exec_limit"].as<double>();
 
-  TiValue::wallet::WalletTransactionEntry result = get_client()->store_reject(file_id, file_piece_id, node_id);
+  TiValue::wallet::WalletTransactionEntry result = get_client()->store_reject(file_id, file_piece_id, node_id, exec_limit);
+  return fc::variant(result);
+}
+
+fc::variant CommonApiRpcServer::confirm_piece_saved_positional(fc::rpc::json_connection* json_connection, const fc::variants& parameters)
+{
+  // check all of this method's prerequisites
+  verify_json_connection_is_authenticated(json_connection);
+  verify_wallet_is_open();
+  verify_wallet_is_unlocked();
+  // done checking prerequisites
+
+  if (parameters.size() <= 0)
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 1 (confirmer)");
+  std::string confirmer = parameters[0].as<std::string>();
+  if (parameters.size() <= 1)
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 2 (file_id)");
+  std::string file_id = parameters[1].as<std::string>();
+  if (parameters.size() <= 2)
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 3 (file_piece_id)");
+  std::string file_piece_id = parameters[2].as<std::string>();
+  if (parameters.size() <= 3)
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 4 (Storage)");
+  std::string Storage = parameters[3].as<std::string>();
+  if (parameters.size() <= 4)
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 5 (exec_limit)");
+  double exec_limit = parameters[4].as<double>();
+
+  TiValue::wallet::WalletTransactionEntry result = get_client()->confirm_piece_saved(confirmer, file_id, file_piece_id, Storage, exec_limit);
+  return fc::variant(result);
+}
+
+fc::variant CommonApiRpcServer::confirm_piece_saved_named(fc::rpc::json_connection* json_connection, const fc::variant_object& parameters)
+{
+  // check all of this method's prerequisites
+  verify_json_connection_is_authenticated(json_connection);
+  verify_wallet_is_open();
+  verify_wallet_is_unlocked();
+  // done checking prerequisites
+
+  if (!parameters.contains("confirmer"))
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 'confirmer'");
+  std::string confirmer = parameters["confirmer"].as<std::string>();
+  if (!parameters.contains("file_id"))
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 'file_id'");
+  std::string file_id = parameters["file_id"].as<std::string>();
+  if (!parameters.contains("file_piece_id"))
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 'file_piece_id'");
+  std::string file_piece_id = parameters["file_piece_id"].as<std::string>();
+  if (!parameters.contains("Storage"))
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 'Storage'");
+  std::string Storage = parameters["Storage"].as<std::string>();
+  if (!parameters.contains("exec_limit"))
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 'exec_limit'");
+  double exec_limit = parameters["exec_limit"].as<double>();
+
+  TiValue::wallet::WalletTransactionEntry result = get_client()->confirm_piece_saved(confirmer, file_id, file_piece_id, Storage, exec_limit);
   return fc::variant(result);
 }
 
@@ -7890,6 +8000,32 @@ fc::variant CommonApiRpcServer::wallet_get_my_upload_requests_named(fc::rpc::jso
   return fc::variant(result);
 }
 
+fc::variant CommonApiRpcServer::blockchain_get__upload_requests_positional(fc::rpc::json_connection* json_connection, const fc::variants& parameters)
+{
+  // check all of this method's prerequisites
+  verify_json_connection_is_authenticated(json_connection);
+  verify_wallet_is_open();
+  verify_wallet_is_unlocked();
+  // done checking prerequisites
+
+
+  std::vector<TiValue::blockchain::UploadRequestEntry> result = get_client()->blockchain_get__upload_requests();
+  return fc::variant(result);
+}
+
+fc::variant CommonApiRpcServer::blockchain_get__upload_requests_named(fc::rpc::json_connection* json_connection, const fc::variant_object& parameters)
+{
+  // check all of this method's prerequisites
+  verify_json_connection_is_authenticated(json_connection);
+  verify_wallet_is_open();
+  verify_wallet_is_unlocked();
+  // done checking prerequisites
+
+
+  std::vector<TiValue::blockchain::UploadRequestEntry> result = get_client()->blockchain_get__upload_requests();
+  return fc::variant(result);
+}
+
 fc::variant CommonApiRpcServer::wallet_get_my_store_request_positional(fc::rpc::json_connection* json_connection, const fc::variants& parameters)
 {
   // check all of this method's prerequisites
@@ -7899,7 +8035,7 @@ fc::variant CommonApiRpcServer::wallet_get_my_store_request_positional(fc::rpc::
   // done checking prerequisites
 
 
-  vector<string> result = get_client()->wallet_get_my_store_request();
+  std::vector<TiValue::blockchain::LocalStoreRequestInfo> result = get_client()->wallet_get_my_store_request();
   return fc::variant(result);
 }
 
@@ -7912,7 +8048,7 @@ fc::variant CommonApiRpcServer::wallet_get_my_store_request_named(fc::rpc::json_
   // done checking prerequisites
 
 
-  vector<string> result = get_client()->wallet_get_my_store_request();
+  std::vector<TiValue::blockchain::LocalStoreRequestInfo> result = get_client()->wallet_get_my_store_request();
   return fc::variant(result);
 }
 
@@ -7997,6 +8133,152 @@ fc::variant CommonApiRpcServer::blockchain_get_file_save_node_named(fc::rpc::jso
   std::string file_id = parameters["file_id"].as<std::string>();
 
   TiValue::blockchain::FileSaveInfo result = get_client()->blockchain_get_file_save_node(file_id);
+  return fc::variant(result);
+}
+
+fc::variant CommonApiRpcServer::download_validation_positional(fc::rpc::json_connection* json_connection, const fc::variants& parameters)
+{
+  // check all of this method's prerequisites
+  verify_json_connection_is_authenticated(json_connection);
+  verify_wallet_is_open();
+  verify_wallet_is_unlocked();
+  // done checking prerequisites
+
+  if (parameters.size() <= 0)
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 1 (file_id)");
+  std::string file_id = parameters[0].as<std::string>();
+  if (parameters.size() <= 1)
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 2 (authentication)");
+  std::string authentication = parameters[1].as<std::string>();
+
+  bool result = get_client()->download_validation(file_id, authentication);
+  return fc::variant(result);
+}
+
+fc::variant CommonApiRpcServer::download_validation_named(fc::rpc::json_connection* json_connection, const fc::variant_object& parameters)
+{
+  // check all of this method's prerequisites
+  verify_json_connection_is_authenticated(json_connection);
+  verify_wallet_is_open();
+  verify_wallet_is_unlocked();
+  // done checking prerequisites
+
+  if (!parameters.contains("file_id"))
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 'file_id'");
+  std::string file_id = parameters["file_id"].as<std::string>();
+  if (!parameters.contains("authentication"))
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 'authentication'");
+  std::string authentication = parameters["authentication"].as<std::string>();
+
+  bool result = get_client()->download_validation(file_id, authentication);
+  return fc::variant(result);
+}
+
+fc::variant CommonApiRpcServer::generate_download_validation_positional(fc::rpc::json_connection* json_connection, const fc::variants& parameters)
+{
+  // check all of this method's prerequisites
+  verify_json_connection_is_authenticated(json_connection);
+  verify_wallet_is_open();
+  verify_wallet_is_unlocked();
+  // done checking prerequisites
+
+  if (parameters.size() <= 0)
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 1 (file_id)");
+  std::string file_id = parameters[0].as<std::string>();
+
+  std::string result = get_client()->generate_download_validation(file_id);
+  return fc::variant(result);
+}
+
+fc::variant CommonApiRpcServer::generate_download_validation_named(fc::rpc::json_connection* json_connection, const fc::variant_object& parameters)
+{
+  // check all of this method's prerequisites
+  verify_json_connection_is_authenticated(json_connection);
+  verify_wallet_is_open();
+  verify_wallet_is_unlocked();
+  // done checking prerequisites
+
+  if (!parameters.contains("file_id"))
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 'file_id'");
+  std::string file_id = parameters["file_id"].as<std::string>();
+
+  std::string result = get_client()->generate_download_validation(file_id);
+  return fc::variant(result);
+}
+
+fc::variant CommonApiRpcServer::declare_piece_saved_positional(fc::rpc::json_connection* json_connection, const fc::variants& parameters)
+{
+  // check all of this method's prerequisites
+  verify_json_connection_is_authenticated(json_connection);
+  verify_wallet_is_open();
+  verify_wallet_is_unlocked();
+  // done checking prerequisites
+
+  if (parameters.size() <= 0)
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 1 (file_id)");
+  std::string file_id = parameters[0].as<std::string>();
+  if (parameters.size() <= 1)
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 2 (piece_id)");
+  std::string piece_id = parameters[1].as<std::string>();
+  if (parameters.size() <= 2)
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 3 (storer)");
+  std::string storer = parameters[2].as<std::string>();
+
+  TiValue::wallet::WalletTransactionEntry result = get_client()->declare_piece_saved(file_id, piece_id, storer);
+  return fc::variant(result);
+}
+
+fc::variant CommonApiRpcServer::declare_piece_saved_named(fc::rpc::json_connection* json_connection, const fc::variant_object& parameters)
+{
+  // check all of this method's prerequisites
+  verify_json_connection_is_authenticated(json_connection);
+  verify_wallet_is_open();
+  verify_wallet_is_unlocked();
+  // done checking prerequisites
+
+  if (!parameters.contains("file_id"))
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 'file_id'");
+  std::string file_id = parameters["file_id"].as<std::string>();
+  if (!parameters.contains("piece_id"))
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 'piece_id'");
+  std::string piece_id = parameters["piece_id"].as<std::string>();
+  if (!parameters.contains("storer"))
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 'storer'");
+  std::string storer = parameters["storer"].as<std::string>();
+
+  TiValue::wallet::WalletTransactionEntry result = get_client()->declare_piece_saved(file_id, piece_id, storer);
+  return fc::variant(result);
+}
+
+fc::variant CommonApiRpcServer::blockchain_list_file_save_declare_positional(fc::rpc::json_connection* json_connection, const fc::variants& parameters)
+{
+  // check all of this method's prerequisites
+  verify_json_connection_is_authenticated(json_connection);
+  verify_wallet_is_open();
+  verify_wallet_is_unlocked();
+  // done checking prerequisites
+
+  if (parameters.size() <= 0)
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 1 (file_id)");
+  std::string file_id = parameters[0].as<std::string>();
+
+  std::set<TiValue::blockchain::PieceStoreInfo> result = get_client()->blockchain_list_file_save_declare(file_id);
+  return fc::variant(result);
+}
+
+fc::variant CommonApiRpcServer::blockchain_list_file_save_declare_named(fc::rpc::json_connection* json_connection, const fc::variant_object& parameters)
+{
+  // check all of this method's prerequisites
+  verify_json_connection_is_authenticated(json_connection);
+  verify_wallet_is_open();
+  verify_wallet_is_unlocked();
+  // done checking prerequisites
+
+  if (!parameters.contains("file_id"))
+    FC_THROW_EXCEPTION(fc::invalid_arg_exception, "missing required parameter 'file_id'");
+  std::string file_id = parameters["file_id"].as<std::string>();
+
+  std::set<TiValue::blockchain::PieceStoreInfo> result = get_client()->blockchain_list_file_save_declare(file_id);
   return fc::variant(result);
 }
 
@@ -10091,6 +10373,14 @@ void CommonApiRpcServer::register_CommonApi_methods(const fc::rpc::json_connecti
                                         this, capture_con, _1);
   json_connection->add_named_param_method("store_reject", bound_named_method);
 
+  // register method confirm_piece_saved
+  bound_positional_method = boost::bind(&CommonApiRpcServer::confirm_piece_saved_positional, 
+                                        this, capture_con, _1);
+  json_connection->add_method("confirm_piece_saved", bound_positional_method);
+  bound_named_method = boost::bind(&CommonApiRpcServer::confirm_piece_saved_named, 
+                                        this, capture_con, _1);
+  json_connection->add_named_param_method("confirm_piece_saved", bound_named_method);
+
   // register method wallet_set_node_id
   bound_positional_method = boost::bind(&CommonApiRpcServer::wallet_set_node_id_positional, 
                                         this, capture_con, _1);
@@ -10147,6 +10437,14 @@ void CommonApiRpcServer::register_CommonApi_methods(const fc::rpc::json_connecti
                                         this, capture_con, _1);
   json_connection->add_named_param_method("wallet_get_my_upload_requests", bound_named_method);
 
+  // register method blockchain_get__upload_requests
+  bound_positional_method = boost::bind(&CommonApiRpcServer::blockchain_get__upload_requests_positional, 
+                                        this, capture_con, _1);
+  json_connection->add_method("blockchain_get__upload_requests", bound_positional_method);
+  bound_named_method = boost::bind(&CommonApiRpcServer::blockchain_get__upload_requests_named, 
+                                        this, capture_con, _1);
+  json_connection->add_named_param_method("blockchain_get__upload_requests", bound_named_method);
+
   // register method wallet_get_my_store_request
   bound_positional_method = boost::bind(&CommonApiRpcServer::wallet_get_my_store_request_positional, 
                                         this, capture_con, _1);
@@ -10178,6 +10476,38 @@ void CommonApiRpcServer::register_CommonApi_methods(const fc::rpc::json_connecti
   bound_named_method = boost::bind(&CommonApiRpcServer::blockchain_get_file_save_node_named, 
                                         this, capture_con, _1);
   json_connection->add_named_param_method("blockchain_get_file_save_node", bound_named_method);
+
+  // register method download_validation
+  bound_positional_method = boost::bind(&CommonApiRpcServer::download_validation_positional, 
+                                        this, capture_con, _1);
+  json_connection->add_method("download_validation", bound_positional_method);
+  bound_named_method = boost::bind(&CommonApiRpcServer::download_validation_named, 
+                                        this, capture_con, _1);
+  json_connection->add_named_param_method("download_validation", bound_named_method);
+
+  // register method generate_download_validation
+  bound_positional_method = boost::bind(&CommonApiRpcServer::generate_download_validation_positional, 
+                                        this, capture_con, _1);
+  json_connection->add_method("generate_download_validation", bound_positional_method);
+  bound_named_method = boost::bind(&CommonApiRpcServer::generate_download_validation_named, 
+                                        this, capture_con, _1);
+  json_connection->add_named_param_method("generate_download_validation", bound_named_method);
+
+  // register method declare_piece_saved
+  bound_positional_method = boost::bind(&CommonApiRpcServer::declare_piece_saved_positional, 
+                                        this, capture_con, _1);
+  json_connection->add_method("declare_piece_saved", bound_positional_method);
+  bound_named_method = boost::bind(&CommonApiRpcServer::declare_piece_saved_named, 
+                                        this, capture_con, _1);
+  json_connection->add_named_param_method("declare_piece_saved", bound_named_method);
+
+  // register method blockchain_list_file_save_declare
+  bound_positional_method = boost::bind(&CommonApiRpcServer::blockchain_list_file_save_declare_positional, 
+                                        this, capture_con, _1);
+  json_connection->add_method("blockchain_list_file_save_declare", bound_positional_method);
+  bound_named_method = boost::bind(&CommonApiRpcServer::blockchain_list_file_save_declare_named, 
+                                        this, capture_con, _1);
+  json_connection->add_named_param_method("blockchain_list_file_save_declare", bound_named_method);
 
 }
 
@@ -13480,16 +13810,20 @@ void CommonApiRpcServer::register_CommonApi_method_metadata()
       /* params: */ {
         {"owner", "string", TiValue::api::required_positional, fc::ovariant()},
         {"AuthorizatingContractId", "string", TiValue::api::required_positional, fc::ovariant()},
-        {"file", "path", TiValue::api::required_positional, fc::ovariant()},
+        {"filename", "path", TiValue::api::required_positional, fc::ovariant()},
+        {"filesize", "uint32_t", TiValue::api::required_positional, fc::ovariant()},
+        {"description", "string", TiValue::api::required_positional, fc::ovariant()},
+        {"piecesinfo", "string", TiValue::api::required_positional, fc::ovariant()},
         {"asset_symbol", "string", TiValue::api::required_positional, fc::ovariant()},
         {"price", "real_amount", TiValue::api::required_positional, fc::ovariant()},
         {"numofcopy", "uint32_t", TiValue::api::required_positional, fc::ovariant()},
         {"numofpiece", "uint32_t", TiValue::api::required_positional, fc::ovariant()},
         {"payterm", "uint32_t", TiValue::api::required_positional, fc::ovariant()},
+        {"node_id", "string", TiValue::api::required_positional, fc::ovariant()},
         {"exec_limit", "real_amount", TiValue::api::required_positional, fc::ovariant()}
       },
       /* prerequisites */ (TiValue::api::MethodPrerequisites) 4,
-      /* detailed description */ "Call FileUpload Contract to ask for file storage\n\nParameters:\n  owner (string, required): File owner address\n  AuthorizatingContractId (string, required): contract checking and authorizating to caller\n  file (path, required): file to be uploaded\n  asset_symbol (string, required): asset symbol name\n  price (real_amount, required): the limit of asset amount used to init contract \n  numofcopy (uint32_t, required): Nums of Copys \n  numofpiece (uint32_t, required): Nums of pieces \n  payterm (uint32_t, required): Nums of pieces \n  exec_limit (real_amount, required): the limit of asset amount used to call FileUploadContract\n\nReturns:\n  UploadRequestEntry\n",
+      /* detailed description */ "Call FileUpload Contract to ask for file storage\n\nParameters:\n  owner (string, required): File owner address\n  AuthorizatingContractId (string, required): contract checking and authorizating to caller\n  filename (path, required): file to be uploaded\n  filesize (uint32_t, required): file to be uploaded\n  description (string, required): file to be uploaded\n  piecesinfo (string, required): info of pieces\n  asset_symbol (string, required): asset symbol name\n  price (real_amount, required): the limit of asset amount used to init contract \n  numofcopy (uint32_t, required): Nums of Copys \n  numofpiece (uint32_t, required): Nums of pieces \n  payterm (uint32_t, required): Nums of pieces \n  node_id (string, required): node_id of uploader \n  exec_limit (real_amount, required): the limit of asset amount used to call FileUploadContract\n\nReturns:\n  UploadRequestEntry\n",
       /* aliases */ {}, false};
     store_method_metadata(store_file_to_network_method_metadata);
   }
@@ -13500,10 +13834,12 @@ void CommonApiRpcServer::register_CommonApi_method_metadata()
       /* description */ "get a permission to access a specific file",
       /* returns */ "transaction_entry",
       /* params: */ {
-        {"file_id", "string", TiValue::api::required_positional, fc::ovariant()}
+        {"requester", "string", TiValue::api::required_positional, fc::ovariant()},
+        {"file_id", "string", TiValue::api::required_positional, fc::ovariant()},
+        {"exec_limit", "real_amount", TiValue::api::required_positional, fc::ovariant()}
       },
       /* prerequisites */ (TiValue::api::MethodPrerequisites) 4,
-      /* detailed description */ "get a permission to access a specific file\n\nParameters:\n  file_id (string, required): id of file\n\nReturns:\n  transaction_entry\n",
+      /* detailed description */ "get a permission to access a specific file\n\nParameters:\n  requester (string, required): requester name\n  file_id (string, required): id of file\n  exec_limit (real_amount, required): the limit of asset amount used to call FileUploadContract\n\nReturns:\n  transaction_entry\n",
       /* aliases */ {}, false};
     store_method_metadata(get_file_access_method_metadata);
   }
@@ -13514,12 +13850,14 @@ void CommonApiRpcServer::register_CommonApi_method_metadata()
       /* description */ "get permission to save specific file piece",
       /* returns */ "transaction_entry",
       /* params: */ {
+        {"requester", "string", TiValue::api::required_positional, fc::ovariant()},
         {"file_id", "string", TiValue::api::required_positional, fc::ovariant()},
         {"file_piece_id", "string", TiValue::api::required_positional, fc::ovariant()},
-        {"beneficiary", "string", TiValue::api::required_positional, fc::ovariant()}
+        {"node_id", "string", TiValue::api::required_positional, fc::ovariant()},
+        {"exec_limit", "real_amount", TiValue::api::required_positional, fc::ovariant()}
       },
       /* prerequisites */ (TiValue::api::MethodPrerequisites) 4,
-      /* detailed description */ "get permission to save specific file piece\n\nParameters:\n  file_id (string, required): id of file\n  file_piece_id (string, required): id of file piece\n  beneficiary (string, required): beneficiary of storing file\n\nReturns:\n  transaction_entry\n",
+      /* detailed description */ "get permission to save specific file piece\n\nParameters:\n  requester (string, required): requester name\n  file_id (string, required): id of file\n  file_piece_id (string, required): id of file piece\n  node_id (string, required): id of store node\n  exec_limit (real_amount, required): the limit of asset amount used to call FileUploadContract\n\nReturns:\n  transaction_entry\n",
       /* aliases */ {}, false};
     store_method_metadata(store_file_piece_method_metadata);
   }
@@ -13532,12 +13870,31 @@ void CommonApiRpcServer::register_CommonApi_method_metadata()
       /* params: */ {
         {"file_id", "string", TiValue::api::required_positional, fc::ovariant()},
         {"file_piece_id", "string", TiValue::api::required_positional, fc::ovariant()},
-        {"node_id", "string", TiValue::api::required_positional, fc::ovariant()}
+        {"node_id", "string", TiValue::api::required_positional, fc::ovariant()},
+        {"exec_limit", "real_amount", TiValue::api::required_positional, fc::ovariant()}
       },
       /* prerequisites */ (TiValue::api::MethodPrerequisites) 4,
-      /* detailed description */ "get permission to save specific file piece\n\nParameters:\n  file_id (string, required): id of file\n  file_piece_id (string, required): id of file piece\n  node_id (string, required): node id\n\nReturns:\n  transaction_entry\n",
+      /* detailed description */ "get permission to save specific file piece\n\nParameters:\n  file_id (string, required): id of file\n  file_piece_id (string, required): id of file piece\n  node_id (string, required): node id\n  exec_limit (real_amount, required): the limit of asset amount used to call FileUploadContract\n\nReturns:\n  transaction_entry\n",
       /* aliases */ {}, false};
     store_method_metadata(store_reject_method_metadata);
+  }
+
+  {
+    // register method confirm_piece_saved
+    TiValue::api::MethodData confirm_piece_saved_method_metadata{"confirm_piece_saved", nullptr,
+      /* description */ "confirm_piece_saved",
+      /* returns */ "transaction_entry",
+      /* params: */ {
+        {"confirmer", "string", TiValue::api::required_positional, fc::ovariant()},
+        {"file_id", "string", TiValue::api::required_positional, fc::ovariant()},
+        {"file_piece_id", "string", TiValue::api::required_positional, fc::ovariant()},
+        {"Storage", "string", TiValue::api::required_positional, fc::ovariant()},
+        {"exec_limit", "real_amount", TiValue::api::required_positional, fc::ovariant()}
+      },
+      /* prerequisites */ (TiValue::api::MethodPrerequisites) 4,
+      /* detailed description */ "confirm_piece_saved\n\nParameters:\n  confirmer (string, required): confirmer\n  file_id (string, required): id of file\n  file_piece_id (string, required): id of file piece\n  Storage (string, required): public key of Storage\n  exec_limit (real_amount, required): the limit of asset amount used to call FileUploadContract\n\nReturns:\n  transaction_entry\n",
+      /* aliases */ {}, false};
+    store_method_metadata(confirm_piece_saved_method_metadata);
   }
 
   {
@@ -13635,13 +13992,25 @@ void CommonApiRpcServer::register_CommonApi_method_metadata()
   }
 
   {
+    // register method blockchain_get__upload_requests
+    TiValue::api::MethodData blockchain_get__upload_requests_method_metadata{"blockchain_get__upload_requests", nullptr,
+      /* description */ "list  upload requests on blockchain",
+      /* returns */ "UploadRequestEntryList",
+      /* params: */ {},
+      /* prerequisites */ (TiValue::api::MethodPrerequisites) 4,
+      /* detailed description */ "list  upload requests on blockchain\n\nParameters:\n  (none)\n\nReturns:\n  UploadRequestEntryList\n",
+      /* aliases */ {}, false};
+    store_method_metadata(blockchain_get__upload_requests_method_metadata);
+  }
+
+  {
     // register method wallet_get_my_store_request
     TiValue::api::MethodData wallet_get_my_store_request_method_metadata{"wallet_get_my_store_request", nullptr,
       /* description */ "list  store requests related to local accounts",
-      /* returns */ "piece_id_list",
+      /* returns */ "LocalStoreRequestList",
       /* params: */ {},
       /* prerequisites */ (TiValue::api::MethodPrerequisites) 4,
-      /* detailed description */ "list  store requests related to local accounts\n\nParameters:\n  (none)\n\nReturns:\n  piece_id_list\n",
+      /* detailed description */ "list  store requests related to local accounts\n\nParameters:\n  (none)\n\nReturns:\n  LocalStoreRequestList\n",
       /* aliases */ {}, false};
     store_method_metadata(wallet_get_my_store_request_method_metadata);
   }
@@ -13682,6 +14051,65 @@ void CommonApiRpcServer::register_CommonApi_method_metadata()
       /* detailed description */ "list all files\n\nParameters:\n  file_id (string, required): id of specific file\n\nReturns:\n  FileSaveInfo\n",
       /* aliases */ {}, false};
     store_method_metadata(blockchain_get_file_save_node_method_metadata);
+  }
+
+  {
+    // register method download_validation
+    TiValue::api::MethodData download_validation_method_metadata{"download_validation", nullptr,
+      /* description */ "check download permission",
+      /* returns */ "bool",
+      /* params: */ {
+        {"file_id", "string", TiValue::api::required_positional, fc::ovariant()},
+        {"authentication", "string", TiValue::api::required_positional, fc::ovariant()}
+      },
+      /* prerequisites */ (TiValue::api::MethodPrerequisites) 4,
+      /* detailed description */ "check download permission\n\nParameters:\n  file_id (string, required): id of specific file\n  authentication (string, required): authentication infomation\n\nReturns:\n  bool\n",
+      /* aliases */ {}, false};
+    store_method_metadata(download_validation_method_metadata);
+  }
+
+  {
+    // register method generate_download_validation
+    TiValue::api::MethodData generate_download_validation_method_metadata{"generate_download_validation", nullptr,
+      /* description */ "generate download validation",
+      /* returns */ "string",
+      /* params: */ {
+        {"file_id", "string", TiValue::api::required_positional, fc::ovariant()}
+      },
+      /* prerequisites */ (TiValue::api::MethodPrerequisites) 4,
+      /* detailed description */ "generate download validation\n\nParameters:\n  file_id (string, required): id of specific file\n\nReturns:\n  string\n",
+      /* aliases */ {}, false};
+    store_method_metadata(generate_download_validation_method_metadata);
+  }
+
+  {
+    // register method declare_piece_saved
+    TiValue::api::MethodData declare_piece_saved_method_metadata{"declare_piece_saved", nullptr,
+      /* description */ "storer call this to declare his store for specific file piece ",
+      /* returns */ "transaction_entry",
+      /* params: */ {
+        {"file_id", "string", TiValue::api::required_positional, fc::ovariant()},
+        {"piece_id", "string", TiValue::api::required_positional, fc::ovariant()},
+        {"storer", "string", TiValue::api::required_positional, fc::ovariant()}
+      },
+      /* prerequisites */ (TiValue::api::MethodPrerequisites) 4,
+      /* detailed description */ "storer call this to declare his store for specific file piece \n\nParameters:\n  file_id (string, required): id of specific file\n  piece_id (string, required): id of specific file piece\n  storer (string, required): account of storer\n\nReturns:\n  transaction_entry\n",
+      /* aliases */ {}, false};
+    store_method_metadata(declare_piece_saved_method_metadata);
+  }
+
+  {
+    // register method blockchain_list_file_save_declare
+    TiValue::api::MethodData blockchain_list_file_save_declare_method_metadata{"blockchain_list_file_save_declare", nullptr,
+      /* description */ "list declaration for specific file piece",
+      /* returns */ "PieceStoreInfoList",
+      /* params: */ {
+        {"file_id", "string", TiValue::api::required_positional, fc::ovariant()}
+      },
+      /* prerequisites */ (TiValue::api::MethodPrerequisites) 4,
+      /* detailed description */ "list declaration for specific file piece\n\nParameters:\n  file_id (string, required): id of specific file\n\nReturns:\n  PieceStoreInfoList\n",
+      /* aliases */ {}, false};
+    store_method_metadata(blockchain_list_file_save_declare_method_metadata);
   }
 
 }
@@ -14152,6 +14580,8 @@ fc::variant CommonApiRpcServer::direct_invoke_positional_method(const std::strin
     return store_file_piece_positional(nullptr, parameters);
   if (method_name == "store_reject")
     return store_reject_positional(nullptr, parameters);
+  if (method_name == "confirm_piece_saved")
+    return confirm_piece_saved_positional(nullptr, parameters);
   if (method_name == "wallet_set_node_id")
     return wallet_set_node_id_positional(nullptr, parameters);
   if (method_name == "blockchain_list_file_saved")
@@ -14166,6 +14596,8 @@ fc::variant CommonApiRpcServer::direct_invoke_positional_method(const std::strin
     return wallet_get_my_access_positional(nullptr, parameters);
   if (method_name == "wallet_get_my_upload_requests")
     return wallet_get_my_upload_requests_positional(nullptr, parameters);
+  if (method_name == "blockchain_get__upload_requests")
+    return blockchain_get__upload_requests_positional(nullptr, parameters);
   if (method_name == "wallet_get_my_store_request")
     return wallet_get_my_store_request_positional(nullptr, parameters);
   if (method_name == "wallet_get_my_store_confirmed")
@@ -14174,6 +14606,14 @@ fc::variant CommonApiRpcServer::direct_invoke_positional_method(const std::strin
     return wallet_get_my_store_rejected_positional(nullptr, parameters);
   if (method_name == "blockchain_get_file_save_node")
     return blockchain_get_file_save_node_positional(nullptr, parameters);
+  if (method_name == "download_validation")
+    return download_validation_positional(nullptr, parameters);
+  if (method_name == "generate_download_validation")
+    return generate_download_validation_positional(nullptr, parameters);
+  if (method_name == "declare_piece_saved")
+    return declare_piece_saved_positional(nullptr, parameters);
+  if (method_name == "blockchain_list_file_save_declare")
+    return blockchain_list_file_save_declare_positional(nullptr, parameters);
   FC_ASSERT(false, "shouldn't happen");
 }
 

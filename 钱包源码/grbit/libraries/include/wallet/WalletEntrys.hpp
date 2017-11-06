@@ -30,7 +30,8 @@ namespace TiValue {
 			contract_entry_type = 10,
 			upload_request_entry_type = 11,
 			store_request_entry_type = 12,
-			my_request_entry_type = 13
+			my_request_entry_type = 13,
+			local_store_req_type=14
         };
 
         enum PropertyEnum
@@ -45,7 +46,8 @@ namespace TiValue {
             transaction_expiration_sec,
             transaction_min_imessage_soft_length,
             transaction_min_imessage_fee_coe,
-            last_scanned_block_number_for_tichain
+            last_scanned_block_number_for_tichain,
+			node_id
         };
 
         struct WalletProperty
@@ -248,6 +250,7 @@ namespace TiValue {
 		typedef WalletEntry<UploadRequestEntry, upload_request_entry_type> WalletUploadRequestEntry;
 		typedef WalletEntry<StoreRequestEntry, store_request_entry_type> WalletStoreRequestEntry;
 		typedef WalletEntry<StoreRequestEntry, my_request_entry_type> MyStoreRequestEntry;
+		typedef WalletEntry<LocalStoreRequestInfo, local_store_req_type> LocalStoreRequestEntry;
 
 		typedef optional<WalletContractEntry>                             oWalletContractEntry;
         typedef optional<WalletPropertyEntry>                             oWalletPropertyEntry;
@@ -260,6 +263,7 @@ namespace TiValue {
 		typedef optional<WalletUploadRequestEntry>						  oWalletUploadRequestEntry;
 		typedef optional<WalletStoreRequestEntry>						 oWalletStoreRequestEntry;
 		typedef optional<MyStoreRequestEntry>						 oMyStoreRequestEntry;
+		typedef optional<LocalStoreRequestEntry>						 olocal_store_req_type;
         struct GenericWalletEntry
         {
             GenericWalletEntry() :type(0){}

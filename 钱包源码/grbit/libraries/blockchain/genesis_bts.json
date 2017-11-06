@@ -1,0 +1,224 @@
+{
+    "timestamp" : "2015-02-03T03:18:40",
+    "market_assets": [
+        {
+            "symbol": "GAS",
+            "name": "Gasoline 87",
+            "description": "1 gallon United States 87 grade gasoline",
+            "precision": 10000
+        },
+        {
+            "symbol": "DIESEL",
+            "name": "Diesel",
+            "description": "1 gallon United States on-highway diesel fuel",
+            "precision": 10000
+        },
+        {
+            "symbol": "KRW",
+            "name": "South Korean Won",
+            "description": "1 South Korean won",
+            "precision": 10000
+        },
+        {
+            "symbol": "BTC",
+            "name": "Bitcoin",
+            "description": "1 bitcoin",
+            "precision": 100000000
+        },
+        {
+            "symbol": "OIL",
+            "name": "Light Sweet Crude Oil",
+            "description": "1 barrel light sweet crude oil",
+            "precision": 10000
+        },
+        {
+            "symbol": "SILVER",
+            "name": "Silver",
+            "description": "1 troy ounce .999 fine silver",
+            "precision": 10000
+        },
+        {
+            "symbol": "GOLD",
+            "name": "Gold",
+            "description": "1 troy ounce .999 fine gold",
+            "precision": 1000000
+        },
+        {
+            "symbol": "TRY",
+            "name": "Turkish Lira",
+            "description": "1 Turkish lira",
+            "precision": 10000
+        },
+        {
+            "symbol": "SGD",
+            "name": "Singapore Dollar",
+            "description": "1 Singapore dollar",
+            "precision": 10000
+        },
+        {
+            "symbol": "HKD",
+            "name": "Hong Kong Dollar",
+            "description": "1 Hong Kong dollar",
+            "precision": 10000
+        },
+        {
+            "symbol": "RUB",
+            "name": "Russian Ruble",
+            "description": "1 Russian ruble",
+            "precision": 10000
+        },
+        {
+            "symbol": "SEK",
+            "name": "Swedish Krona",
+            "description": "1 Swedish krona",
+            "precision": 10000
+        },
+        {
+            "symbol": "NZD",
+            "name": "New Zealand Dollar",
+            "description": "1 New Zealand dollar",
+            "precision": 10000
+        },
+        {
+            "symbol": "CNY",
+            "name": "Chinese Yuan",
+            "description": "1 Chinese yuan",
+            "precision": 10000
+        },
+        {
+            "symbol": "MXN",
+            "name": "Mexican Peso",
+            "description": "1 Mexican peso",
+            "precision": 10000
+        },
+        {
+            "symbol": "CAD",
+            "name": "Canadian Dollar",
+            "description": "1 Canadian dollar",
+            "precision": 10000
+        },
+        {
+            "symbol": "CHF",
+            "name": "Swiss Franc",
+            "description": "1 Swiss franc",
+            "precision": 10000
+        },
+        {
+            "symbol": "AUD",
+            "name": "Australian Dollar",
+            "description": "1 Australian dollar",
+            "precision": 10000
+        },
+        {
+            "symbol": "GBP",
+            "name": "Pound sterling",
+            "description": "1 pound sterling",
+            "precision": 10000
+        },
+        {
+            "symbol": "JPY",
+            "name": "Japanese Yen",
+            "description": "1 Japanese yen",
+            "precision": 100
+        },
+        {
+            "symbol": "EUR",
+            "name": "Euro",
+            "description": "1 euro",
+            "precision": 10000
+        },
+        {
+            "symbol": "USD",
+            "name": "United States Dollar",
+            "description": "1 United States dollar",
+            "precision": 10000
+        }
+    ],
+    "names": [
+    {
+      "name": "init1",
+      "delegate_pay_rate": 100,
+      "owner": "TTS66zZvJFPvjdFgE4kTrqgR7mqGnTtYG7yNH2JyH3mnDBsuX3wJv"
+    },{
+      "name": "init2",
+      "delegate_pay_rate": 100,
+      "owner": "TTS7Wi14cbHtzwrx5V6F6g2fTcADGu5L6JwgmJBS7aRBNT7bPrknK"
+    },{
+      "name": "init3",
+      "delegate_pay_rate": 100,
+      "owner": "TTS8XAhecVSNCxpDSy5dNn4yzn8oVe1VzcBJ9bfjCVexisGK9mtm4"
+    },{
+      "name": "init4",
+      "delegate_pay_rate": 100,
+      "owner": "TTS567jUqNMSmosqQADYthjLccoiZjohkN2Em8i6dbVbWMKw7iwf3"
+    },{
+      "name": "init5",
+      "delegate_pay_rate": 100,
+      "owner": "TTS8A2zmiKupVHkWWKQXnYbTNDyRvTKGjMSPQLrTfnYM858CRooZv"
+    },{
+      "name": "account1",
+      "delegate_pay_rate": 100,
+      "owner": "TTS8cg5wmFzufcensUZ9Mrd3r5Dairk2JQci2o3YCnZhouij6Z6eT"
+    },{
+      "name": "account2",
+      "delegate_pay_rate": 100,
+      "owner": "TTS6Yhsd4zTtFLqrE6J4C3pRQFF4QkLq17eki3E85esZabJPCUkWt"
+    },{
+      "name": "account3",
+      "delegate_pay_rate": 100,
+      "owner": "TTS7SBnCDW8yQQ9k1wiWqVX2vYMZ5zHWd3TeuwVHaDHEoDpFD2fB7"
+    },{
+      "name": "account4",
+      "delegate_pay_rate": 100,
+      "owner": "TTS7d8g9nZUs1tyUvQVMsJidU7c94D7xZUCDPtjER5M4dcBSUrSSV"
+    },{
+      "name": "account5",
+      "delegate_pay_rate": 100,
+      "owner": "TTS8AEg4Qx6mjxD54ewL4ecvoEtS6XgUtJqnHKwreGkHHAozVMWfr"
+    }
+    ],
+    "balances": [    
+        [
+            "PaaJjGLX1XWeBW5A7bB142sRk7ALszdE8x",
+            50000000000000
+        ],
+        [
+            "PusXtRS6T5N1GT4SJqtHrmZStsopAjhrU6",
+            50000000000000
+        ],
+        [
+            "Ps57uxnreeTrX1iDvt7AG3VztV64K7Wpid",
+            50000000000000
+        ],
+        [
+            "PgPkKDwLU8KinyeYniE4wye8FPADKyQ82V",
+            50000000000000
+        ],
+        [
+            "PpWn5x5LZXM9RgCdnuD8yV7T8txBsGmp39",
+            50000000000000
+        ],
+        [
+            "PiPV6xHRQybLf9ocXCWVYu2koow19oU88Q",
+            50000000000000
+        ],
+        [
+            "Pb3uYy8aNUu8hZ4qdotaswnaJ2YoDCoXsD",
+            50000000000000
+        ],
+        [
+            "PvFkoj6rvwpCMmW3xrWSikgcMCmkHJGCDB",
+            50000000000000
+        ],
+        [
+            "PcZhxFTBCZeHbhVwqYArMN7zcvD2fMsxWX",
+            50000000000000
+        ],
+        [
+            "PcZhxFTBCZeHbhVwqYArMN7zcvD2fMsxWX",
+            50000000000000
+        ]
+    ],
+    "bts_sharedrop": [
+    ]
+}

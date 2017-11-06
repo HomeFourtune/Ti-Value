@@ -6,6 +6,7 @@
 
 #include <glua/glua_lutil.h>
 #include <glua/lstate.h>
+#include <boost/algorithm/string.hpp>
 
 
 namespace glua
@@ -73,19 +74,44 @@ namespace glua
 		}
 
 		void replace_all(std::string& str, const std::string& from, const std::string& to) {
-			size_t start_pos = 0;
+			/*size_t start_pos = 0;
 			while ((start_pos = str.find(from, start_pos)) != std::string::npos) {
 				size_t end_pos = start_pos + from.length();
 				str.replace(start_pos, end_pos, to);
 				start_pos += to.length();
-			}
+			}*/
+			boost::replace_all(str, from, to);
 		}
+
+		static std::string need_escaped_chars = "ntabfrv";
 
 		std::string escape_string(std::string &str)
 		{
 			std::string result(str);
 			glua::util::replace_all(result, "\\", "\\\\");
 			glua::util::replace_all(result, "\"", "\\\"");
+			glua::util::replace_all(result, "\n", "\\n");
+			glua::util::replace_all(result, "\t", "\\t");
+			glua::util::replace_all(result, "\a", "\\a");
+			glua::util::replace_all(result, "\b", "\\b");
+			glua::util::replace_all(result, "\f", "\\f");
+			glua::util::replace_all(result, "\r", "\\r");
+			glua::util::replace_all(result, "\v", "\\v");
+			return result;
+		}
+
+		std::string unescape_string(std::string &str)
+		{
+			std::string result(str);
+			glua::util::replace_all(result, "\\\\", "\\");
+			glua::util::replace_all(result, "\\\"", "\"");
+			glua::util::replace_all(result, "\\n", "\n");
+			glua::util::replace_all(result, "\\t", "\t");
+			glua::util::replace_all(result, "\\a", "\a");
+			glua::util::replace_all(result, "\\b", "\b");
+			glua::util::replace_all(result, "\\f", "\f");
+			glua::util::replace_all(result, "\\r", "\r");
+			glua::util::replace_all(result, "\\v", "\v");
 			return result;
 		}
 

@@ -1934,45 +1934,66 @@ namespace TiValue { namespace api {
      *
      * @param owner File owner address (string, required)
      * @param AuthorizatingContractId contract checking and authorizating to caller (string, required)
-     * @param file file to be uploaded (path, required)
+     * @param filename file to be uploaded (path, required)
+     * @param filesize file to be uploaded (uint32_t, required)
+     * @param description file to be uploaded (string, required)
+     * @param piecesinfo info of pieces (string, required)
      * @param asset_symbol asset symbol name (string, required)
      * @param price the limit of asset amount used to init contract (real_amount, required)
      * @param numofcopy Nums of Copys (uint32_t, required)
      * @param numofpiece Nums of pieces (uint32_t, required)
      * @param payterm Nums of pieces (uint32_t, required)
+     * @param node_id node_id of uploader (string, required)
      * @param exec_limit the limit of asset amount used to call FileUploadContract (real_amount, required)
      *
      * @return UploadRequestEntry
      */
-    virtual TiValue::blockchain::UploadRequestEntry store_file_to_network(const std::string& owner, const std::string& AuthorizatingContractId, const TiValue::blockchain::FilePath& file, const std::string& asset_symbol, double price, uint32_t numofcopy, uint32_t numofpiece, uint32_t payterm, double exec_limit) = 0;
+    virtual TiValue::blockchain::UploadRequestEntry store_file_to_network(const std::string& owner, const std::string& AuthorizatingContractId, const TiValue::blockchain::FilePath& filename, uint32_t filesize, const std::string& description, const std::string& piecesinfo, const std::string& asset_symbol, double price, uint32_t numofcopy, uint32_t numofpiece, uint32_t payterm, const std::string& node_id, double exec_limit) = 0;
     /**
      * get a permission to access a specific file.
      *
+     * @param requester requester name (string, required)
      * @param file_id id of file (string, required)
+     * @param exec_limit the limit of asset amount used to call FileUploadContract (real_amount, required)
      *
      * @return transaction_entry
      */
-    virtual TiValue::wallet::WalletTransactionEntry get_file_access(const std::string& file_id) = 0;
+    virtual TiValue::wallet::WalletTransactionEntry get_file_access(const std::string& requester, const std::string& file_id, double exec_limit) = 0;
     /**
      * get permission to save specific file piece.
      *
+     * @param requester requester name (string, required)
      * @param file_id id of file (string, required)
      * @param file_piece_id id of file piece (string, required)
-     * @param beneficiary beneficiary of storing file (string, required)
+     * @param node_id id of store node (string, required)
+     * @param exec_limit the limit of asset amount used to call FileUploadContract (real_amount, required)
      *
      * @return transaction_entry
      */
-    virtual TiValue::wallet::WalletTransactionEntry store_file_piece(const std::string& file_id, const std::string& file_piece_id, const std::string& beneficiary) = 0;
+    virtual TiValue::wallet::WalletTransactionEntry store_file_piece(const std::string& requester, const std::string& file_id, const std::string& file_piece_id, const std::string& node_id, double exec_limit) = 0;
     /**
      * get permission to save specific file piece.
      *
      * @param file_id id of file (string, required)
      * @param file_piece_id id of file piece (string, required)
      * @param node_id node id (string, required)
+     * @param exec_limit the limit of asset amount used to call FileUploadContract (real_amount, required)
      *
      * @return transaction_entry
      */
-    virtual TiValue::wallet::WalletTransactionEntry store_reject(const std::string& file_id, const std::string& file_piece_id, const std::string& node_id) = 0;
+    virtual TiValue::wallet::WalletTransactionEntry store_reject(const std::string& file_id, const std::string& file_piece_id, const std::string& node_id, double exec_limit) = 0;
+    /**
+     * confirm_piece_saved.
+     *
+     * @param confirmer confirmer (string, required)
+     * @param file_id id of file (string, required)
+     * @param file_piece_id id of file piece (string, required)
+     * @param Storage public key of Storage (string, required)
+     * @param exec_limit the limit of asset amount used to call FileUploadContract (real_amount, required)
+     *
+     * @return transaction_entry
+     */
+    virtual TiValue::wallet::WalletTransactionEntry confirm_piece_saved(const std::string& confirmer, const std::string& file_id, const std::string& file_piece_id, const std::string& Storage, double exec_limit) = 0;
     /**
      * set local node id.
      *
@@ -2024,11 +2045,17 @@ namespace TiValue { namespace api {
      */
     virtual std::vector<TiValue::blockchain::UploadRequestEntry> wallet_get_my_upload_requests() = 0;
     /**
+     * list upload requests on blockchain.
+     *
+     * @return UploadRequestEntryList
+     */
+    virtual std::vector<TiValue::blockchain::UploadRequestEntry> blockchain_get__upload_requests() = 0;
+    /**
      * list store requests related to local accounts.
      *
-     * @return piece_id_list
+     * @return LocalStoreRequestList
      */
-    virtual vector<string> wallet_get_my_store_request() = 0;
+    virtual std::vector<TiValue::blockchain::LocalStoreRequestInfo> wallet_get_my_store_request() = 0;
     /**
      * list pieces which uploader has confirmed that we saved.
      *
@@ -2049,6 +2076,41 @@ namespace TiValue { namespace api {
      * @return FileSaveInfo
      */
     virtual TiValue::blockchain::FileSaveInfo blockchain_get_file_save_node(const std::string& file_id) = 0;
+    /**
+     * check download permission.
+     *
+     * @param file_id id of specific file (string, required)
+     * @param authentication authentication infomation (string, required)
+     *
+     * @return bool
+     */
+    virtual bool download_validation(const std::string& file_id, const std::string& authentication) = 0;
+    /**
+     * generate download validation.
+     *
+     * @param file_id id of specific file (string, required)
+     *
+     * @return string
+     */
+    virtual std::string generate_download_validation(const std::string& file_id) = 0;
+    /**
+     * storer call this to declare his store for specific file piece .
+     *
+     * @param file_id id of specific file (string, required)
+     * @param piece_id id of specific file piece (string, required)
+     * @param storer account of storer (string, required)
+     *
+     * @return transaction_entry
+     */
+    virtual TiValue::wallet::WalletTransactionEntry declare_piece_saved(const std::string& file_id, const std::string& piece_id, const std::string& storer) = 0;
+    /**
+     * list declaration for specific file piece.
+     *
+     * @param file_id id of specific file (string, required)
+     *
+     * @return PieceStoreInfoList
+     */
+    virtual std::set<TiValue::blockchain::PieceStoreInfo> blockchain_list_file_save_declare(const std::string& file_id) = 0;
   };
 
 } } // end namespace Tivalue::api

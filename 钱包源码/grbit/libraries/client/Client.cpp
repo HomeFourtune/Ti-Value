@@ -83,6 +83,8 @@ std::cin >> a;
 #include <blockchain/api_extern.hpp>
 #include <glua/tichain_lua_api.h>
 
+#include <contract_engine/contract_engine_builder.hpp>
+
 using namespace boost;
 using std::string;
 
@@ -1372,11 +1374,21 @@ namespace TiValue {
                     }
 					auto p_lua_module = std::make_shared<GluaModuleByteStream>();
                     FC_ASSERT(p_lua_module, "Alloc memory for GluaModuleByteStream failed!");
-                    lua::lib::GluaStateScope sco(false);
-                    if (NOT lua::lib::compilefile_to_stream(sco.L(), filename.generic_string().c_str(), p_lua_module.get(), err_msg, USE_TYPE_CHECK))
-                    {
-                        FC_THROW_EXCEPTION(compile_script_fail, err_msg);
-                    }
+                    // lua::lib::GluaStateScope sco(false);
+					::blockchain::contract_engine::ContractEngineBuilder builder;
+					auto engine = builder.set_use_contract(false)->build();
+					try
+					{
+						engine->compilefile_to_stream(filename.generic_string(), p_lua_module.get());
+					}
+					catch (glua::core::GluaException &e)
+					{
+						FC_THROW_EXCEPTION(compile_script_fail, e.what());
+					}
+                    //if (NOT lua::lib::compilefile_to_stream(sco.L(), filename.generic_string().c_str(), p_lua_module.get(), err_msg, USE_TYPE_CHECK))
+                    //{
+                    //    FC_THROW_EXCEPTION(compile_script_fail, err_msg);
+                    //}
                     if (save_code_to_file(out_filename, p_lua_module.get(), err_msg) < 0)
                     {
                         FC_THROW_EXCEPTION(TiValue::blockchain::save_bytecode_to_scriptfile_fail, err_msg);

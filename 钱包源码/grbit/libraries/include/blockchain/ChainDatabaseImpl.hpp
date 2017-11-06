@@ -389,7 +389,8 @@ namespace TiValue {
 				TiValue::db::fast_level_map<FileIdType, FileSavedEntry>				_file_saved_db;
 				TiValue::db::fast_level_map<FileIdType, EnableAccessEntry>			_enable_access_db;
 				TiValue::db::fast_level_map<FilePieceIdType, StoreRejectEntry>		_reject_store_db;
-            };
+				TiValue::db::fast_level_map<FilePieceIdType, PieceSavedDeclEntry>		_save_decl_db;
+};
 
         } // detail
     }

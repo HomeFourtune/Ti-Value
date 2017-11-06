@@ -429,6 +429,13 @@ namespace TiValue {
 			oStoreRequestEntry get_store_request_entry(const FilePieceIdType& id );
 			void store_store_request(const StoreRequestEntry& entry);
 			void store_store_reject(const StoreRejectEntry& entry);
+			void store_save_decl_entry(const PieceSavedDeclEntry& entry);
+			oPieceSavedDeclEntry get_save_decl_entry(const FilePieceIdType& id);
+
+
+
+
+
             int  get_limit(AssetIdType id, ShareType amount);
             Asset get_amount(ShareType limit, AssetIdType asset_id = 0);
             Asset  get_transaction_fee(const AssetIdType desired_fee_asset_id = 0)const;

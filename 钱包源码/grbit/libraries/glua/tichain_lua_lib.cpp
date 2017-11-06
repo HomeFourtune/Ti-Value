@@ -65,7 +65,8 @@ namespace TiValue
                 "import_contract_from_address", "import_contract", "emit",
                 "TiValue", "storage", "repl", "exit", "exit_repl", "self", "debugger", "exit_debugger",
                 "caller", "caller_address",
-                "contract_transfer", "contract_transfer_to", "transfer_from_contract_to_address",
+                "contract_transfer", "contract_transfer_to", "transfer_from_contract_to_address","get_publickey_address","contract_api_check","allow_upload_request","allow_store_request",
+				"allow_piece_saved","allow_enable_access","allow_store_reject",
 				"transfer_from_contract_to_public_account",
                 "get_chain_random", "get_transaction_fee",
                 "get_transaction_id", "get_header_block_num", "wait_for_future_random", "get_waited",
@@ -277,6 +278,13 @@ next: (table) => bool
                 { "contract_transfer", "(...) => object" },
                 { "contract_transfer_to", "(...) => object" },
                 { "transfer_from_contract_to_address", "(string, string, int) => int" },
+				{"allow_upload_request", "(object,string,object,string,int,int,string,string,string) => bool"},
+				{"allow_store_request","(object,string,string,string) => bool"},
+				{"allow_piece_saved","(string,string,string) => bool"},
+				{"allow_enable_access","(string,string) => bool "},
+				{"allow_store_reject","(string,string,string) => bool "},
+				{"contract_api_check","(string,string) => bool"},
+				{"get_publickey_address","(string)=> string"},
 				{ "transfer_from_contract_to_public_account", "(string, string, int) => int"},
                 { "get_chain_random", "() => number" },
                 { "get_transaction_fee", "() => int" },
@@ -377,6 +385,44 @@ next: (table) => bool
 				return 1;
             }
 
+			static int allow_upload_request(lua_State *L)
+			{
+				return TiValue::lua::api::global_glua_chain_api->allow_upload_request_wrapper_func(L);
+			}
+			static int  allow_piece_saved(lua_State *L)
+			{
+				return TiValue::lua::api::global_glua_chain_api->allow_piece_saved_wrapper_func(L);
+			}
+			static int allow_enable_access(lua_State *L)
+			{
+				return TiValue::lua::api::global_glua_chain_api->allow_enable_access_wrapper_func(L);
+			}
+			static int allow_store_reject(lua_State *L)
+			{
+				return TiValue::lua::api::global_glua_chain_api->allow_store_reject_wrapper_func(L);
+			}
+			static  int get_publickey_address(lua_State *L)
+			{
+				if (lua_gettop(L) < 1)
+				{
+					TiValue::lua::api::global_glua_chain_api->throw_exception(L, tichain_API_SIMPLE_ERROR, "get_publickey_address need 1 arguments");
+					return 0;
+				}
+				if (!lua_isstring(L, 1))
+				{
+					TiValue::lua::api::global_glua_chain_api->throw_exception(L, tichain_API_SIMPLE_ERROR,
+						"get_publickey_address need 1 string argument of public key");
+					return 0;
+				}
+				const char* pubkey = luaL_checkstring(L, 1);
+				const char* res = TiValue::lua::api::global_glua_chain_api->get_publickey_address(L, pubkey);
+				lua_pushstring(L, res);
+				return 1;
+			}
+			static int allow_store_request(lua_State *L)
+			{
+				return TiValue::lua::api::global_glua_chain_api->allow_store_request_wrapper_func(L);
+			}
             /************************************************************************/
             /* transfer from contract to address                                    */
             /************************************************************************/
@@ -417,7 +463,37 @@ next: (table) => bool
                 lua_pushstring(L, cur_contract_id);
                 return 1;
             }
-
+			static int contract_api_check(lua_State *L)
+			{
+				if (lua_gettop(L) <2)
+				{
+					TiValue::lua::api::global_glua_chain_api->throw_exception(L, tichain_API_SIMPLE_ERROR,
+						"contract_api_check need 2 string arguments");
+					return 0;
+				}
+				if (!lua_isstring(L, 1))
+				{
+					TiValue::lua::api::global_glua_chain_api->throw_exception(L, tichain_API_SIMPLE_ERROR,
+						"get_contract_balance_amount need 1 string argument of contract address");
+					return 0;
+				}
+				auto contract_address = luaL_checkstring(L, 1);
+				if (strlen(contract_address) < 1)
+				{
+					TiValue::lua::api::global_glua_chain_api->throw_exception(L, tichain_API_SIMPLE_ERROR,
+						"contract address can't be empty");
+					return 0;
+				}
+				if (!lua_isstring(L, 2))
+				{
+					TiValue::lua::api::global_glua_chain_api->throw_exception(L, tichain_API_SIMPLE_ERROR,
+						"get_contract_balance_amount need 1 string argument of contract api");
+					return 0;
+				}
+				auto api_name = luaL_checkstring(L, 2);
+				lua_pushboolean(L, TiValue::lua::api::global_glua_chain_api->contract_api_check(L, contract_address, api_name));
+				return 1;
+			}
             static int get_contract_balance_amount(lua_State *L)
             {
                 if (lua_gettop(L) > 0 && !lua_isstring(L, 1))
@@ -1161,7 +1237,14 @@ end
                     add_global_c_function(L, "wait_for_future_random", wait_for_future_random);
                     add_global_c_function(L, "get_waited", get_waited_block_random);
                     add_global_c_function(L, "get_transaction_fee", get_transaction_fee);
-                    add_global_c_function(L, "emit", emit_tichain_event);
+					add_global_c_function(L, "emit", emit_tichain_event);
+					add_global_c_function(L, "contract_api_check", contract_api_check);
+					add_global_c_function(L, "get_publickey_address", get_publickey_address);
+					add_global_c_function(L, "allow_upload_request", allow_upload_request);
+					add_global_c_function(L, "allow_enable_access", allow_enable_access);
+					add_global_c_function(L, "allow_piece_saved", allow_piece_saved);
+					add_global_c_function(L, "allow_store_reject", allow_store_reject);
+					add_global_c_function(L, "allow_store_request", allow_store_request);
                 }
                 return L;
             }
@@ -1665,6 +1748,7 @@ end
 							bool hasXkh = it->type == '(';
 							if (hasXkh)
 								++it;
+							/*
 							if (it == token_parser->end() || it->type != glua::parser::LTK_STRING || it->token.length() < 1)
 							{
 								if(throw_exception)
@@ -1673,6 +1757,7 @@ end
 									*changed = false;
 								return origin_code;
 							}
+							*/
 						}
 					}
 					code = token_parser->dump();

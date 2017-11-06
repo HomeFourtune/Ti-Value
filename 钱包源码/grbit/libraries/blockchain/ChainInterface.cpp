@@ -518,6 +518,17 @@ namespace TiValue {
 			StoreRejectEntry::store(*this, entry.piece_id, entry);
 		}
 
+		void ChainInterface::store_save_decl_entry(const PieceSavedDeclEntry & entry)
+		{
+			PieceSavedDeclEntry::store(*this,entry.piece_id, entry);
+		}
+
+		oPieceSavedDeclEntry ChainInterface::get_save_decl_entry(const FilePieceIdType & id)
+		{
+			return PieceSavedDeclEntry::lookup(*this,id);
+		}
+		
+
 		int ChainInterface::get_limit(AssetIdType id, ShareType amount)
         {
             //to do  根据设定设置指定资产指定amount对应的limit值

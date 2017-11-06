@@ -43,6 +43,11 @@ namespace glua
 		*/
 		std::string escape_string(std::string &str);
 
+		/**
+		 * unescape string used in json
+		 */
+		std::string unescape_string(std::string &str);
+
 		std::vector<std::string> &string_split(const std::string &s, char delim, std::vector<std::string> &elems);
 
 		std::vector<std::string> string_split(const std::string &s, char delim);

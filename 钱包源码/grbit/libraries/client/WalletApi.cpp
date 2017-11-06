@@ -1044,7 +1044,12 @@ namespace TiValue {
                     FC_THROW_EXCEPTION(sandbox_command_forbidden, "in sandbox, this command is forbidden, you cannot call it!");
 
                 try {
-                    const auto history = _wallet->get_pretty_transaction_history(account_name, start_block_num, end_block_num, asset_symbol);
+					auto history = _wallet->get_pretty_transaction_history(account_name, start_block_num, end_block_num, asset_symbol);
+					for (auto& prettytrx : history) {
+						for (auto& prettyledgerentry : prettytrx.ledger_entries) {
+							prettyledgerentry.running_balances.clear();
+						}
+					}
                     if (limit == 0 || abs(limit) >= history.size())
                     {
                         return history;

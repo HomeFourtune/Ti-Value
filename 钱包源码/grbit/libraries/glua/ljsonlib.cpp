@@ -17,6 +17,7 @@
 #include <glua/glua_tokenparser.h>
 #include <glua/tichain_lua_api.h>
 #include <glua/tichain_lua_lib.h>
+#include <glua/glua_lutil.h>
 
 using TiValue::lua::api::global_glua_chain_api;
 
@@ -120,6 +121,8 @@ static GluaStorageValue tokens_to_lua_value(lua_State *L, GluaTokenParser *token
             GluaStorageValue value;
             value.type = TiValue::blockchain::StorageValueTypes::storage_value_string;
             auto token_str = token.token;
+			// FIXME: 要unescape
+			token_str = glua::util::unescape_string(token_str);
             value.value.string_value = TiValue::lua::lib::malloc_managed_string(L, token_str.length() + 1);
             memset(value.value.string_value, 0x0, token_str.length() + 1);
             strncpy(value.value.string_value, token_str.c_str(), token_str.length());

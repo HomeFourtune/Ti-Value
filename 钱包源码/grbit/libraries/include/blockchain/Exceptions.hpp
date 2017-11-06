@@ -197,7 +197,7 @@ namespace TiValue {
 
 		FC_DECLARE_EXCEPTION(file_upload_error, 43000, "file upload error");
 		FC_DECLARE_DERIVED_EXCEPTION(file_upload_contract_not_exsited, TiValue::blockchain::file_upload_error, 43001, "file_upload_contract_not_exsited");
-		FC_DECLARE_DERIVED_EXCEPTION(read_file_error, TiValue::blockchain::file_upload_error, 43002, "file_upload_contract_not_exsited");
+		FC_DECLARE_DERIVED_EXCEPTION(read_file_info_error, TiValue::blockchain::file_upload_error, 43002, "file_upload_contract_not_exsited");
 		FC_DECLARE_DERIVED_EXCEPTION(upload_request_not_exsited, TiValue::blockchain::file_upload_error, 43003, "upload_request_not_exsited");
 		FC_DECLARE_DERIVED_EXCEPTION(file_piece_upload_request_not_exsited, TiValue::blockchain::file_upload_error, 43004, "file_piece_upload_request_not_exsited");
 		FC_DECLARE_DERIVED_EXCEPTION(store_request_not_exsited, TiValue::blockchain::file_upload_error, 43005, "store_request_not_exsited");
@@ -208,6 +208,8 @@ namespace TiValue {
 		FC_DECLARE_DERIVED_EXCEPTION(file_piece_missing, TiValue::blockchain::file_upload_error, 43010, "file_piece_missing");
 		FC_DECLARE_DERIVED_EXCEPTION(authorazing_contract_not_exsited, TiValue::blockchain::file_upload_error, 43011, "authorazingContract_not_exsited");
 		FC_DECLARE_DERIVED_EXCEPTION(invalid_authorazing_contract, TiValue::blockchain::file_upload_error, 43012, "AuthorazingContract must has a getAccess api");
-		FC_DECLARE_DERIVED_EXCEPTION(file_is_too_small_to_partition, TiValue::blockchain::file_upload_error, 43012, "file_is_too_small_to_partition");
+		FC_DECLARE_DERIVED_EXCEPTION(file_is_too_small_to_partition, TiValue::blockchain::file_upload_error, 43013, "file_is_too_small_to_partition");
+		FC_DECLARE_DERIVED_EXCEPTION(access_unauthorized, TiValue::blockchain::file_upload_error, 43014, "access_unauthorized");
+		FC_DECLARE_DERIVED_EXCEPTION(save_decl_exsited, TiValue::blockchain::file_upload_error, 43015, "save_decl_exsited");
    }
 } // TiValue::blockchain

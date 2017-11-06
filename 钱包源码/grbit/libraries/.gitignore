@@ -1,0 +1,9 @@
+patch.diff
+*.ldf
+*.gpc
+*.pyc
+TiApp/.vscode/
+TiApp.7z
+TiApp/start.bat
+TiApp/Ti_Value.exe
+TiApp/.idea/

@@ -19,68 +19,77 @@ namespace TiValue {
 
         class TransactionEvaluationState;
 
-        enum OperationTypeEnum
-        {
-            null_op_type = 0,
+		enum OperationTypeEnum
+		{
+			null_op_type = 0,
 
-            // balances
-            withdraw_op_type = 1,
-            deposit_op_type = 2,
+			// balances
+			withdraw_op_type = 1,
+			deposit_op_type = 2,
 
-            // accounts
-            register_account_op_type = 3,
-            update_account_op_type = 4,
-            withdraw_pay_op_type = 5,
+			// accounts
+			register_account_op_type = 3,
+			update_account_op_type = 4,
+			withdraw_pay_op_type = 5,
 
-            // assets
-            create_asset_op_type = 6,
-            update_asset_op_type = 7,
-            issue_asset_op_type = 8,
+			// assets
+			create_asset_op_type = 6,
+			update_asset_op_type = 7,
+			issue_asset_op_type = 8,
 
-            // reserved
-            // reserved_op_1_type         = 10, // Skip; see below
-            reserved_op_2_type = 11,
-            reserved_op_3_type = 17,
-            define_slate_op_type = 18,
+			// reserved
+			// reserved_op_1_type         = 10, // Skip; see below
+			reserved_op_2_type = 11,
+			reserved_op_3_type = 17,
+			define_slate_op_type = 18,
 
-            // reserved
-            reserved_op_4_type = 21,
-            reserved_op_5_type = 22,
-            release_escrow_op_type = 23,
-            update_signing_key_op_type = 24,
-            update_balance_vote_op_type = 27,
+			// reserved
+			reserved_op_4_type = 21,
+			reserved_op_5_type = 22,
+			release_escrow_op_type = 23,
+			update_signing_key_op_type = 24,
+			update_balance_vote_op_type = 27,
 
-            // assets
-            update_asset_ext_op_type = 30,
-            //memo
-            imessage_memo_op_type = 66,
+			// assets
+			update_asset_ext_op_type = 30,
+			//memo
+			imessage_memo_op_type = 66,
 
-            contract_info_op_type = 68,
+			contract_info_op_type = 68,
 
-            register_contract_op_type = 70,
-            upgrade_contract_op_type = 71,
-            destroy_contract_op_type = 72,
-            call_contract_op_type = 73,
-            transfer_contract_op_type = 74,
-            // contract
-            withdraw_contract_op_type = 80,
-            deposit_contract_op_type = 82,
-            
-            // balances withdraw
-            balances_withdraw_op_type = 88,
+			register_contract_op_type = 70,
+			upgrade_contract_op_type = 71,
+			destroy_contract_op_type = 72,
+			call_contract_op_type = 73,
+			transfer_contract_op_type = 74,
+			// contract
+			withdraw_contract_op_type = 80,
+			deposit_contract_op_type = 82,
 
-            transaction_op_type = 90,
-            storage_op_type = 91,
+			// balances withdraw
+			balances_withdraw_op_type = 88,
 
-            // event
-            event_op_type = 100,
+			transaction_op_type = 90,
+			storage_op_type = 91,
+
+			// event
+			event_op_type = 100,
 
 			// on functions in contracts
 			on_destroy_op_type = 108,
 			on_upgrade_op_type = 109,
 
-            // contract call success
-			on_call_success_op_type = 110
+			// contract call success
+			on_call_success_op_type = 110,
+
+
+			//file store 
+			upload_request_op_type=120,
+			store_request_op_type=121,
+			piece_saved_op_type=122,
+			enable_access_op_type=123,
+			store_reject_op_type=124,
+			piece_saved_decl_op_type=125
 
         };
 
@@ -170,6 +179,11 @@ FC_REFLECT_ENUM(TiValue::blockchain::OperationTypeEnum,
 	(on_destroy_op_type)
 	(on_upgrade_op_type)
     (on_call_success_op_type)
+	(upload_request_op_type)
+	(store_request_op_type)
+	(piece_saved_op_type)
+	(enable_access_op_type)
+	(store_reject_op_type)
     )
 
     FC_REFLECT(TiValue::blockchain::Operation, (type)(data))

@@ -139,8 +139,11 @@ namespace TiValue {
 					if (pos == string::npos)
 						throw fc::exception();
 					try {
-						FileContentIdType content_id(id.substr(0, pos), AddressType::file_id);
+						FileContentIdType content_id(id.substr(0, pos));
 						PublicKeyType pk(id.substr(pos));
+						this->file_id = content_id;
+						this->uploader = pk;
+						break;
 					}
 					catch (...) {}
 				} while (1);
@@ -154,56 +157,98 @@ namespace TiValue {
 		{}
 		StoreNodeInfo::StoreNodeInfo(const NodeIdType & node, const PublicKeyType & key) :node(node), key(key)
 		{}
-		FileContentIdType GetFileInfo(std::string filename, vector<PieceUploadInfo>& infos, ShareType num_of_pieces, double Price)
+		bool StoreNodeInfo::operator<(const StoreNodeInfo & info) const
+		{
+			if (node < info.node)
+				return true;
+			return key < info.key;
+		}
+		bool StoreNodeInfo::operator==(const StoreNodeInfo & info) const
+		{
+			return (key==info.key)&&(node==info.node);
+		}
+		FileContentIdType GetFileInfo(std::string fileinfo, vector<PieceUploadInfo>& infos, ShareType num_of_pieces, double Price,uint32_t filesize)
 		{
 			infos.clear();
-			FILE* pFIle = fopen(filename.c_str(), "rb");
-			char buf[FILE_READBUF_LENGTH + 1] = { 0 };
-			FC_ASSERT(fseek(pFIle, 0, SEEK_END) == 0);
-			long filesize = ftell(pFIle);
-			if ((filesize / num_of_pieces) < num_of_pieces)
+			FileContentIdType result;
+			std::string info_parser;
+			auto pos=fileinfo.find_first_of(";");
+			if(pos==string::npos)
+				FC_CAPTURE_AND_THROW(read_file_info_error, (fileinfo));
+			info_parser = fileinfo.substr(0, pos);
+			result = info_parser;
+			fileinfo = fileinfo.substr(pos + 1);
+			int piece_count = 0;
+			string buf;
+			uint32_t size_count=0;
+			while (pos=fileinfo.find_first_of(";"),pos != string::npos)
 			{
-				FC_CAPTURE_AND_THROW(file_is_too_small_to_partition, (filename));
+				PieceUploadInfo info;
+				info_parser= fileinfo.substr(0, pos);
+				int pos2 = fileinfo.find_first_of(",");
+				buf = info_parser.substr(0,pos2);
+				info.pieceid = buf;
+				buf = info_parser.substr(pos2 + 1);
+				sscanf(buf.c_str(), "%lld",&(info.piece_size));
+				size_count += info.piece_size;
+				info.price= Price*info.piece_size / filesize;
+				infos.push_back(info);
+				fileinfo = fileinfo.substr(pos+1);
 			}
-			int times_to_read_one_piece = filesize / num_of_pieces / num_of_pieces;
-			int times_count = times_to_read_one_piece;
-
-			FileContentIdType id;
-			fc::sha512::encoder enc;
-
-			fc::sha512::encoder enc_for_piece;
-			size_t read_count = 0;
-			size_t piece_size = 0;
-			while (read_count = fread(buf, 1, FILE_READBUF_LENGTH, pFIle), read_count>0)
-			{
-				piece_size += read_count;
-				fc::raw::pack(enc, fc::to_base58(buf, read_count));
-				fc::raw::pack(enc_for_piece, fc::to_base58(buf, read_count));
-				--times_count;
-				if (times_count == 0 && num_of_pieces > 1)
-				{
-					PieceUploadInfo info;
-					info.pieceid.addr = fc::ripemd160::hash(enc_for_piece.result());
-					info.piece_size = piece_size;
-					info.price = Price*(piece_size / filesize);
-					piece_size = 0;
-					times_count = times_to_read_one_piece;
-					num_of_pieces--;
-					infos.push_back(info);
-					enc_for_piece.reset();
-				}
-			}
-			PieceUploadInfo info;
-			info.pieceid.addr = fc::ripemd160::hash(enc_for_piece.result());
-			info.piece_size = piece_size;
-			info.price = Price*(piece_size / filesize);
-			infos.push_back(info);
-			if (feof(pFIle))
-			{
-				id.addr = fc::ripemd160::hash(enc.result());
-				return id;
-			}
-			FC_CAPTURE_AND_THROW(read_file_error, (filename));
+			if(size_count!=filesize)
+				FC_CAPTURE_AND_THROW(read_file_info_error, (fileinfo));
+			return result;
 		}
+
+		LocalStoreRequestInfo::LocalStoreRequestInfo()
+		{
+		}
+
+		LocalStoreRequestInfo::LocalStoreRequestInfo(const const FileIdType& fid, const FilePieceIdType& piece_id, const NodeIdType& node, int piece_index, size_t piece_size, const string& filename) :
+			file_id(fid),piece_id(piece_id),node_id(node),c_id(fid.file_id),piece_index(piece_index), piece_size(piece_size),filename(filename)
+		{
+
+		}
+
+		oPieceSavedDeclEntry PieceSavedDeclEntry::lookup(const ChainInterface & db, const FilePieceIdType & id)
+		{
+			try
+			{
+				return db.savedecl_lookup_by_id(id);
+			}FC_CAPTURE_AND_RETHROW((id));
+
+		}
+
+		void PieceSavedDeclEntry::store(ChainInterface & db, const FilePieceIdType & id, const PieceSavedDeclEntry & entry)
+		{
+			try
+			{
+				return db.savedecl_insert_into_id_map(id,entry);
+			}FC_CAPTURE_AND_RETHROW((id));
+
+		}
+
+		void PieceSavedDeclEntry::remove(ChainInterface & db, const FilePieceIdType & id)
+		{
+			try
+			{
+				return db.savedecl_remove_by_id(id);
+			}FC_CAPTURE_AND_RETHROW((id));
+		}
+
+		bool PieceStoreInfo::operator<(const PieceStoreInfo & info) const
+		{
+			if (file_id < info.file_id)
+				return true;
+			return piece_id < info.piece_id;
+		}
+
+		bool PieceStoreInfo::operator==(const PieceStoreInfo & info) const
+		{
+			if (file_id == info.file_id&&piece_id == info.piece_id)
+				return true;
+			return false;
+		}
+
 }
 }

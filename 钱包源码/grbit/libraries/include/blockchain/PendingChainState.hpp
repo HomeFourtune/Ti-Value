@@ -194,6 +194,7 @@ namespace TiValue {
 
 
 			//filestore related
+			
 			unordered_map<FileIdType, UploadRequestEntry>			_upload_request_db;
 			unordered_set<FileIdType>								_upload_request_remove;
 			unordered_map<FilePieceIdType, StoreRequestEntry>		_store_request_db;
@@ -206,7 +207,8 @@ namespace TiValue {
 			unordered_set<FileIdType>								_enable_access_remove;
 			unordered_map<FilePieceIdType, StoreRejectEntry>	    _reject_store_db;
 			unordered_set<FilePieceIdType>							_reject_store_remove;
-
+			unordered_map<FilePieceIdType, PieceSavedDeclEntry>		_savedecl_db;
+			unordered_set<FilePieceIdType> _savedecl_remove;
             vector<EventOperation> event_vector;
 			vector<TiValue::blockchain::SandboxAccountInfo>                     _vec_wallet_accounts;
 
@@ -645,6 +647,8 @@ namespace TiValue {
 			virtual void filesaved_insert_into_id_map(const FileIdType& piece_id, const FileSavedEntry& entry);
 			virtual void enableaccess_insert_into_id_map(const FileIdType& file_id, const EnableAccessEntry& entry);
 			virtual void rejectstore_insert_into_id_map(const FilePieceIdType& file_id, const StoreRejectEntry& entry);
+			virtual void savedecl_insert_into_id_map(const FilePieceIdType& file_id, const PieceSavedDeclEntry& entry);
+
 			//lookup related
 			virtual oUploadRequestEntry uploadrequest_lookup_by_id(const FileIdType& file_id) const;
 			virtual oStoreRequestEntry storerequest_lookup_by_id(const FilePieceIdType& file_id)const;
@@ -652,7 +656,8 @@ namespace TiValue {
 			virtual oFileSavedEntry filesaved_lookup_by_id(const FileIdType& file_id)const;
 			virtual oEnableAccessEntry enableaccess_lookup_by_id(const FileIdType& file_id)const;
 			virtual oRejectStoreEntry rejectstore_lookup_by_id(const FilePieceIdType& file_id)const;
-
+			virtual oPieceSavedDeclEntry savedecl_lookup_by_id(const FilePieceIdType& file_id)const;
+			
 			//remove related			
 			virtual void uploadrequest_remove_by_id(const FileIdType& file_id);
 			virtual void storerequest_remove_by_id(const FilePieceIdType& file_id);
@@ -660,7 +665,8 @@ namespace TiValue {
 			virtual void filesaved_remove_by_id(const FileIdType& file_id);
 			virtual void enableaccess_remove_by_id(const FileIdType& file_id);
 			virtual void rejectstore_remove_by_id(const FilePieceIdType& file_id);
-        };
+			virtual void savedecl_remove_by_id(const FilePieceIdType& file_id);
+};
         typedef std::shared_ptr<PendingChainState> PendingChainStatePtr;
 
     }
@@ -708,6 +714,8 @@ FC_REFLECT(TiValue::blockchain::PendingChainState,
 	(_enable_access_remove)
 	(_reject_store_db)
 	(_reject_store_remove)
+	(_savedecl_db)
+	(_savedecl_remove)
     )
 
 	FC_REFLECT(TiValue::blockchain::SandboxAccountInfo, (id)(name)(delegate_info)(owner_address)(registration_date)(last_update)(owner_key))

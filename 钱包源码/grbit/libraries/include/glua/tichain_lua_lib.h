@@ -140,11 +140,11 @@ namespace TiValue
                 /************************************************************************/
                 /* the the max limit instructions count in the lua stack                */
                 /************************************************************************/
-                int get_instructions_limit();
+                int get_instructions_limit() const;
                 /************************************************************************/
                 /* get how many lua vm instructions ran now in the lua stack            */
                 /************************************************************************/
-                int get_instructions_executed_count();
+                int get_instructions_executed_count() const;
                 /************************************************************************/
                 /* check whether the TiValue apis over limit(maybe TiValue limit api called count) */
                 /************************************************************************/

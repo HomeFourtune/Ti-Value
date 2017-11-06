@@ -103,11 +103,11 @@ namespace TiValue
             {
                 return set_lua_state_instructions_limit(_L, limit);
             }
-            int GluaStateScope::get_instructions_limit()
+            int GluaStateScope::get_instructions_limit() const
             {
                 return get_lua_state_instructions_limit(_L);
             }
-            int GluaStateScope::get_instructions_executed_count()
+            int GluaStateScope::get_instructions_executed_count() const
             {
                 return get_lua_state_instructions_executed_count(_L);
             }

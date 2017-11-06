@@ -635,6 +635,12 @@ namespace TiValue {
 			_reject_store_db[file_id] = entry;
 			_reject_store_remove.erase(file_id);
 		}
+		void PendingChainState::savedecl_insert_into_id_map(const FilePieceIdType & file_id, const PieceSavedDeclEntry & entry)
+		{
+			_savedecl_db[file_id] = entry;
+			_savedecl_remove.erase(file_id);
+		}
+
 		oUploadRequestEntry PendingChainState::uploadrequest_lookup_by_id(const FileIdType & file_id) const
 		{
 			auto it = _upload_request_db.find(file_id);
@@ -707,6 +713,18 @@ namespace TiValue {
 				return oRejectStoreEntry();
 			return prev_state->lookup<StoreRejectEntry>(file_id);
 		}
+		oPieceSavedDeclEntry PendingChainState::savedecl_lookup_by_id(const FilePieceIdType & file_id) const
+		{
+			auto it = _savedecl_db.find(file_id);
+			if (it != _savedecl_db.end())
+				return it->second;
+			if (_savedecl_remove.count(file_id) > 0)
+				return oPieceSavedDeclEntry();
+			const ChainInterfacePtr prev_state = _prev_state.lock();
+			if (!prev_state)
+				return oPieceSavedDeclEntry();
+			return prev_state->lookup<PieceSavedDeclEntry>(file_id);
+		}
 		void PendingChainState::uploadrequest_remove_by_id(const FileIdType & file_id)
 		{
 			_upload_request_db.erase(file_id);
@@ -736,6 +754,11 @@ namespace TiValue {
 		{
 			_reject_store_db.erase(file_id);
 			_reject_store_remove.insert(file_id);
+		}
+		void PendingChainState::savedecl_remove_by_id(const FilePieceIdType & file_id)
+		{
+			_savedecl_db.erase(file_id);
+			_savedecl_remove.insert(file_id);
 		}
         void PendingChainState::contractstorage_erase_from_id_map(const ContractIdType& id)
         {

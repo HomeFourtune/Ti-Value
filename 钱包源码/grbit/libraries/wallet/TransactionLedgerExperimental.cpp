@@ -110,9 +110,8 @@ namespace TiValue {
 					my_store_requests[store_request_entry.piece_id]=store_request_entry.file_id;
 					_wallet_db.store_my_store_request(store_request_entry);
 				}
-				else
-				{
-					//不是自己的记录
+				//else
+				//{
 					auto pieceid = store_request_entry.piece_id;
 					auto it = _upload_request_entrys.begin();
 					bool found = false;
@@ -140,19 +139,19 @@ namespace TiValue {
 						_store_request_entrys_for_my_file[pieceid] = store_request_entry.store_request;
 						_wallet_db.store_store_request_for_my_file(store_request_entry);
 					}
-				}
+				//}
 			};
 			_store_request_entrys_for_my_file.clear();
 			_blockchain->scan_store_request(scan_store_request);
 			//现在钱包里存储了跟本地上传上传相关所有Store_Request
 			const auto  scan_pieced_saved = [&](const PieceSavedEntry& piece_saved_entry)
 			{
-				if (piece_saved_entry.storageNode.count(file_store_node) > 1)
+				if (piece_saved_entry.storageNode.count(file_store_node) > 0)
 				{
 					if (my_store_confirmed.find(piece_saved_entry.piece_id) != my_store_confirmed.end())
-						my_store_confirmed[piece_saved_entry.piece_id] = 1;
-					else
 						my_store_confirmed[piece_saved_entry.piece_id] += 1;
+					else
+						my_store_confirmed[piece_saved_entry.piece_id] = 1;
 				}
 			};
 			my_store_confirmed.clear();
@@ -165,7 +164,7 @@ namespace TiValue {
 					my_store_rejected[entry.piece_id].insert(it->second);
 				}
 			};
-			my_store_confirmed.clear();
+			my_store_rejected.clear();
 			_blockchain->scan_store_reject(scan_store_reject);
 			//获取本地账户获取的授权
 			const auto  scan_enable_access = [&](const EnableAccessEntry& entry)

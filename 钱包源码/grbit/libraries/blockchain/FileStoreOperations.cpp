@@ -6,8 +6,15 @@ namespace TiValue
 {
 	namespace blockchain
 	{
-		UploadRequestOperation::UploadRequestOperation(const FileIdType & file_id, const PublicKeyType & requestor, const vector<PieceUploadInfo>& pieces, const ContractIdType & authentication, ShareType num_of_copys, ShareType payterm) :
-			file_id(file_id), requestor(requestor), pieces(pieces), authentication(authentication), num_of_copys(num_of_copys), payterm(payterm)
+		UploadRequestOperation::UploadRequestOperation(const FileIdType& file_id, const PublicKeyType& requestor,
+			const vector<PieceUploadInfo>& pieces,
+			const ContractIdType& authentication,
+			ShareType num_of_copys,
+			ShareType payterm,
+			const string& filename,
+			const string& description,
+			const string& node_id) :
+			file_id(file_id), requestor(requestor), pieces(pieces), authentication(authentication), num_of_copys(num_of_copys), payterm(payterm),filename(filename),description(description),node_id(node_id)
 		{
 			num_of_pieces = pieces.size();
 		}
@@ -24,6 +31,9 @@ namespace TiValue
 					entry.num_of_copys = num_of_copys;
 					entry.pieces = pieces;
 					entry.authenticating_contract = authentication;
+					entry.description = description;
+					entry.node_id =		node_id;
+					entry.filename =	filename;
 					eval_state._current_state->store_upload_request(entry);
 				}
 			}
@@ -68,8 +78,8 @@ namespace TiValue
 					entry.piece_id = piece_id;
 					entry.store_request.insert(std::make_pair(node_id, requester));
 					eval_state._current_state->store_store_request(entry);
-				}
 
+				}
 			}
 			FC_CAPTURE_AND_RETHROW((*this))
 		}
@@ -81,6 +91,7 @@ namespace TiValue
 
 		void PieceSavedOperation::evaluate(TransactionEvaluationState & eval_state) const
 		{
+			try {
 			auto _cur_state = eval_state._current_state;
 			if (!eval_state.evaluate_contract_result)
 				FC_CAPTURE_AND_THROW(in_result_of_execute, ("PieceSavedOperation can only in result transaction"));
@@ -104,16 +115,6 @@ namespace TiValue
 			};
 			auto upload_request = _cur_state->get_upload_request(file_id);
 			auto& pieces = upload_request->pieces;
-			for (auto piece : pieces)
-			{
-				if (piece.pieceid == piece_id)
-					continue;
-				if (!_cur_state->get_piece_saved_entry(piece.pieceid).valid())
-					return;
-			}
-			FileSavedEntry file_store_entry;
-			file_store_entry.file_id = file_id;
-			_cur_state->store_file_saved_entry(file_store_entry);
 			auto reject_entry = _cur_state->get_reject_store_entry(this->piece_id);
 			if (reject_entry.valid())
 			{
@@ -132,13 +133,27 @@ namespace TiValue
 				else
 					_cur_state->store_store_reject(*reject_entry);
 			}
+			for (auto piece : pieces)
+			{
+				if (piece.pieceid == piece_id)
+					continue;
+				if (!_cur_state->get_piece_saved_entry(piece.pieceid).valid())
+					return;
+			}
+			FileSavedEntry file_store_entry;
+			file_store_entry.file_id = file_id;
+			_cur_state->store_file_saved_entry(file_store_entry);
 
+			}
+			FC_CAPTURE_AND_RETHROW((*this))
 		}
 
-		EnableAccessOperation::EnableAccessOperation(const FileIdType & file_id, const PublicKeyType & requester) :file_id(file_id), requester(requester) {}
+		EnableAccessOperation::EnableAccessOperation(const FileIdType & file_id, const PublicKeyType & requester) :file_id(file_id), requester(requester) 
+		{}
 
 		void EnableAccessOperation::evaluate(TransactionEvaluationState & eval_state) const
 		{
+			try{
 			auto _cur_state = eval_state._current_state;
 			if (!eval_state.evaluate_contract_result)
 				FC_CAPTURE_AND_THROW(in_result_of_execute, ("EnableAccessOperation can only in result transaction"));
@@ -156,12 +171,15 @@ namespace TiValue
 
 				_cur_state->store_enable_access_entry(new_entry);
 			}
+			}
+			FC_CAPTURE_AND_RETHROW((*this))
 		}
 
 		StoreRejectOperation::StoreRejectOperation(const FileIdType & file_id, const FilePieceIdType & piece_id, const NodeIdType & node_id) :file_id(file_id), piece_id(piece_id), node_id(node_id) {}
 
 		void StoreRejectOperation::evaluate(TransactionEvaluationState & eval_state) const
 		{
+			try{
 			auto _cur_state = eval_state._current_state;
 			if (!eval_state.evaluate_contract_result)
 				FC_CAPTURE_AND_THROW(in_result_of_execute, ("EnableAccessOperation can only in result transaction"));
@@ -198,10 +216,76 @@ namespace TiValue
 			else
 			{
 				StoreRejectEntry new_entry;
-				store_rejection->info.insert(std::make_pair(node_id,file_id));
+				new_entry.piece_id = piece_id;
+				new_entry.info.insert(std::make_pair(node_id,file_id));
 				_cur_state->store_store_reject(new_entry);
 			}
+			}
+			FC_CAPTURE_AND_RETHROW((*this))
 		}
 
+		PieceSavedDeclareOperation::PieceSavedDeclareOperation(const FileIdType & file_id, const FilePieceIdType & piece_id, 
+			const NodeIdType & node_id, const PublicKeyType & key):file_id(file_id),piece_id(piece_id),node_id(node_id),key(key)
+		{
+
+		}
+
+		void PieceSavedDeclareOperation::evaluate(TransactionEvaluationState & eval_state) const
+		{
+			try{
+			if (!eval_state.check_signature(Address(key)))
+				FC_CAPTURE_AND_THROW(missing_signature, (key));
+			auto entry= eval_state._current_state->get_store_request_entry(piece_id);
+			if (!entry.valid())
+				FC_CAPTURE_AND_THROW(store_request_not_exsited, (piece_id));
+			if(entry->file_id.find(file_id)== entry->file_id.end())
+				FC_CAPTURE_AND_THROW(file_piece_upload_request_not_exsited, (piece_id));
+			auto node_and_key =entry->store_request.find(node_id);
+			if (node_and_key == entry->store_request.end() || node_and_key->second != key)
+				FC_CAPTURE_AND_THROW(store_request_not_exsited, (""));
+			auto decl_entry=eval_state._current_state->get_save_decl_entry(piece_id);
+			if (decl_entry.valid())
+			{
+				PieceStoreInfo temp;
+				temp.file_id = file_id;
+				temp.piece_id = piece_id;
+				set<PieceStoreInfo>::iterator it = decl_entry->store_info.find(temp);
+
+				if (it == decl_entry->store_info.end())
+				{
+					PieceStoreInfo info;
+					info.file_id = file_id;
+					info.piece_id = piece_id;
+					info.nodes.insert(StoreNodeInfo(this->node_id, this->key));
+					decl_entry->store_info.insert(info);
+				}
+				else
+				{
+					if (it->nodes.find(StoreNodeInfo(this->node_id, this->key)) != it->nodes.end())
+						FC_CAPTURE_AND_THROW(save_decl_exsited,(this->node_id));
+					StoreNodeInfo node_info= StoreNodeInfo(this->node_id, this->key);
+					PieceStoreInfo info;
+					info.file_id = file_id;
+					info.piece_id = piece_id;
+					info.nodes = it->nodes;
+					info.nodes.insert(StoreNodeInfo(this->node_id, this->key));
+					decl_entry->store_info.insert(info);
+				}
+				eval_state._current_state->store_save_decl_entry(*decl_entry);
+			}
+			else
+			{
+				PieceSavedDeclEntry decl_entry;
+				decl_entry.piece_id = piece_id;
+				PieceStoreInfo info;
+				info.file_id = file_id;
+				info.piece_id = piece_id;
+				info.nodes.insert(StoreNodeInfo(this->node_id, this->key));
+				decl_entry.store_info.insert(info);
+				eval_state._current_state->store_save_decl_entry(decl_entry);
+			}
+		}FC_CAPTURE_AND_RETHROW((*this))
+		}
+		
 }
 }

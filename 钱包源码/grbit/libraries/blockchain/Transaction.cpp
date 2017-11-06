@@ -1,7 +1,7 @@
 #include <blockchain/AccountOperations.hpp>
 #include <blockchain/AssetOperations.hpp>
 #include <blockchain/BalanceOperations.hpp>
-
+#include <blockchain\Exceptions.hpp>
 #include <blockchain/SlateOperations.hpp>
 #include <blockchain/Time.hpp>
 #include <blockchain/Transaction.hpp>
@@ -160,7 +160,20 @@ namespace TiValue {
         void Transaction::deposit(const Address& owner, const Asset& amount)
         {
             FC_ASSERT(amount.amount > 0, "amount: ${amount}", ("amount", amount));
-            operations.emplace_back(DepositOperation(owner, amount));
+			DepositOperation new_op = DepositOperation(owner, amount);
+			for (auto& op : operations)
+			{
+				if (op.type == deposit_op_type&&op.as<DepositOperation>().balance_id()== new_op.balance_id())
+				{
+
+					new_op.amount = op.as<DepositOperation>().amount + amount.amount;
+					if (new_op.amount < amount.amount)
+						FC_CAPTURE_AND_THROW(addition_overflow,(""));
+					op = new_op;
+					return;
+				}
+			}
+			operations.emplace_back(DepositOperation(owner, amount));
         }
 
 

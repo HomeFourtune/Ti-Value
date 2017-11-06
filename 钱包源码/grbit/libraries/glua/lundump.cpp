@@ -109,20 +109,32 @@ static TString *LoadString(LoadState *S) {
 }
 
 
-static void LoadCode(LoadState *S, Proto *f) {
+const int g_sizelimit = 1024 * 1024 * 500;
+static bool LoadCode(LoadState *S, Proto *f) {
     int n = LoadInt(S);
+	if (n > g_sizelimit)
+	{
+		return false;
+	}
+
     f->code = luaM_newvector(S->L, n, Instruction);
     f->sizecode = n;
     LoadVector(S, f->code, n);
+	return true;
 }
 
 
 static void LoadFunction(LoadState *S, Proto *f, TString *psource);
 
-
-static void LoadConstants(LoadState *S, Proto *f) {
+// 500M
+const int g_constantslimit = 1024 * 1024 * 500;
+static bool LoadConstants(LoadState *S, Proto *f) {
     int i;
     int n = LoadInt(S);
+	if (n > g_constantslimit)
+	{
+		return false;
+	}
     f->k = luaM_newvector(S->L, n, TValue);
     f->sizek = n;
     for (i = 0; i < n; i++)
@@ -151,12 +163,17 @@ static void LoadConstants(LoadState *S, Proto *f) {
             lua_assert(0);
         }
     }
+	return true;
 }
 
-
-static void LoadProtos(LoadState *S, Proto *f) {
+// 500M
+static bool LoadProtos(LoadState *S, Proto *f) {
     int i;
     int n = LoadInt(S);
+	if (n > g_sizelimit)
+	{
+		return false;
+	}
     f->p = luaM_newvector(S->L, n, Proto *);
     f->sizep = n;
     for (i = 0; i < n; i++)
@@ -165,12 +182,18 @@ static void LoadProtos(LoadState *S, Proto *f) {
         f->p[i] = luaF_newproto(S->L);
         LoadFunction(S, f->p[i], f->source);
     }
+
+	return true;
 }
 
-
-static void LoadUpvalues(LoadState *S, Proto *f) {
+// 500M
+static bool LoadUpvalues(LoadState *S, Proto *f) {
     int i, n;
     n = LoadInt(S);
+	if (n > g_sizelimit)
+	{
+		return false;
+	}
     f->upvalues = luaM_newvector(S->L, n, Upvaldesc);
     f->sizeupvalues = n;
     for (i = 0; i < n; i++)
@@ -179,12 +202,19 @@ static void LoadUpvalues(LoadState *S, Proto *f) {
         f->upvalues[i].instack = LoadByte(S);
         f->upvalues[i].idx = LoadByte(S);
     }
+
+	return true;
 }
 
-
-static void LoadDebug(LoadState *S, Proto *f) {
+// 500M
+const int g_lineslimit = 1024 * 1024 * 500;
+static bool LoadDebug(LoadState *S, Proto *f) {
     int i, n;
     n = LoadInt(S);
+	if (n > g_lineslimit)
+	{
+		return false;
+	}
     f->lineinfo = luaM_newvector(S->L, n, int);
     f->sizelineinfo = n;
     LoadVector(S, f->lineinfo, n);
@@ -201,6 +231,8 @@ static void LoadDebug(LoadState *S, Proto *f) {
     n = LoadInt(S);
     for (i = 0; i < n; i++)
         f->upvalues[i].name = LoadString(S);
+
+	return true;
 }
 
 
@@ -213,10 +245,26 @@ static void LoadFunction(LoadState *S, Proto *f, TString *psource) {
     f->numparams = LoadByte(S);
     f->is_vararg = LoadByte(S);
     f->maxstacksize = LoadByte(S);
-    LoadCode(S, f);
-    LoadConstants(S, f);
-    LoadUpvalues(S, f);
-    LoadProtos(S, f);
+
+	if (!LoadCode(S, f))
+	{
+		return;
+	}
+
+	if (!LoadConstants(S, f))
+	{
+		return;
+	}
+
+	if (!LoadUpvalues(S, f))
+	{
+		return;
+	}
+
+	if (!LoadProtos(S, f))
+	{
+		return;
+	}
     LoadDebug(S, f);
 }
 

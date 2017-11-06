@@ -17,9 +17,14 @@
 #include <glua/glua_lutil.h>
 #include <glua/lobject.h>
 #include <glua/lstate.h>
-
+#include <blockchain/Types.hpp>
 
 namespace  TiValue{
+	namespace  blockchain
+	{
+		struct FileIdType;
+		struct PieceUploadInfo;
+	};
   namespace lua {
     namespace api {
       // 这里是demo实现，需要具体重新实现这里所有API
@@ -150,10 +155,28 @@ namespace  TiValue{
         virtual uint32_t wait_for_future_random(lua_State *L, int next);
 
         virtual int32_t get_waited(lua_State *L, uint32_t num);
-
+		
         virtual void emit(lua_State *L, const char* contract_id, const char* event_name, const char* event_param);
-
-      };
+		virtual bool contract_api_check(lua_State *L, const std::string& contract_id, const std::string& api_name);
+		virtual bool allow_upload_request(lua_State *L, const blockchain::FileIdType& file_id, const std::string& requestor,
+			const std::vector<blockchain::PieceUploadInfo>& pieces,
+			const std::string& authentication,
+			int64_t num_of_copys,
+			int64_t payterm,
+			const std::string& filename,
+			const std::string& description,
+			const std::string& node_id);
+		virtual int allow_upload_request_wrapper_func(lua_State *L);
+		virtual int allow_piece_saved_wrapper_func(lua_State *L);
+		virtual int allow_enable_access_wrapper_func(lua_State *L);
+		virtual int allow_store_reject_wrapper_func(lua_State *L);
+		virtual int allow_store_request_wrapper_func(lua_State *L);
+		virtual bool allow_store_request(lua_State *L, const blockchain::FileIdType& file_id, const std::string& piece_id, const std::string& requester, const std::string& node_id);
+		virtual bool allow_piece_saved(lua_State *L, const blockchain::FileIdType& file_id, const  std::string& piece_id, const std::string& Node);
+		virtual bool allow_enable_access(lua_State *L, const std::string& file_id, const std::string& requestor);
+		virtual bool allow_store_reject(lua_State *L, const blockchain::FileIdType& file_id, const std::string& piece_id, const std::string& node_id);
+		virtual const char* get_publickey_address(lua_State *L, const char* pubkey);
+};
 
     }
   }

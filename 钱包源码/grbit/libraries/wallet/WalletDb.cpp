@@ -75,6 +75,9 @@ namespace TiValue {
 						case my_request_entry_type:
 							load_my_store_request_entry(entry.as<MyStoreRequestEntry>());
 							break;
+						case local_store_req_type:
+							load_local_store_request_entry(entry.as<LocalStoreRequestEntry>());
+							break;
                         default:
                             elog("Unknown wallet entry type: ${type}", ("type", entry.type));
                             break;
@@ -150,6 +153,10 @@ namespace TiValue {
 				void load_my_store_request_entry(const MyStoreRequestEntry &store_request_entry)
 				{
 					self->my_store_requests[store_request_entry.piece_id] = store_request_entry;
+				}
+				void load_local_store_request_entry(const LocalStoreRequestEntry&store_request_entry)
+				{
+					self->local_store_requests.insert(store_request_entry);
 				}
                 void load_key_entry(const WalletKeyEntry& key_entry)
                 {
@@ -276,6 +283,10 @@ namespace TiValue {
 			//clear contract db
 			contracts_of_wallet.clear();
 			id_to_entry_for_contract.clear();
+
+			//for file_store
+			my_store_requests.clear();
+			local_store_requests.clear();
         }
 
         bool WalletDb::is_open()const
@@ -945,6 +956,12 @@ namespace TiValue {
 					return it->second;
 				return oMyStoreRequestEntry();
 			}FC_CAPTURE_AND_RETHROW((piece_id));
+		}
+
+		void WalletDb::store_local_store_req(const blockchain::LocalStoreRequestInfo & info) 
+		{
+			this->local_store_requests.insert(info);
+			store_and_reload_entry(LocalStoreRequestEntry(info));
 		}
 
         oWalletKeyEntry WalletDb::lookup_key(const Address& derived_address)const

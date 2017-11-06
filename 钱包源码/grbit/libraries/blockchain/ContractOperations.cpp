@@ -9,6 +9,8 @@
 #include <sstream>
 #include <blockchain/TransactionOperations.hpp>
 
+#include <contract_engine/contract_engine_builder.hpp>
+
 namespace TiValue
 {
     namespace blockchain
@@ -207,7 +209,10 @@ namespace TiValue
 
                     if (!eval_state.skipexec)
                     {
-                        lua::lib::GluaStateScope scope;
+                        // lua::lib::GluaStateScope scope;
+						::blockchain::contract_engine::ContractEngineBuilder builder;
+						auto engine = builder.build();
+
                         int exception_code = 0;
                         string exception_msg;
                         try
@@ -219,35 +224,53 @@ namespace TiValue
                             statevalue.pointer_value = &eval_state;
 
                             auto contract_entry = eval_state._current_state->get_contract_entry(id);
-                            lua::lib::add_global_string_variable(scope.L(), "caller", ((string)(contract_entry->owner)).c_str());
-                            lua::lib::add_global_string_variable(scope.L(), "caller_address", ((string)(Address(contract_entry->owner))).c_str());
-                            lua::lib::set_lua_state_value(scope.L(), "evaluate_state", statevalue, GluaStateValueType::LUA_STATE_VALUE_POINTER);
-                            lua::api::global_glua_chain_api->clear_exceptions(scope.L());
+
+                            //lua::lib::add_global_string_variable(scope.L(), "caller", ((string)(contract_entry->owner)).c_str());
+                            //lua::lib::add_global_string_variable(scope.L(), "caller_address", ((string)(Address(contract_entry->owner))).c_str());
+                            //lua::lib::set_lua_state_value(scope.L(), "evaluate_state", statevalue, GluaStateValueType::LUA_STATE_VALUE_POINTER);
+                            //lua::api::global_glua_chain_api->clear_exceptions(scope.L());
+
+							engine->set_caller((string)(contract_entry->owner), (string)(Address(contract_entry->owner)));
+							engine->set_state_pointer_value("evaluate_state", &eval_state);
+							engine->clear_exceptions();
 
                             int limit = eval_state._current_state->get_limit(0, exec_limit.amount);
                             if (limit <= 0)
                                 FC_CAPTURE_AND_THROW(TiValue::blockchain::contract_run_out_of_money);
 
-                            scope.set_instructions_limit(limit);
+                            // scope.set_instructions_limit(limit);
+							engine->set_gas_limit(limit);
+
                             //the arg of on_destroy is empty
                             string default_arg = "";
-                            scope.execute_contract_api_by_address(id.AddressToString(AddressType::contract_address).c_str(), CON_ON_UPGRADE_INTERFACE, default_arg.c_str(), nullptr);
-                            if (scope.L()->force_stopping == true && scope.L()->exit_code == LUA_API_INTERNAL_ERROR)
-                                FC_CAPTURE_AND_THROW(lua_executor_internal_error, (""));
-                            exception_code = lua::lib::get_lua_state_value(scope.L(), "exception_code").int_value;
-                            if (exception_code > 0)
-                            {
-                                exception_msg = (char*)lua::lib::get_lua_state_value(scope.L(), "exception_msg").string_value;
-                                if (exception_code == tichain_API_LVM_LIMIT_OVER_ERROR)
-                                    FC_CAPTURE_AND_THROW(TiValue::blockchain::contract_run_out_of_money);
-                                else
-                                {
-                                    TiValue::blockchain::contract_error con_err(32000, "exception", exception_msg);
-                                    throw con_err;
-                                }
-                            }
+                            // scope.execute_contract_api_by_address(id.AddressToString(AddressType::contract_address).c_str(), CON_ON_UPGRADE_INTERFACE, default_arg.c_str(), nullptr);
+							try
+							{
+								engine->execute_contract_api_by_address(id.AddressToString(AddressType::contract_address).c_str(), CON_ON_UPGRADE_INTERFACE, default_arg.c_str(), nullptr);
+							}
+							catch (glua::core::GluaException &e)
+							{
+								TiValue::blockchain::contract_error con_err(32000, "exception", e.what());
+								throw con_err;
+							}
 
-                            ShareType exec_cost = eval_state._current_state->get_amount(scope.get_instructions_executed_count()).amount;
+                            //if (scope.L()->force_stopping == true && scope.L()->exit_code == LUA_API_INTERNAL_ERROR)
+                            //    FC_CAPTURE_AND_THROW(lua_executor_internal_error, (""));
+                            //exception_code = lua::lib::get_lua_state_value(scope.L(), "exception_code").int_value;
+                            //if (exception_code > 0)
+                            //{
+                            //    exception_msg = (char*)lua::lib::get_lua_state_value(scope.L(), "exception_msg").string_value;
+                            //    if (exception_code == tichain_API_LVM_LIMIT_OVER_ERROR)
+                            //        FC_CAPTURE_AND_THROW(TiValue::blockchain::contract_run_out_of_money);
+                            //    else
+                            //    {
+                            //        TiValue::blockchain::contract_error con_err(32000, "exception", exception_msg);
+                            //        throw con_err;
+                            //    }
+                            //}
+
+                            // ShareType exec_cost = eval_state._current_state->get_amount(scope.get_instructions_executed_count()).amount;
+							ShareType exec_cost = eval_state._current_state->get_amount(engine->gas_used()).amount;
                             eval_state.exec_cost = Asset(exec_cost, 0);
                             FC_ASSERT(exec_cost <= exec_limit.amount && exec_cost > 0, "costs of execution can be only between 0 and costlimit");
                             ShareType required = get_amount_sum(exec_cost, transaction_fee.amount);
@@ -293,7 +316,8 @@ namespace TiValue
                             {
                                 if (eval_state.throw_exec_exception)
                                     FC_CAPTURE_AND_THROW(TiValue::blockchain::contract_execute_error, (exception_msg));
-                                Asset exec_cost = eval_state._current_state->get_amount(scope.get_instructions_executed_count());
+                                // Asset exec_cost = eval_state._current_state->get_amount(scope.get_instructions_executed_count());
+								Asset exec_cost = eval_state._current_state->get_amount(engine->gas_used());
                                 std::map<BalanceIdType, ShareType> withdraw_map;
                                 withdraw_enough_balances(balances, (exec_cost + transaction_fee).amount, withdraw_map);
                                 eval_state.p_result_trx.operations.resize(1);
@@ -419,7 +443,9 @@ namespace TiValue
                     {
                         int exception_code = 0;
                         string exception_msg;
-                        lua::lib::GluaStateScope scope;
+                        // lua::lib::GluaStateScope scope;
+						::blockchain::contract_engine::ContractEngineBuilder builder;
+						auto engine = builder.build();
                         try
                         {
                             FC_ASSERT(eval_state.p_result_trx.operations.size() == 0);
@@ -438,35 +464,50 @@ namespace TiValue
                             else
                                 eval_state._contract_balance_remain = 0;
 
-                            lua::lib::add_global_string_variable(scope.L(), "caller", ((string)(entry->owner)).c_str());
-                            lua::lib::add_global_string_variable(scope.L(), "caller_address", ((string)(Address(entry->owner))).c_str());
-                            lua::lib::set_lua_state_value(scope.L(), "evaluate_state", statevalue, GluaStateValueType::LUA_STATE_VALUE_POINTER);
-                            lua::api::global_glua_chain_api->clear_exceptions(scope.L());
+                            //lua::lib::add_global_string_variable(scope.L(), "caller", ((string)(entry->owner)).c_str());
+                            //lua::lib::add_global_string_variable(scope.L(), "caller_address", ((string)(Address(entry->owner))).c_str());
+                            //lua::lib::set_lua_state_value(scope.L(), "evaluate_state", statevalue, GluaStateValueType::LUA_STATE_VALUE_POINTER);
+                            //lua::api::global_glua_chain_api->clear_exceptions(scope.L());
+
+							engine->set_caller((string)(entry->owner), (string)(Address(entry->owner)));
+							engine->set_state_pointer_value("evaluate_state", &eval_state);
+							engine->clear_exceptions();
 
                             int limit = eval_state._current_state->get_limit(0, exec_limit.amount);
                             if (limit <= 0)
                                 FC_CAPTURE_AND_THROW(TiValue::blockchain::contract_run_out_of_money);
 
-                            scope.set_instructions_limit(limit);
+                            // scope.set_instructions_limit(limit);
+							engine->set_gas_limit(limit);
                             //the arg of on_destroy is empty
                             string default_arg = "";
-                            scope.execute_contract_api_by_address(id.AddressToString(AddressType::contract_address).c_str(), CON_ON_DESTROY_INTERFACE, default_arg.c_str(), nullptr);
-                            if (scope.L()->force_stopping == true && scope.L()->exit_code == LUA_API_INTERNAL_ERROR)
-                                FC_CAPTURE_AND_THROW(lua_executor_internal_error, (""));
-                            exception_code = lua::lib::get_lua_state_value(scope.L(), "exception_code").int_value;
-                            if (exception_code > 0)
-                            {
-                                exception_msg = (char*)lua::lib::get_lua_state_value(scope.L(), "exception_msg").string_value;
-                                if (exception_code == tichain_API_LVM_LIMIT_OVER_ERROR)
-                                    FC_CAPTURE_AND_THROW(TiValue::blockchain::contract_run_out_of_money);
-                                else
-                                {
-                                    TiValue::blockchain::contract_error con_err(32000, "exception", exception_msg);
-                                    throw con_err;
-                                }
-                            }
+                            // scope.execute_contract_api_by_address(id.AddressToString(AddressType::contract_address).c_str(), CON_ON_DESTROY_INTERFACE, default_arg.c_str(), nullptr);
+							try
+							{
+								engine->execute_contract_api_by_address(id.AddressToString(AddressType::contract_address).c_str(), CON_ON_DESTROY_INTERFACE, default_arg.c_str(), nullptr);
+							}
+							catch (glua::core::GluaException &e)
+							{
+								TiValue::blockchain::contract_error con_err(32000, "exception", exception_msg);
+								throw con_err;
+							}
+                            //if (scope.L()->force_stopping == true && scope.L()->exit_code == LUA_API_INTERNAL_ERROR)
+                            //    FC_CAPTURE_AND_THROW(lua_executor_internal_error, (""));
+                            //exception_code = lua::lib::get_lua_state_value(scope.L(), "exception_code").int_value;
+                            //if (exception_code > 0)
+                            //{
+                            //    exception_msg = (char*)lua::lib::get_lua_state_value(scope.L(), "exception_msg").string_value;
+                            //    if (exception_code == tichain_API_LVM_LIMIT_OVER_ERROR)
+                            //        FC_CAPTURE_AND_THROW(TiValue::blockchain::contract_run_out_of_money);
+                            //    else
+                            //    {
+                            //        TiValue::blockchain::contract_error con_err(32000, "exception", exception_msg);
+                            //        throw con_err;
+                            //    }
+                            //}
 
-                            ShareType exec_cost = eval_state._current_state->get_amount(scope.get_instructions_executed_count()).amount;
+                            // ShareType exec_cost = eval_state._current_state->get_amount(scope.get_instructions_executed_count()).amount;
+							ShareType exec_cost = eval_state._current_state->get_amount(engine->gas_used()).amount;
                             eval_state.exec_cost = Asset(exec_cost, 0);
                             FC_ASSERT(exec_cost <= exec_limit.amount && exec_cost > 0, "costs of execution can be only between 0 and costlimit");
                             ShareType required = get_amount_sum(exec_cost, transaction_fee.amount);
@@ -510,7 +551,7 @@ namespace TiValue
                                 if (eval_state.throw_exec_exception)
                                     FC_CAPTURE_AND_THROW(TiValue::blockchain::contract_execute_error, (exception_msg));
 
-                                Asset exec_cost = eval_state._current_state->get_amount(scope.get_instructions_executed_count());
+                                Asset exec_cost = eval_state._current_state->get_amount(engine->gas_used());
                                 std::map<BalanceIdType, ShareType> withdraw_map;
                                 withdraw_enough_balances(balances, (exec_cost + transaction_fee).amount, withdraw_map);
                                 eval_state.p_result_trx.operations.resize(1);
@@ -664,42 +705,59 @@ namespace TiValue
 
             if (!eval_state.skipexec)
             {
-                lua::lib::GluaStateScope scope;
+                // lua::lib::GluaStateScope scope;
+				::blockchain::contract_engine::ContractEngineBuilder builder;
+				auto engine = builder.build();
                 int exception_code = 0;
                 string exception_msg;
                 try {
                     FC_ASSERT(eval_state.p_result_trx.operations.size() == 0);
 
-                    GluaStateValue statevalue;
-                    statevalue.pointer_value = &eval_state;
-                    lua::lib::set_lua_state_value(scope.L(), "evaluate_state", statevalue, GluaStateValueType::LUA_STATE_VALUE_POINTER);
-                    lua::lib::add_global_string_variable(scope.L(), "caller", ((string)(this->owner)).c_str());
-                    lua::lib::add_global_string_variable(scope.L(), "caller_address", ((string)(Address(this->owner))).c_str());
-                    lua::api::global_glua_chain_api->clear_exceptions(scope.L());
+                    //GluaStateValue statevalue;
+                    //statevalue.pointer_value = &eval_state;
+                    //lua::lib::set_lua_state_value(scope.L(), "evaluate_state", statevalue, GluaStateValueType::LUA_STATE_VALUE_POINTER);
+                    //lua::lib::add_global_string_variable(scope.L(), "caller", ((string)(this->owner)).c_str());
+                    //lua::lib::add_global_string_variable(scope.L(), "caller_address", ((string)(Address(this->owner))).c_str());
+                    //lua::api::global_glua_chain_api->clear_exceptions(scope.L());
+
+					engine->set_caller((string)(this->owner), (string)(Address(this->owner)));
+					engine->set_state_pointer_value("evaluate_state", &eval_state);
+					engine->clear_exceptions();
+
                     int limit = eval_state._current_state->get_limit(0, initcost.amount);
                     if (limit <= 0)
                         FC_CAPTURE_AND_THROW(TiValue::blockchain::contract_run_out_of_money);
 
-                    scope.set_instructions_limit(limit);
+                    // scope.set_instructions_limit(limit);
+					engine->set_gas_limit(limit);
                     eval_state.p_result_trx.operations.resize(0);
                     eval_state.p_result_trx.push_transaction(eval_state.trx);
                     eval_state.p_result_trx.expiration = eval_state.trx.expiration;
                     eval_state.p_result_trx.operations.push_back(ContractInfoOperation(get_contract_id(), owner, contract_code, register_time));
-                    scope.execute_contract_init_by_address(get_contract_id().AddressToString(AddressType::contract_address).c_str(), nullptr, nullptr);
-                    exception_code = lua::lib::get_lua_state_value(scope.L(), "exception_code").int_value;
+					// scope.execute_contract_init_by_address(get_contract_id().AddressToString(AddressType::contract_address).c_str(), nullptr, nullptr);
+					try
+					{
+						engine->execute_contract_init_by_address(get_contract_id().AddressToString(AddressType::contract_address).c_str(), "", nullptr);
+					}
+					catch (glua::core::GluaException &e)
+					{
+						TiValue::blockchain::contract_error con_err(32000, "exception", exception_msg);
+						throw con_err;
+					}
+                    //exception_code = lua::lib::get_lua_state_value(scope.L(), "exception_code").int_value;
 
-                    if (exception_code > 0)
-                    {
-                        exception_msg = ((char*)lua::lib::get_lua_state_value(scope.L(), "exception_msg").string_value);
-                        if (exception_code == tichain_API_LVM_LIMIT_OVER_ERROR)
-                            FC_CAPTURE_AND_THROW(TiValue::blockchain::contract_run_out_of_money);
-                        else
-                        {
-                            TiValue::blockchain::contract_error con_err(32000, "exception", exception_msg);
-                            throw con_err;
-                        }
-                    }
-                    ShareType exec_cost = eval_state._current_state->get_amount(scope.get_instructions_executed_count()).amount;
+                    //if (exception_code > 0)
+                    //{
+                    //    exception_msg = ((char*)lua::lib::get_lua_state_value(scope.L(), "exception_msg").string_value);
+                    //    if (exception_code == tichain_API_LVM_LIMIT_OVER_ERROR)
+                    //        FC_CAPTURE_AND_THROW(TiValue::blockchain::contract_run_out_of_money);
+                    //    else
+                    //    {
+                    //        TiValue::blockchain::contract_error con_err(32000, "exception", exception_msg);
+                    //        throw con_err;
+                    //    }
+                    //}
+                    ShareType exec_cost = eval_state._current_state->get_amount(engine->gas_used()).amount;
                     eval_state.exec_cost = Asset(exec_cost, 0);
                     FC_ASSERT(exec_cost <= initcost.amount&&exec_cost > 0, "costs of execution can be only between 0 and initcost");
                     if (!eval_state.evaluate_contract_testing)
@@ -741,7 +799,7 @@ namespace TiValue
                     {
                         if (eval_state.throw_exec_exception)
                             FC_CAPTURE_AND_THROW(TiValue::blockchain::contract_execute_error, (exception_msg));
-                        Asset exec_cost = eval_state._current_state->get_amount(scope.get_instructions_executed_count());
+                        Asset exec_cost = eval_state._current_state->get_amount(engine->gas_used());
                         std::map<BalanceIdType, ShareType> withdraw_map;
                         withdraw_enough_balances(balances, (exec_cost + eval_state.required_fees).amount, withdraw_map);
                         eval_state.p_result_trx.operations.resize(1);
@@ -803,7 +861,9 @@ namespace TiValue
 
                 if (!eval_state.skipexec)
                 {
-                    lua::lib::GluaStateScope scope;
+                    // lua::lib::GluaStateScope scope;
+					::blockchain::contract_engine::ContractEngineBuilder builder;
+					auto engine = builder.build();
                     int exception_code = 0;
                     string exception_msg;
                     try
@@ -820,14 +880,18 @@ namespace TiValue
                         GluaStateValue statevalue;
                         statevalue.pointer_value = &eval_state;
 
-                        lua::lib::add_global_string_variable(scope.L(), "caller", ((string)(this->caller)).c_str());
-                        lua::lib::add_global_string_variable(scope.L(), "caller_address", ((string)(Address(this->caller))).c_str());
-                        lua::lib::set_lua_state_value(scope.L(), "evaluate_state", statevalue, GluaStateValueType::LUA_STATE_VALUE_POINTER);
+                        //lua::lib::add_global_string_variable(scope.L(), "caller", ((string)(this->caller)).c_str());
+                        //lua::lib::add_global_string_variable(scope.L(), "caller_address", ((string)(Address(this->caller))).c_str());
+                        //lua::lib::set_lua_state_value(scope.L(), "evaluate_state", statevalue, GluaStateValueType::LUA_STATE_VALUE_POINTER);
+
+						engine->set_caller((string)(this->caller), (string)(Address(this->caller)));
+						engine->set_state_pointer_value("evaluate_state", &eval_state);
 
                         if (!eval_state.evaluate_contract_testing)
                             FC_ASSERT(all_amount >= transaction_fee.amount, "call limit amount not enough!");
 
-                        lua::api::global_glua_chain_api->clear_exceptions(scope.L());
+                        // lua::api::global_glua_chain_api->clear_exceptions(scope.L());
+						engine->clear_exceptions();
 
                         int limit = 0;
                         limit = eval_state._current_state->get_limit(0, costlimit.amount);
@@ -835,25 +899,35 @@ namespace TiValue
                         {
                             FC_CAPTURE_AND_THROW(TiValue::blockchain::contract_run_out_of_money);
                         }
-                        scope.set_instructions_limit(limit);
-                        scope.execute_contract_api_by_address(this->contract.AddressToString(AddressType::contract_address).c_str(), method.c_str(), this->args.c_str(), nullptr);
-                        if (scope.L()->force_stopping == true && scope.L()->exit_code == LUA_API_INTERNAL_ERROR)
-                            FC_CAPTURE_AND_THROW(lua_executor_internal_error, (""));
-                        exception_code = lua::lib::get_lua_state_value(scope.L(), "exception_code").int_value;
-                        if (exception_code > 0)
-                        {
-                            exception_msg = (char*)lua::lib::get_lua_state_value(scope.L(), "exception_msg").string_value;
-                            if (exception_code == tichain_API_LVM_LIMIT_OVER_ERROR)
-                                FC_CAPTURE_AND_THROW(TiValue::blockchain::contract_run_out_of_money);
-                            else
-                            {
-                                TiValue::blockchain::contract_error con_err(32000, "exception", exception_msg);
-                                throw con_err;
-                            }
-                        }
+                        // scope.set_instructions_limit(limit);
+						engine->set_gas_limit(limit);
+						try
+						{
+							engine->execute_contract_api_by_address(this->contract.AddressToString(AddressType::contract_address).c_str(), method.c_str(), this->args.c_str(), nullptr);
+						}
+						catch (glua::core::GluaException &e)
+						{
+							TiValue::blockchain::contract_error con_err(32000, "exception", exception_msg);
+							throw con_err;
+						}
+                        //scope.execute_contract_api_by_address(this->contract.AddressToString(AddressType::contract_address).c_str(), method.c_str(), this->args.c_str(), nullptr);
+                        //if (scope.L()->force_stopping == true && scope.L()->exit_code == LUA_API_INTERNAL_ERROR)
+                        //    FC_CAPTURE_AND_THROW(lua_executor_internal_error, (""));
+                        //exception_code = lua::lib::get_lua_state_value(scope.L(), "exception_code").int_value;
+                        //if (exception_code > 0)
+                        //{
+                        //    exception_msg = (char*)lua::lib::get_lua_state_value(scope.L(), "exception_msg").string_value;
+                        //    if (exception_code == tichain_API_LVM_LIMIT_OVER_ERROR)
+                        //        FC_CAPTURE_AND_THROW(TiValue::blockchain::contract_run_out_of_money);
+                        //    else
+                        //    {
+                        //        TiValue::blockchain::contract_error con_err(32000, "exception", exception_msg);
+                        //        throw con_err;
+                        //    }
+                        //}
 
-                        int left = limit - scope.get_instructions_executed_count();
-                        eval_state.exec_cost = eval_state._current_state->get_amount(scope.get_instructions_executed_count());
+                        int left = limit - engine->gas_used();
+                        eval_state.exec_cost = eval_state._current_state->get_amount(engine->gas_used());
                         if (left > 0)
                         {
                             //合约调用初始化费用没有花完
@@ -890,7 +964,7 @@ namespace TiValue
 
                             eval_state.p_result_trx.operations.resize(1);
                             eval_state.p_result_trx.expiration = eval_state.trx.expiration;
-                            required = (eval_state._current_state->get_amount(scope.get_instructions_executed_count()) + transaction_fee).amount;
+                            required = (eval_state._current_state->get_amount(engine->gas_used()) + transaction_fee).amount;
                         }
                         else
                             FC_CAPTURE_AND_THROW(TiValue::blockchain::contract_execute_error_in_testing, (exception_msg));
@@ -993,7 +1067,9 @@ namespace TiValue
                 {
                     if (!eval_state.skipexec)
                     {
-                        lua::lib::GluaStateScope scope;
+                        // lua::lib::GluaStateScope scope;
+						::blockchain::contract_engine::ContractEngineBuilder builder;
+						auto engine = builder.build();
                         int exception_code = 0;
                         string exception_msg;
                         try
@@ -1008,10 +1084,14 @@ namespace TiValue
                             GluaStateValue statevalue;
                             statevalue.pointer_value = &eval_state;
 
-                            lua::lib::add_global_string_variable(scope.L(), "caller", ((string)(from)).c_str());
-                            lua::lib::add_global_string_variable(scope.L(), "caller_address", ((string)(Address(from))).c_str());
-                            lua::lib::set_lua_state_value(scope.L(), "evaluate_state", statevalue, GluaStateValueType::LUA_STATE_VALUE_POINTER);
-                            lua::api::global_glua_chain_api->clear_exceptions(scope.L());
+                            //lua::lib::add_global_string_variable(scope.L(), "caller", ((string)(from)).c_str());
+                            //lua::lib::add_global_string_variable(scope.L(), "caller_address", ((string)(Address(from))).c_str());
+                            //lua::lib::set_lua_state_value(scope.L(), "evaluate_state", statevalue, GluaStateValueType::LUA_STATE_VALUE_POINTER);
+                            //lua::api::global_glua_chain_api->clear_exceptions(scope.L());
+
+							engine->set_caller((string)(from), (string)(Address(from)));
+							engine->set_state_pointer_value("evaluate_state", &eval_state);
+							engine->clear_exceptions();
 
                             int limit = eval_state._current_state->get_limit(0, costlimit.amount);
                             if (limit <= 0)
@@ -1021,7 +1101,8 @@ namespace TiValue
                             transfer_stream << transfer_amount.amount;
                             std::string transfer_str = transfer_stream.str();
                             DepositContractOperation deposit_contract_op(contract_id, transfer_amount, deposit_contract_normal);
-                            scope.set_instructions_limit(limit);
+                            // scope.set_instructions_limit(limit);
+							engine->set_gas_limit(limit);
                             oBalanceEntry obalance_entry = eval_state._current_state->get_balance_entry(deposit_contract_op.balance_id());
                             BalanceEntry balance_entry(WithdrawCondition(WithdrawWithSignature(contract_id), transfer_amount.asset_id, 0, withdraw_contract_type));
                             if (obalance_entry.valid())
@@ -1032,26 +1113,35 @@ namespace TiValue
                                 balance_entry.deposit_date = eval_state._current_state->now();
                                 balance_entry.last_update = eval_state._current_state->now();
                             }
-                            BalanceEntry new_balance_entry = balance_entry;
-                            new_balance_entry.balance = balance_entry.balance + this->transfer_amount.amount;
-                            eval_state._current_state->store_balance_entry(new_balance_entry);
-                            scope.execute_contract_api_by_address(contract_id.AddressToString(AddressType::contract_address).c_str(), CON_ON_DEPOSIT_INTERFACE, transfer_str.c_str(), nullptr);//to do:与lua部分适配 
-                            eval_state._current_state->store_balance_entry(balance_entry);
-                            if (scope.L()->force_stopping == true && scope.L()->exit_code == LUA_API_INTERNAL_ERROR)
-                                FC_CAPTURE_AND_THROW(lua_executor_internal_error, (""));
-                            exception_code = lua::lib::get_lua_state_value(scope.L(), "exception_code").int_value;
-                            if (exception_code > 0)
-                            {
-                                exception_msg = (char*)lua::lib::get_lua_state_value(scope.L(), "exception_msg").string_value;
-                                if (exception_code == tichain_API_LVM_LIMIT_OVER_ERROR)
-                                    FC_CAPTURE_AND_THROW(TiValue::blockchain::contract_run_out_of_money);
-                                else
-                                {
-                                    TiValue::blockchain::contract_error con_err(32000, "exception", exception_msg);
-                                    throw con_err;
-                                }
-                            }
-                            ShareType exec_cost = eval_state._current_state->get_amount(scope.get_instructions_executed_count()).amount;
+                            //BalanceEntry new_balance_entry = balance_entry;
+                            //new_balance_entry.balance = balance_entry.balance + this->transfer_amount.amount;
+                            //eval_state._current_state->store_balance_entry(new_balance_entry);
+							try
+							{
+								engine->execute_contract_api_by_address(contract_id.AddressToString(AddressType::contract_address).c_str(), CON_ON_DEPOSIT_INTERFACE, transfer_str.c_str(), nullptr);//to do:与lua部分适配 
+							}
+							catch (glua::core::GluaException &e)
+							{
+								TiValue::blockchain::contract_error con_err(32000, "exception", exception_msg);
+								throw con_err;
+							}
+                            //scope.execute_contract_api_by_address(contract_id.AddressToString(AddressType::contract_address).c_str(), CON_ON_DEPOSIT_INTERFACE, transfer_str.c_str(), nullptr);//to do:与lua部分适配 
+                            //eval_state._current_state->store_balance_entry(balance_entry);
+                            //if (scope.L()->force_stopping == true && scope.L()->exit_code == LUA_API_INTERNAL_ERROR)
+                            //    FC_CAPTURE_AND_THROW(lua_executor_internal_error, (""));
+                            //exception_code = lua::lib::get_lua_state_value(scope.L(), "exception_code").int_value;
+                            //if (exception_code > 0)
+                            //{
+                            //    exception_msg = (char*)lua::lib::get_lua_state_value(scope.L(), "exception_msg").string_value;
+                            //    if (exception_code == tichain_API_LVM_LIMIT_OVER_ERROR)
+                            //        FC_CAPTURE_AND_THROW(TiValue::blockchain::contract_run_out_of_money);
+                            //    else
+                            //    {
+                            //        TiValue::blockchain::contract_error con_err(32000, "exception", exception_msg);
+                            //        throw con_err;
+                            //    }
+                            //}
+                            ShareType exec_cost = eval_state._current_state->get_amount(engine->gas_used()).amount;
                             eval_state.exec_cost = Asset(exec_cost, 0);
                             FC_ASSERT(exec_cost <= costlimit.amount&&exec_cost > 0, "costs of execution can be only between 0 and costlimit");
                             ShareType required = get_amount_sum(exec_cost, transfer_amount.amount);
@@ -1090,7 +1180,7 @@ namespace TiValue
                             {
                                 if (eval_state.throw_exec_exception)
                                     FC_CAPTURE_AND_THROW(TiValue::blockchain::contract_execute_error, (exception_msg));
-                                Asset exec_cost = eval_state._current_state->get_amount(scope.get_instructions_executed_count());
+                                Asset exec_cost = eval_state._current_state->get_amount(engine->gas_used());
                                 std::map<BalanceIdType, ShareType> withdraw_map;
                                 withdraw_enough_balances(balances, (exec_cost + transaction_fee).amount, withdraw_map);
                                 eval_state.p_result_trx.operations.resize(1);

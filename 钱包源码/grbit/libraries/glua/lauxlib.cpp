@@ -2136,15 +2136,18 @@ std::shared_ptr<GluaModuleByteStream> lua_common_open_contract(lua_State *L, con
         std::string address;
         std::stringstream(pointer_str) >> address;
         auto stream = global_glua_chain_api->open_contract_by_address(L, address.c_str());
-        if (stream && stream->contract_level != CONTRACT_LEVEL_FOREVER && (stream->contract_name.length() < 1 || stream->contract_state == CONTRACT_STATE_DELETED))
+        if (stream)
         {
-            auto start_contract_address = TiValue::lua::lib::get_starting_contract_address(L);
+            /*auto start_contract_address = TiValue::lua::lib::get_starting_contract_address(L);
             if (start_contract_address.length()>0 && stream->contract_name.length() < 1 && std::string(address) == start_contract_address)
             {
                 return stream;
-            }
-            lerror_set(L, error, "only active and upgraded contract %s can be imported by others", namestr.c_str());
-            return nullptr;
+            }*/
+			if (stream->contract_state == CONTRACT_STATE_DELETED)
+				return nullptr;
+			return stream;
+            // lerror_set(L, error, "only active and upgraded contract %s can be imported by others", namestr.c_str());
+            // return nullptr;
         }
         else
             return stream;
@@ -2809,7 +2812,12 @@ static const char *tojsonstring_with_nested(lua_State *L, int idx, size_t *len, 
             break;
         }
         case LUA_TSTRING:
-            lua_pushvalue(L, idx);
+		{
+			//std::string str(lua_tostring(L, idx));
+			//str = glua::util::escape_string(str);
+			//lua_pushstring(L, str.c_str());
+			lua_pushvalue(L, idx);
+		}
             break;
         case LUA_TBOOLEAN:
             lua_pushstring(L, (lua_toboolean(L, idx) ? "true" : "false"));
