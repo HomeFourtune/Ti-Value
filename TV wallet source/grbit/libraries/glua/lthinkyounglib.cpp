@@ -1,4 +1,4 @@
-﻿/**
+/**
 * thinkyoung core api module for glua code
 */
 
@@ -139,7 +139,7 @@ static struct GluaStorageValue get_last_storage_changed_value(lua_State *L, cons
     {
         auto value = thinkyoung::lua::api::get_storage_value_from_thinkyoung_by_address(L, contract_id, key);
         post_when_read_table(value);
-        // 如果是第一次读取，要把这个读取结果缓存住，避免重复从区块链上读取数据
+        // if it is the first time to read, we should cache the results of this reading, to avoid duplication of data read from the blockchain
         
         if (!list) {
           list = (GluaStorageChangeList*)malloc(sizeof(GluaStorageChangeList));
@@ -174,7 +174,7 @@ static std::string global_key_for_storage_prop(std::string contract_id, std::str
 
 bool lua_push_storage_value(lua_State *L, const GluaStorageValue &value);
 
-#define max_support_array_size 10000000  // 目前最大支持的array size
+#define max_support_array_size 10000000  // the biggest array size supporting now
 static bool lua_push_storage_table_value(lua_State *L, GluaTableMap *map, int type)
 {
     if (nullptr == L || nullptr == map)
@@ -247,7 +247,7 @@ static GluaStorageChangeItem diff_storage_change_if_is_table(lua_State *L, GluaS
 
     if (!lua_storage_is_table(change_item.before.type) || !lua_storage_is_table(change_item.after.type))
         return change_item;
-	// FIXME: 考虑这里用malloc再手动placement new是否有问题
+	// FIXME: consider whether there will be something wrong here with manual placement new after malloc  
     auto new_before = (GluaTableMapP) malloc(sizeof(GluaTableMap));
     new (new_before)GluaTableMap();
     auto new_after = (GluaTableMapP) malloc(sizeof(GluaTableMap));
@@ -300,12 +300,12 @@ static bool has_property_changed_in_changelist(GluaStorageChangeList *list, std:
 
 bool luaL_commit_storage_changes(lua_State *L)
 {
-  // TODO: 新storage操作方式，commit的时候再统一比较storage变化
+  // TODO: the new storage mode of operation, compare storage changes when commit
   /*
 	auto maybe_storage_changed_contract_ids = thinkyoung::lua::lib::get_maybe_storage_changed_contract_ids_vector(L, false);
   if (maybe_storage_changed_contract_ids && maybe_storage_changed_contract_ids->size()>0)
   {
-    // TODO: 如何获取到这些合约的内存中的对象
+    // TODO: how to get the objects in the memory of these contracts 
     // printf("");
   }*/
 
@@ -347,10 +347,10 @@ bool luaL_commit_storage_changes(lua_State *L)
                 if (lua_istable(L, -1))
                 {
                     auto after_value = lua_type_to_storage_value_type(L, -1, 0);
-                    // 检查changelist是否有这个属性的改变项，有的话不用readvalue
+                    // check whether there is a change of this property in the changelist, if there is, the readvalue is not needed
                     change_item.after = after_value;
 
-					// FIXME: a= {}, storage.a = a, a['name'] = 123, storage.a = {}的情况下怎么处理? 考虑把storage还是做成一个table来处理
+					// FIXME: a= {}, storage.a = a, a['name'] = 123, storage.a = {} how should it deal with this case? Make a table of storage to solve it
                     //if (!has_property_changed_in_changelist(list, change_item.contract_id, change_item.key))
                     // {
 						if(!change_item.before.equals(change_item.after))
@@ -401,14 +401,14 @@ bool luaL_commit_storage_changes(lua_State *L)
 			thinkyoung::lua::api::throw_exception(L, THINKYOUNG_API_SIMPLE_ERROR, "Can't get contract info by contract address %s", it->first.c_str());
 			return false;
 		}
-		// 如果是调用init API，并且storage所处的合约地址和初始调用的合约地址一样，则要检查storage的after类型是否能和编译期时的storage类型匹配
+		// if you call the init API and storage contract address is the same with the contract address of the initial call, you need to check whether the storage after type can match the storage type at compile time
 		bool is_in_starting_contract_init = false;
 		if (thinkyoung::lua::lib::is_calling_contract_init_api(L))
 		{
 			auto starting_contract_address = thinkyoung::lua::lib::get_starting_contract_address(L);
 			if (it->first == starting_contract_address)
 			{
-				// 检查storage的after类型是否能和编译期时的storage类型匹配
+				// check whether the storage after type can match the storage type at compile time
 				is_in_starting_contract_init = true;
 				const auto &storage_properties_in_chain = stream->contract_storage_properties;
 				if(it->second->size()!=storage_properties_in_chain.size())
@@ -429,7 +429,7 @@ bool luaL_commit_storage_changes(lua_State *L)
 					if(thinkyoung::blockchain::is_any_table_storage_value_type(p1.second.after.type)
 						|| thinkyoung::blockchain::is_any_array_storage_value_type(p1.second.after.type))
 					{
-						// 运行时[]也会变现为{}
+						// [] will be realized as {} in running
 						if(!thinkyoung::blockchain::is_any_table_storage_value_type(storage_info_in_chain)
 							&& !thinkyoung::blockchain::is_any_array_storage_value_type(storage_info_in_chain))
 						{
@@ -450,7 +450,7 @@ bool luaL_commit_storage_changes(lua_State *L)
 							}
 						}
 
-						// 检查after值类型和链上值类型是否匹配
+						// check if the value type after the match matches the value type on the chain
 						if(p1.second.after.type == thinkyoung::blockchain::storage_value_unknown_table
 							|| p1.second.after.type == thinkyoung::blockchain::storage_value_unknown_array)
 						{
@@ -477,8 +477,8 @@ bool luaL_commit_storage_changes(lua_State *L)
         {
             if (lua_storage_is_table(it2->second.after.type))
             {
-				// 如果before是空table，after是array时
-				// 如果before是array, after是空table时
+				// If before is an empty table, after is an array
+				// If before is an array, after is an empty table
 				if (lua_storage_is_array(it2->second.before.type) && it2->second.after.value.table_value->size() == 0)
 					it2->second.after.type = it2->second.before.type;
                 else if (lua_storage_is_table(it2->second.before.type) && it2->second.before.value.table_value->size()>0)
@@ -488,7 +488,7 @@ bool luaL_commit_storage_changes(lua_State *L)
                 it2->second = diff_storage_change_if_is_table(L, it2->second);
             }
 
-			// storage的变化要检查对应合约的编译期类型，并适当修改commit的类型
+			// when storage changes, check the corresponding types of compile-time contracts, and modify the type of commit
 			if(!is_in_starting_contract_init)
 			{
 				const auto &storage_properties_in_chain = stream->contract_storage_properties;
@@ -500,7 +500,7 @@ bool luaL_commit_storage_changes(lua_State *L)
 					if (thinkyoung::blockchain::is_any_table_storage_value_type(it2->second.after.type)
 						|| thinkyoung::blockchain::is_any_array_storage_value_type(it2->second.after.type))
 					{
-						// 运行时[]也会变现为{}
+						// [] will be realized as {} in running
 						if (!thinkyoung::blockchain::is_any_table_storage_value_type(storage_info_in_chain)
 							&& !thinkyoung::blockchain::is_any_array_storage_value_type(storage_info_in_chain))
 						{
@@ -520,7 +520,7 @@ bool luaL_commit_storage_changes(lua_State *L)
 								return false;
 							}
 						}
-						// 检查after值类型和链上值类型是否匹配
+						// check if the value type after the match matches the value type on the chain
 						if (it2->second.after.type == thinkyoung::blockchain::storage_value_unknown_table
 							|| it2->second.after.type == thinkyoung::blockchain::storage_value_unknown_array)
 						{
@@ -542,7 +542,7 @@ bool luaL_commit_storage_changes(lua_State *L)
 				}
 			}
 
-			// map/array的值类型要是一致的并且是基本类型
+			// the value type of map / array should be consistent and belong to basic type
 			if(lua_storage_is_table(it2->second.after.type))
 			{
 				thinkyoung::blockchain::StorageValueTypes item_value_type;
@@ -632,9 +632,7 @@ bool luaL_commit_storage_changes(lua_State *L)
     return result;
 }
 
-/************************************************************************/
-/*    获取操作合约代码的storage的代码直接出现在哪个合约，合约只能操作本身的storage，不能操作其他合约的storage */
-/************************************************************************/
+
 static const char *get_contract_id_in_storage_operation(lua_State *L)
 {
 	const auto &contract_id = thinkyoung::lua::lib::get_current_using_contract_id(L);
@@ -708,8 +706,7 @@ namespace glua {
 			return result;
 		}
 
-        // TODO: 读写storage的时候记录本次调用一共涉及了哪些合约的storage读table/写任何类型数据
-        // 然后在commit的时候取出最新数据来比较
+
 
 		/**
 		* arg1 is contract, arg2 is storage property name
@@ -762,13 +759,12 @@ namespace glua {
 
           // thinkyoung::lua::lib::add_maybe_storage_changed_contract_id(L, contract_id);
 
-		  // FIXME: 这里如果是table，每次创建新对象，占用内存太大了，而且读取也太慢了
-          // FIXME: 考虑commit的时候再去读取storage的变化，不要每次都改
+
           const auto &arg2 = lua_type_to_storage_value_type(L, value_index, 0);
 
           if (lua_istable(L, value_index))
           {
-            // 如果是table，要加入read_list，因为可能直接修改它
+         
             lua_pushvalue(L, value_index);
             lua_setglobal(L, global_key_for_storage_prop(contract_id, name).c_str());
             auto *table_read_list = get_or_init_storage_table_read_list(L);
@@ -790,7 +786,7 @@ namespace glua {
                 change_item.key = name;
                 change_item.before = arg2;
                 change_item.after = arg2;
-                // TODO: 为了避免arg2太多占用内存，合并历史，释放多余对象
+          
                 table_read_list->push_back(change_item);
               }
             }
@@ -948,7 +944,7 @@ namespace glua {
           change_item.contract_id = contract_id;
           change_item.after = after;
           change_item.before = before;
-          // TODO: 为了避免arg2太多占用内存，合并历史，释放多余对象
+       
           list->push_back(change_item);
 
           return 0;
@@ -999,7 +995,7 @@ namespace thinkyoung {
 
             GluaStorageValue lthinkyoung_get_storage(lua_State *L, const char *contract_id, const char *name)
             {
-                lua_pushstring(L, contract_id); // FIXME: 这里是用contract table还是contract id?
+                lua_pushstring(L, contract_id); 
                 lua_pushstring(L, name);
                 int result_count = glua::lib::thinkyounglib_get_storage(L);
                 if (result_count > 0)

@@ -1,3 +1,114 @@
+Configuration information of vs2013 project properties page
+
+Build console project
+
+Problem: Unresolved external symbol _WinMain @ 16, referenced in function ___tmainCRTStartup
+The real reason for this problem is that c language can not find the appropriate program entry function in running. Under normal circumstances, if it is a windows program, then WinMain is an entry function; if it is a dos console program, then main is the entry function. If the entrance function is not properly specified, it is clear that c language can not find a matching function in runing, so it will report an error.
+
+Solution: Linker -> All Options -> Subsystem   Select Console
+
+
+Configure debug platform activity x64
+
+Project Properties -> C / C ++ -> add / bigobj in command line additional options
+
+C/C++
+Additional include directory
+D:\GRBit_ver1\boost_1.55.x64;
+D:\GRBit_ver1\fc\include;
+D:\GRBit_ver1\grbit\libraries\blockchain\include;
+D:\GRBit_ver1\leveldb\include;
+D:\GRBit_ver1\db\include;
+D:\GRBit_ver1\include;
+D:\GRBit_ver1\grbit\libraries\utilities\include;
+D:\GRBit_ver1\grbit\libraries\wallet\include;
+D:\GRBit_ver1\grbit\libraries\cli\include;
+D:\GRBit_ver1\vendor\miniupnp;
+D:\GRBit_ver1\grbit\libraries\net\include;
+D:\GRBit_ver1\grbit\libraries\client\include;
+D:\GRBit_ver1\grbit\libraries\api\include;
+D:\GRBit_ver1\grbit\libraries\rpc\include;
+D:\GRBit_ver1\grbit\libraries\rpc_stubs\include
+
+
+Preprocessor definition
+_MBCS
+_DEBUG
+WIN32
+_WINDOWS
+NOMINMAX
+_WIN32_WINNT=0x0501
+_CRT_SECURE_NO_WARNINGS
+_SCL_SERCURE_NO_WARNINGS
+BOOST_ALL_NO_LIB
+_SECURE_SCL=0
+BTS_GLOBAL_API_LOG=1
+
+
+Code Generation -> Disable Security Checks
+
+
+Linker
+Additional library directory
+D:\GRBit_ver1\boost_1.55.x64\stage\lib
+D:\GRBit_ver1\libs_debug
+D:\GRBit_ver1\OpenSSL.x64\lib
+D:\GRBit_ver1\libs_win_x64
+
+
+Additional dependencies
+kernel32.lib
+user32.lib
+gdi32.lib
+winspool.lib
+comdlg32.lib
+advapi32.lib
+shell32.lib
+ole32.lib
+oleaut32.lib
+uuid.lib
+odbc32.lib
+odbccp32.lib
+bts_db.lib
+leveldb.lib
+fc_debug.lib
+easylzma_static_debug.lib
+udt_debug.lib
+libboost_thread-vc120-mt-gd-1_55.lib
+libboost_date_time-vc120-mt-gd-1_55.lib
+libboost_system-vc120-mt-gd-1_55.lib
+libboost_filesystem-vc120-mt-gd-1_55.lib
+libboost_program_options-vc120-mt-gd-1_55.lib
+libboost_signals-vc120-mt-gd-1_55.lib
+libboost_serialization-vc120-mt-gd-1_55.lib
+libboost_chrono-vc120-mt-gd-1_55.lib
+libboost_unit_test_framework-vc120-mt-gd-1_55.lib
+libboost_context-vc120-mt-gd-1_55.lib
+libboost_locale-vc120-mt-gd-1_55.lib
+libboost_iostreams-vc120-mt-gd-1_55.lib
+libboost_coroutine-vc120-mt-gd-1_55.lib
+ssleay32MDd.lib
+libeay32MDd.lib
+WS2_32.lib
+Userenv.lib
+Rpcrt4.lib
+crypt32.lib
+shlwapi.lib
+bts_utilities.lib
+miniupnpc.lib
+WS2_32.Lib
+IPHlpApi.Lib
+
+
+c / c ++ command line is as follows:
+/GS- /W3 /Zc:wchar_t /I"D:\GRBit_ver1\boost_1.55.x64" /I"D:\GRBit_ver1\fc\include" /I"D:\GRBit_ver1\grbit\libraries\blockchain\include" /I"D:\GRBit_ver1\leveldb\include" /I"D:\GRBit_ver1\db\include" /I"D:\GRBit_ver1\include" /I"D:\GRBit_ver1\grbit\libraries\utilities\include" /I"D:\GRBit_ver1\grbit\libraries\wallet\include" /I"D:\GRBit_ver1\grbit\libraries\cli\include" /I"D:\GRBit_ver1\vendor\miniupnp" /I"D:\GRBit_ver1\grbit\libraries\net\include" /I"D:\GRBit_ver1\grbit\libraries\client\include" /I"D:\GRBit_ver1\grbit\libraries\api\include" /I"D:\GRBit_ver1\grbit\libraries\rpc\include" /I"D:\GRBit_ver1\grbit\libraries\rpc_stubs\include" /Zi /Gm /Od /sdl /Fd"x64\Debug\vc120.pdb" /fp:precise /D "_MBCS" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "NOMINMAX" /D "_WIN32_WINNT=0x0501" /D "_CRT_SECURE_NO_WARNINGS" /D "_SCL_SERCURE_NO_WARNINGS" /D "BOOST_ALL_NO_LIB" /D "_SECURE_SCL=0" /D "BTS_GLOBAL_API_LOG=1" /errorReport:prompt /WX- /Zc:forScope /RTC1 /Gd /MDd /Fa"x64\Debug\" /EHsc /nologo /Fo"x64\Debug\" /Fp"x64\Debug\GRBit.pch" 
+
+Linker command line is as follows:
+/OUT:"C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Project2\x64\Debug\GRBit.exe" /MANIFEST /NXCOMPAT /PDB:"C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Project2\x64\Debug\GRBit.pdb" /DYNAMICBASE "kernel32.lib" "user32.lib" "gdi32.lib" "winspool.lib" "comdlg32.lib" "advapi32.lib" "shell32.lib" "ole32.lib" "oleaut32.lib" "uuid.lib" "odbc32.lib" "odbccp32.lib" "bts_db.lib" "leveldb.lib" "fc_debug.lib" "easylzma_static_debug.lib" "udt_debug.lib" "libboost_thread-vc120-mt-gd-1_55.lib" "libboost_date_time-vc120-mt-gd-1_55.lib" "libboost_system-vc120-mt-gd-1_55.lib" "libboost_filesystem-vc120-mt-gd-1_55.lib" "libboost_program_options-vc120-mt-gd-1_55.lib" "libboost_signals-vc120-mt-gd-1_55.lib" "libboost_serialization-vc120-mt-gd-1_55.lib" "libboost_chrono-vc120-mt-gd-1_55.lib" "libboost_unit_test_framework-vc120-mt-gd-1_55.lib" "libboost_context-vc120-mt-gd-1_55.lib" "libboost_locale-vc120-mt-gd-1_55.lib" "libboost_iostreams-vc120-mt-gd-1_55.lib" "libboost_coroutine-vc120-mt-gd-1_55.lib" "ssleay32MDd.lib" "libeay32MDd.lib" "WS2_32.lib" "Userenv.lib" "Rpcrt4.lib" "crypt32.lib" "shlwapi.lib" "bts
+
+
+
+
 vs2013 项目属性页配置信息
 
 建立console项目

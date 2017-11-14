@@ -1,4 +1,4 @@
-﻿#ifndef tichainlib_h
+#ifndef tichainlib_h
 #define tichainlib_h
 
 #include <glua/lprefix.h>
@@ -23,7 +23,7 @@ namespace glua
 	namespace lib
 	{
 		int tichainlib_get_storage(lua_State *L);
-		// TiValue.get_storage具体的实现
+		
 		int tichainlib_get_storage_impl(lua_State *L,
 			const char *contract_id, const char *name);
 

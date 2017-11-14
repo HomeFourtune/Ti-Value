@@ -1,4 +1,4 @@
-﻿/*
+/*
 ** $Id: lua.h,v 1.329 2015/11/13 17:18:42 roberto Exp $
 ** Lua - A Scripting Language
 ** Lua.org, PUC-Rio, Brazil (http://www.lua.org)
@@ -300,7 +300,7 @@ LUA_API int (lua_dump)(lua_State *L, lua_Writer writer, void *data, int strip);
 #define INSTRUCTIONS_EXECUTED_COUNT_LUA_STATE_MAP_KEY "instructions_executed_count"
 #define LUA_STATE_STOP_TO_RUN_IN_LVM_STATE_MAP_KEY "stop_in_lvm"
 #define LUA_TABLE_MAP_LIST_STATE_MAP_KEY "glua_table_map_list_in_memory_pool"
-// state_map中合约API调用栈的合约ID栈的key
+
 #define GLUA_CONTRACT_API_CALL_STACK_STATE_MAP_KEY "glua_contract_api_call_stack_state_map_key"
 
 LUA_API int (lua_docompiledfile)(lua_State *L, const char *filename);

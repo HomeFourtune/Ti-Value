@@ -8,6 +8,6 @@ glua�����ں�������������lua5.3.2����
 
 * boost 1.55
 
-* 宏增加WIN32
+* Macro increase WIN32
 
-* 命令行考虑增加/W4
+* Command line to consider adding / W4

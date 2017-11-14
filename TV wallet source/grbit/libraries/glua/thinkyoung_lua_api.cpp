@@ -1,4 +1,4 @@
-﻿/**
+/**
  * lua module injector header in thinkyoung
  */
 
@@ -93,8 +93,7 @@ namespace thinkyoung {
 
                 lua_set_compile_error(L, msg);
 
-                //如果上次的exception code为THINKYOUNG_API_LVM_LIMIT_OVER_ERROR, 不能被其他异常覆盖
-                //只有调用clear清理后，才能继续记录异常
+               
                 int last_code = lua::lib::get_lua_state_value(L, "exception_code").int_value;
                 if (last_code == THINKYOUNG_API_LVM_LIMIT_OVER_ERROR
                     && code != THINKYOUNG_API_LVM_LIMIT_OVER_ERROR)
@@ -528,7 +527,7 @@ namespace thinkyoung {
 					return;
 				}
 				object_pools = (std::map<GluaOutsideObjectTypes, std::shared_ptr<std::map<intptr_t, intptr_t>>> *) node.value.pointer_value;
-				// TODO: 对于object_pools中不同类型的对象，分别释放
+
 				for (const auto &p : *object_pools)
 				{
 					auto type = p.first;
@@ -831,9 +830,7 @@ namespace thinkyoung {
                     return 0;
                 }
             }
-            //获取指定块与之前50块的pre_secret hash出的结果，该值在指定块被产出的上一轮出块时就已经确定，而无人可知，无法操控
-            //如果希望使用该值作为随机值，以随机值作为其他数据的选取依据时，需要在目标块被产出前确定要被筛选的数据
-            //如投注彩票，只允许在目标块被产出前投注
+
             int32_t get_waited(lua_State *L, uint32_t num)
             {
               thinkyoung::lua::lib::increment_lvm_instructions_executed_count(L, CHAIN_GLUA_API_EACH_INSTRUCTIONS_COUNT - 1);

@@ -1,7 +1,0 @@
-命令：
-bts_genesis_to_bin.exe "--json=./genesis_bts.json" "--prologue=./binary_genesis.prologue" "--epilogue=./binary_genesis.epilogue" "--source-out=./genesis_json.cpp"
-
-
-
-该版bts_genesis_to_bin.exe产生init_genesis.json文件和对应的keys.json和wif_keys.json文件 同时还生成genesis_json.cpp， 
-将genesis_json.cpp放入D:\GRBit_ver1\grbit\libraries\blockchain

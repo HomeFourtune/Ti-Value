@@ -1,4 +1,4 @@
-﻿/*
+/*
 ** $Id: lvm.c,v 2.265 2015/11/23 11:30:45 roberto Exp $
 ** Lua virtual machine
 ** See Copyright Notice in lua.h
@@ -824,7 +824,7 @@ typedef std::unordered_map<std::string, std::pair<std::string, bool>> LuaDebugge
 static LuaDebuggerInfoList g_debug_infos;
 static bool g_debug_running = false;
 
-static glua::debugger::LRemoteDebugger *remote_debugger; // TODO: 什么时候关闭
+static glua::debugger::LRemoteDebugger *remote_debugger; 
 
 static LuaDebuggerInfoList *get_lua_debugger_info_list_in_state(lua_State *L)
 {
@@ -862,7 +862,7 @@ static int enter_lua_debugger(lua_State *L)
 	int real_localvars_count = (int)(ci->func - oci->func - 1);
 	int linedefined = p->linedefined;
 	// fprintf(L->out, "debugging into line %d\n", linedefined); // FIXME: logging the debugging code line
-	L->ci = oci; // FIXME: 考虑不直接复制ci，改成类似函数入栈出栈的方式
+	L->ci = oci;
 	int top = lua_gettop(L);
 
 	// capture locals vars and values(need get localvar name from whereelse)
@@ -880,7 +880,7 @@ static int enter_lua_debugger(lua_State *L)
 			LocVar localvar = p->locvars[i];
 			const char *varname = getstr(localvar.varname);
 
-			if (std::string(value_str) != "nil") // 考虑到还没用用到的var也会表现为nil，这里不输出nil值的变量
+			if (std::string(value_str) != "nil") 
 			{
 				fprintf(L->out, "[debugger]%s=%s\n", varname, value_str);
 			}
@@ -939,7 +939,7 @@ static bool debugger_watcher_started = false;
 
 static int get_line_in_current_proto(CallInfo* ci, Proto *proto)
 {
-	int idx = (int)(ci->u.l.savedpc - proto->code); // 在proto中执行到的指令的偏移量
+	int idx = (int)(ci->u.l.savedpc - proto->code);
 	if (idx < proto->sizecode)
 	{
 		int line_in_proto = proto->lineinfo[idx];
@@ -1004,7 +1004,7 @@ newframe:  /* reentry point when frame changes (call/return) */
 		{
 			std::this_thread::sleep_for(std::chrono::seconds(1));
 		}
-		// TODO: 添加断点调试, 外部socket设置文件名，断点位置（字节码指令offset)列表，继续/暂停等
+		
 		if(L->bytecode_debugger_opened)
 		{
 			// TODO
@@ -1042,13 +1042,13 @@ newframe:  /* reentry point when frame changes (call/return) */
 					fclose(ldf_file);
 				}
 			}
-			// TODO: 考虑碰到debugger时把上下文环境socket传回去
+			
 			auto source_found_in_debugger = debugger_source_lines.find(proto_source);
 			if (source_found_in_debugger != debugger_source_lines.end())
 			{
 				auto debugger_lines = source_found_in_debugger->second;
 				// Instruction i2 = *(ci->u.l.savedpc);
-				int idx = (int)(ci->u.l.savedpc - proto->code); // 在proto中执行到的指令的偏移量
+				int idx = (int)(ci->u.l.savedpc - proto->code); 
 				if(idx<proto->sizecode)
 				{
 					int line_in_proto = proto->lineinfo[idx];
@@ -1065,7 +1065,7 @@ newframe:  /* reentry point when frame changes (call/return) */
 							{
 								last_debug_line_in_file = line_in_lua_file;
 								// TODO: paused to debug
-								// TODO: 反汇编这条指令让其可读，获取上下文的局部变量的值，让remote调式方知道断点的代码位置
+								
 
 								// enter_lua_debugger(L);
 								lua_pushcfunction(L, enter_lua_debugger);
@@ -1078,7 +1078,7 @@ newframe:  /* reentry point when frame changes (call/return) */
 								lua_pcall(L, 0, 0, 0);
 
 								remote_debugger->set_pausing_lvm(true);
-								// remote_debugger->shutdown(); // FIXME: 暂时一次性就关闭，以后可能要改成根据远程调试器来关闭
+								// remote_debugger->shutdown(); 
 							}
 						}
 					}
@@ -1123,7 +1123,7 @@ newframe:  /* reentry point when frame changes (call/return) */
         ra = RA(i);
         lua_assert(base == ci->u.l.base);
         lua_assert(base <= L->top && L->top < L->stack + L->stacksize);
-		// TODO: 运行时出错时把行号，函数名等记录下来
+		
 		
         vmdispatch(GET_OPCODE(i)) {
             vmcase(OP_MOVE) {

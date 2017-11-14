@@ -1,4 +1,4 @@
-﻿#ifndef tichain_lua_api_demo_h
+#ifndef tichain_lua_api_demo_h
 #define tichain_lua_api_demo_h
 
 #include <glua/lprefix.h>
@@ -23,7 +23,7 @@
 namespace TiValue {
   namespace lua {
     namespace api {
-      // 这里是demo实现，需要具体重新实现这里所有API
+      // Here is a demo implementation that needs to be reimplemented with all of the APIs here
 
       class DemoGluaChainApi : public IGluaChainApi
       {
@@ -113,20 +113,20 @@ namespace TiValue {
         virtual bool commit_storage_changes_to_tichain(lua_State *L, AllContractsChangesMap &changes);
 
         /**
-        * 注册对象地址到关联lua_State的外部对象池（在外部创建的各种类型的对象）中，不同类型的对象需要一个单独的对象池
-        * lua_State被释放的时候需要释放所有对象池中所有对象
-        * 返回值是glua中用来操作这个对象的句柄/指针，目前只能是对象地址本身，以lightuserdata的形式存在于glua中
+        * register an object address to an external object pool associated with lua_State (various types of objects created externally). Different types of objects require a separate pool
+        * release of lua_State requires release of all the objects in all pools
+        * the return value is the handle / pointer used to manipulate this object in glua, which is currently only the object address itself, as lightuserdata in glua
         */
         virtual intptr_t register_object_in_pool(lua_State *L, intptr_t object_addr, GluaOutsideObjectTypes type);
 
         /**
-        * 判断某个对象(register_object_in_pool的返回对象，一般实现为对象的内存地址)是否是关联lua_State中某个类型的对象池中的对象（从而可以判断是否可以强制转换)
-        * 如果找到，返回对象地址，否则返回0
+        * determine if the object (register_object_in_pool return object, generally implemented as the object's memory address) is an object in a type of object pool associated with lua_State (which can determine whether you can cast)
+        * if find the object, return the object address. If not, return 0
         */
         virtual intptr_t is_object_in_pool(lua_State *L, intptr_t object_key, GluaOutsideObjectTypes type);
 
         /**
-        * 释放lua_State关联的所有外部对象池中的对象已经对象池本身
+        * release all the objects in the external object pools associated with lua_State as well as the pools themselves
         */
         virtual void release_objects_in_pool(lua_State *L);
 

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * lua module injector header in thinkyoung
  * @author zoowii@thinkyoung
  */
@@ -50,20 +50,20 @@
 #define CONTRACT_LEVEL_TEMP 1
 #define CONTRACT_LEVEL_FOREVER 2
 
-//状态 有效 删除
+
 #define CONTRACT_STATE_VALID 1
 #define CONTRACT_STATE_DELETED 2
 
-// 在blockchain中是否使用新语法
+
 #define USE_TYPE_CHECK true 
 
-// 合约的storage的record类型最多可以包含多少个属性
+
 #define CONTRACT_STORAGE_PROPERTIES_MAX_COUNT 256
 
-// 链给glua提供的全局API每次API调用增加指令累计执行数的数量
+
 #define CHAIN_GLUA_API_EACH_INSTRUCTIONS_COUNT 50
 
-// 外部管理的对象类型枚举，用在register_object_in_pool中
+
 enum GluaOutsideObjectTypes
 {
 	OUTSIDE_STREAM_STORAGE_TYPE = 0
@@ -197,13 +197,13 @@ enum GluaTypeInfoEnum
 	LTI_TABLE = 6,
 	LTI_FUNCTION = 7, // coroutine as function type
 	LTI_UNION = 8,
-	LTI_RECORD = 9, // 新语法, type <RecordName> = { <name> : <type> , ... }
-	LTI_GENERIC = 10, // 新语法，泛型类型
-	LTI_ARRAY = 11, // 新语法，列表类型
-	LTI_MAP = 12, // 新语法，单纯的哈希表，并且key类型只能是字符串
-	LTI_LITERIAL_TYPE = 13, // 新语法，literal type 字符串/数字/布尔值的字面值的union的类型，比如: "Male" | "Female"
-	LTI_STREAM = 14, // Stream类型，没有直接的字面量
-	LTI_UNDEFINED = 100 // 未定义值，类似undefined
+	LTI_RECORD = 9, 
+	LTI_GENERIC = 10,
+	LTI_ARRAY = 11, 
+	LTI_MAP = 12,
+	LTI_LITERIAL_TYPE = 13, 
+	LTI_STREAM = 14, 
+	LTI_UNDEFINED = 100 
 };
 
 class GluaModuleByteStream {
@@ -217,10 +217,10 @@ public:
     std::string contract_name;
     int  contract_level;
     int  contract_state;
-    // 合约中storage的类型
+   
     std::map<std::string, thinkyoung::blockchain::StorageValueTypes> contract_storage_properties;
 
-	// 合约中各API的API名称的参数类型列表
+	
 	std::map<std::string, std::vector<GluaTypeInfoEnum>> contract_api_arg_types;
 
 public:
@@ -243,7 +243,7 @@ public:
 #define THINKYOUNG_API_PARSER_ERROR 4
 #define THINKYOUNG_API_COMPILE_ERROR 5
 #define THINKYOUNG_API_LVM_LIMIT_OVER_ERROR 6
-#define THINKYOUNG_API_THROW_ERROR 7   // glua代码中主动抛出的错误
+#define THINKYOUNG_API_THROW_ERROR 7  
 
 
 // storage structs
@@ -317,7 +317,7 @@ typedef struct GluaStorageValue
         return sv;
     }
 
-	// 尝试类型转换
+
 	inline void try_parse_type(thinkyoung::blockchain::StorageValueTypes new_type)
     {
 	    switch(new_type)
@@ -333,7 +333,7 @@ typedef struct GluaStorageValue
 	    }
     }
 
-	// 尝试当成int处理
+	
 	inline void try_parse_to_int_type()
     {
 	    if(type == thinkyoung::blockchain::StorageValueTypes::storage_value_number)
@@ -343,7 +343,7 @@ typedef struct GluaStorageValue
 	    }
     }
 
-	// 尝试当成number处理
+
 	inline void try_parse_to_number_type()
     {
 		if (type == thinkyoung::blockchain::StorageValueTypes::storage_value_int)
@@ -518,22 +518,13 @@ namespace thinkyoung {
              */
             bool commit_storage_changes_to_thinkyoung(lua_State *L, AllContractsChangesMap &changes);
 
-			/**
-			 * 注册对象地址到关联lua_State的外部对象池（在外部创建的各种类型的对象）中，不同类型的对象需要一个单独的对象池
-			 * lua_State被释放的时候需要释放所有对象池中所有对象
-			 * 返回值是glua中用来操作这个对象的句柄/指针，目前只能是对象地址本身，以lightuserdata的形式存在于glua中
-			 */
+			
 			intptr_t register_object_in_pool(lua_State *L, intptr_t object_addr, GluaOutsideObjectTypes type);
 
-			/**
-			 * 判断某个对象(register_object_in_pool的返回对象，一般实现为对象的内存地址)是否是关联lua_State中某个类型的对象池中的对象（从而可以判断是否可以强制转换)
-			 * 如果找到，返回对象地址，否则返回0
-			 */
+			
 			intptr_t is_object_in_pool(lua_State *L, intptr_t object_key, GluaOutsideObjectTypes type);
 
-			/**
-			 * 释放lua_State关联的所有外部对象池中的对象已经对象池本身
-			 */
+			
 			void release_objects_in_pool(lua_State *L);
 
             /************************************************************************/

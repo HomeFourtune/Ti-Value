@@ -1,4 +1,4 @@
-﻿#ifndef glua_decompile_h
+#ifndef glua_decompile_h
 #define LUADEC_DECOMPILE_H
 
 #include <glua/lprefix.h>
@@ -253,7 +253,7 @@ namespace glua {
 		IndexType MakeIndex(GluaDecompileContextP ctx, Function* F, std::stringstream &str, std::string rstr, IndexType type);
 		int isIdentifier(std::string src);
 
-		// @param lfag: 是否显示调试信息
+		
 		std::string luaU_decompile(GluaDecompileContextP ctx, Proto* f, int lflag);
 		void luaU_decompileSubFunction(GluaDecompileContextP ctx, Proto* f, int dflag, std::string funcnumstr);
 

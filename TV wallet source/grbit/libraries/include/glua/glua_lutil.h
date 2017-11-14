@@ -1,4 +1,4 @@
-﻿/**
+/**
 * some utils functions
 * @author
 */
@@ -107,7 +107,7 @@ namespace glua
             return false;
         }
 
-		// 获取字符串有几行
+	
 		size_t string_lines_count(const std::string &str);
 
         class TimeDiff

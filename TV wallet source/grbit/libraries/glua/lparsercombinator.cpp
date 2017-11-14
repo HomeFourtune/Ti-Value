@@ -1,4 +1,4 @@
-﻿#include <glua/lparsercombinator.h>
+#include <glua/lparsercombinator.h>
 #include <cassert>
 #include <iostream>
 #include <stdarg.h>
@@ -129,7 +129,7 @@ namespace glua {
 			auto type_name_token = ninput.read();
 			ninput.inc_pos(1);
 
-			// TODO: 这里要能从ctx里获取到 record_name的parserfunctor，然后进行parse
+			// TODO: here to get from the ctx the parserfunctor of record_name, and then parse
 			return _ctx->failure_parser()->tryParse(input, 0, optional);
         }
 
@@ -149,7 +149,7 @@ namespace glua {
 				printf("");
 			if (node_name() == "local_def_stat")
 				printf("");
-			// TODO: 做成expect
+			// TODO: make a expect
             if (_parsers.size() == 1)
             {
                 auto pr = (*_parsers.begin())->tryParse(input, skip_end_size2, optional);
@@ -160,11 +160,11 @@ namespace glua {
             if (parser_min_length > 0 && !input.can_read(parser_min_length, skip_end_size2))
                 return _ctx->failure_parser()->tryParse(input, 0, optional);
 			auto it = 0;
-			auto start_match_pos = input.pos(); // 开始匹配时候的token索引
+			auto start_match_pos = input.pos(); // the token index when starting to match
 			ParserFunctor *cur_parser = _parsers[it];
-			// TODO: 当optional为true时，expect结果，直接构造error而不是failure
-            // TODO: 限制后面至少跟着剩下_parsers需要的tokens，否则在 exp ::= exp binop exp 这种情况下，在匹配规则的第一个exp时，就会匹配到全部，然后接下来匹配失败
-            // TODO: 还有一种方法是，这种情况下，多种结果的分支都作为options考虑
+			// TODO: when optional is true, expect result, build error directly instead of failure
+            // TODO: the restriction is followed by at least the following tokens needed by _parsers, otherwise in the case of exp :: = exp binop exp the first match on a matching exp will match all, then the match fails
+            // TODO: another approach is that in this case, multiple branches of the result are considered as options
             size_t skip_end_size = parser_min_length - cur_parser->min_length();
             auto ninput_it = input.skip_end();
             ParseResult pr = cur_parser->tryParse(ninput_it, skip_end_size + skip_end_size2, optional);
@@ -196,10 +196,10 @@ namespace glua {
                         return _ctx->failure_parser()->tryParse(ninput, 0, optional);
                     }
 
-					// 需要判断出input结束了，而当前parser的剩下parsers没有结束，需要非空数据，要提供合理的报错信息
+					// need to determine the input is over, and the remaining parsers in the parser are not finished, non-empty data are needed, to provide a reasonable error message
 					if(!pr.result()->next_input().can_read(1, skip_end_size + skip_end_size2))
 					{
-						// input读取完了时候
+						// when the input are all read
 						size_t min_len_sum_of_remaining_parsers = 0;
 						for(size_t k=it+1;k<_parsers.size();++k)
 						{
@@ -207,7 +207,7 @@ namespace glua {
 						}
 						if(min_len_sum_of_remaining_parsers>0)
 						{
-							// 把_parsers中剩下的最可能的缺少的符号（单个literal符号优先级最高，没有就->str()）作为缺少的maybe error
+							// The most likely missing symbols left in _parsers (a single literal symbol has the highest priority, without -> str ()) as a missing maybe error
 							std::vector<ParserFunctor*> remaining_literal_parsers;
 							std::string remaining_literal_names_str;
 							for(size_t k=it+1;k<_parsers.size();++k)
@@ -273,9 +273,9 @@ namespace glua {
 						auto error_line = (ninput.prev_token().linenumber > _ctx->inner_lib_code_lines() - 2) ? (ninput.prev_token().linenumber - _ctx->inner_lib_code_lines() + 2) : ninput.prev_token().linenumber;
 						std::string maybe_error = std::string("parse error around ") + ninput.read(skip_end_size).token + " in line " + std::to_string(error_line);
 
-						// 在这里猜测可能错误原因，如果不是正常的推导过程，加入maybe_errors
-						// 如果此concat_parser以literal开头，并且上一级是union parser，且此literal开头在上一级union parser中唯一，构造maybe error
-						// 如果此concat_parser以literal开头，并且上一级是union parser，且此literal开头在上一级union parser中不唯一但是满足这个开头的所有子项都匹配失败或者当前是最后一个在匹配的这个开头的parser，构造maybe error(考虑合并开头后匹配)
+						// guess here the possible cause of the error, if it is not the normal process of derivation, add maybe_errors
+						// if this concat_parser starts with literal and the previous level is a union parser and this literal is unique at the previous union, construct a maybe error
+						// If this concat_parser starts with literal and the previous level is a union parser and this literal is not unique at the top union parser, but all children that satisfy this start can't match or this is the last one that matches at the beginning parser, construct maybe error (consider merge after the beginning of the match)
                         if(node_name().length()>0 && _parsers.size()>0 && _parsers[0]->is_literal() && parent_parser() && parent_parser()->is_union())
                         {
 							auto head_literal_name = _parsers[0]->str(); // 头部的literal parser的符号名
@@ -285,7 +285,7 @@ namespace glua {
 							if (index_in_parent >= 0)
 							{
 								bool has_matching_same_literal = false;
-								// TODO: 如果剩下的同级parser也都失败，并且起始是literal，挑最长的加入maybe error
+								// TODO: if the rest of the same level parser also failed, and the beginning is literal, pick the longest one to be the maybe error
 								for(size_t k=(size_t) index_in_parent+1;k<parent_parsers.size();++k)
 								{
 									auto item = parent_parsers[k];
@@ -294,9 +294,9 @@ namespace glua {
 										auto item_concat = (ConcatParserFunctor*) item;
 										if(item_concat->size()>0 && item_concat->parsers()[0]->is_literal() && item_concat->parsers()[0]->str() == head_literal_name)
 										{
-											// FIXME: 考虑这里的性能影响
+											// FIXME: consider the performance impact here
 											
-											// 判断能匹配的长度和this能判断的长度哪个长，如果item能匹配的更短，则忽略
+											// compare the length that matches and the length this can determine, if the item that can match is shorter, then ignore
 											auto matched_tokens_count = ninput.pos() - start_match_pos + 1;
 											auto item_matched_tokens_count = _ctx->parse_with_cache(item_concat, ninput, skip_end_size, optional).result()->next_input().pos() - start_match_pos;
 											if(item_matched_tokens_count>matched_tokens_count)
@@ -707,10 +707,10 @@ namespace glua {
 
         std::string ParserContext::simple_token_error(GluaParserToken token, bool with_maybe_errors) const
         {
-            // TODO: 输出错误代码周边的代码
+            // TODO: output code around the error code
             std::stringstream ss;
             ss << "error not match after token " << token.token
-                << ", line " << (token.linenumber-7+2) // FIXME： 这里暂时直接扣除内置库的代码行数
+                << ", line " << (token.linenumber-7+2) // FIXME： here to temporarily deduct the number of built-in library lines
                 << ", position " << token.position;
 			if (with_maybe_errors)
 			{
@@ -764,7 +764,7 @@ namespace glua {
 			int magic_len = -10086;
             if (len == magic_len)
                 return 0; // the parser is now fetching min length, use this to avoid recur call self
-            set_parser_min_length(parser, static_cast<size_t>(magic_len)); // FIXME: 这里可能有BUG，魔法数是size_t(负数)，也就是非常大的数
+            set_parser_min_length(parser, static_cast<size_t>(magic_len)); // FIXME: there may be a BUG, magic number is size_t (negative), which is a very large number
             size_t mlen = parser->min_length();
             set_parser_min_length(parser, mlen);
             return mlen;
@@ -772,7 +772,7 @@ namespace glua {
 
         ParseResult ParserContext::parse_with_cache(ParserFunctor *parser, Input &input, size_t skip_end_size, bool optional)
         {
-            size_t MAX_SIZE_AFTER_MAX_TOKENS_COUNT = 100000; // TODO： 这里要用input的pos和skip_end_size来cache，暂时用pos + skip_end_size * MAX_SIZE_AFTER_MAX_TOKENS_COUNT
+            size_t MAX_SIZE_AFTER_MAX_TOKENS_COUNT = 100000; // TODO： here to use the pos of input and skip_end_size to cache, temporarily use pos + skip_end_size * MAX_SIZE_AFTER_MAX_TOKENS_COUNT
             size_t size_key = input.pos() + skip_end_size * MAX_SIZE_AFTER_MAX_TOKENS_COUNT;
             auto found = _parsers_parse_result_cache.find(parser);
             if (found == _parsers_parse_result_cache.end())
@@ -784,7 +784,7 @@ namespace glua {
             auto found2 = parser_result_map->find(size_key);
             if (PARSING_MAX_LEVEL_DEPTH > 10 && _parsing_level > PARSING_MAX_LEVEL_DEPTH - 5)
             {
-                // 如果是因为parsing_level导致的failure，不应该记录到cache
+                // if the failure is caused by parsing_level, it should not be recorded in cache
                 return parser->tryParse(input, skip_end_size, optional);
             }
             else if (found2 == parser_result_map->end())
@@ -1178,7 +1178,7 @@ namespace glua {
         }
 
 		/**
-			TODO: 把手动解构做成自动解构,或者根据原始语法自动生成类
+			TODO: change manual deconstruction into automatical deconstruction, or automatically generate classes based on the original syntax
 		    if exp then block
 			{ elseif exp then block }
 			[ else block ]
@@ -1274,12 +1274,12 @@ namespace glua {
                 s("..."), n("functiondef"),
                 ctx->number_parser(), ctx->string_parser(),
                 n("un_exp"),
-					// n("prefixexp"), // 后面要紧跟着bin_exp的下半部分
+					// n("prefixexp"), // followed by the bottom half of bin_exp
                 n("functioncall"),
                 n("suffixedexp"), n("prefixexp"), n("tableconstructor"),
-				// 单行lambda表达式只支持单行的直接跟表达式的语法 (args) => exp
+				// A single-line lambda expression only supports single-line direct-to-expression syntax (args) => exp
 				ctx->p_and(n("funcbody_args_def"), s("=>"), n("exp"))->set_items_in_same_line()->as("lambda_value_expr"),
-				// 多行lambda表达式 (args) => do block end
+				// multi-line lambda expression (args) => do block end
 				ctx->p_and(n("funcbody_args_def"), s("=>"), s("do"), n("block"), s("end"))->as("lambda_expr"),
 					ctx->p_and(s("("), n("simpleexp"), s(")"))
                 ));
@@ -1287,7 +1287,7 @@ namespace glua {
                 ctx->p_or(
                 ctx->p_and(n("simpleexp"), ctx->repeatPlus(ctx->p_and(n("binop"), n("exp"))))->as("bin_exp"),
                 n("simpleexp"),
-					ctx->p_and(s("("), n("exp"), s(")")))); // TODO: 重构成直接定义尾递归
+					ctx->p_and(s("("), n("exp"), s(")")))); // TODO: refactoring to define tail recursion directly
             /*
             auto *exp_p = ctx->cache("exp",
             ctx->or(
@@ -1312,7 +1312,7 @@ namespace glua {
                 ctx->p_and(s(","), n("explist")))));
             ctx->cache("args",
                 ctx->p_or(ctx->p_and(s("("), ctx->optional_parser(n("explist")), s(")")),
-                n("tableconstructor"), ctx->string_parser(), n("exp"))); // 这里加上n("exp")是因为如果直接用exp做参数，是为了在exp不是字符串或者tablecontructor时编译期报错，否则会被识别为2个stat
+                n("tableconstructor"), ctx->string_parser(), n("exp"))); // here n("exp") is added because if you use exp to do the parameters directly, in the case that exp is not a string or tablecontructor, the translater will report the error, otherwise it will be identified as two stat
             auto *functioncall_p = ctx->cache("functioncall",
                 ctx->p_or(
                 ctx->p_and(n("var"), n("args"))->set_items_in_same_line()
@@ -1329,16 +1329,16 @@ namespace glua {
                     return true;
 				if (args_mr->node_name() == "tableconstructor" && args_mr->head_token().token == "[")
 					return false;
-                // TODO: parse时stat之间间隔要有分号或者换行
+                // TODO: when parse, there should be a semicolon or line spacing 
 				if (args_mr->node_name() == "prefixexp")
 					return true;
-                return false; // 这里允许不带括号调用函数的参数使用字符串字面量和table字面量外的其他exp，是为了语法parse时不把函数名和参数当成2个stat,然后提供更好的报错
+                return false; // this allows other exp as arguments without parentheses to use functions other than string literals and table literals, in case parse function parse names and arguments as two stats and thus provide a better error report
             })
                 , ctx->p_and(n("var"), s(":"), ctx->lua_symbol_parser(), n("args"))
 				, ctx->p_and(n("simple_type"), n("args"))->set_items_in_same_line()->set_result_requirement([this](Input &input, MatchResult *mr)
             {
 				auto *args_mr = mr->as_complex()->get_item(1);
-				return args_mr->head_token().token == "(" || (args_mr->node_name() == "tableconstructor" && args_mr->head_token().token == "{"); // TODO: 考虑支持构造函数后直接跟着 tableconstructor
+				return args_mr->head_token().token == "(" || (args_mr->node_name() == "tableconstructor" && args_mr->head_token().token == "{"); // TODO: consider supporting the constructor directly after the tableconstructor
             })
                 ));
 			ctx->cache("type_declare_prefix",
@@ -1357,7 +1357,7 @@ namespace glua {
                 ))->as("suffixedexp_visit_prop"),
                 n("functioncall")
                 // ctx->and(n("prefixexp"), ctx->and(s(":"), ctx->lua_symbol_parser(), n("args"))),
-                // ctx->and(n("prefixexp"), n("args")) // FIXME: exp, suffixedexp, args，有间接循环左递归，考虑用调用深度限制来排除掉
+                // ctx->and(n("prefixexp"), n("args")) // FIXME: exp, suffixedexp, args，there is an left recursion of indirect loop, consider using call depth restrictions to exclude
                 ));
             ctx->cache("var",
                 ctx->p_or(
@@ -1407,7 +1407,7 @@ namespace glua {
 				ctx->p_and(s("Map"), s("<"), n("type"), s(">"))->as("map_type"),
                 ctx->p_and(ctx->lua_symbol_parser(), ctx->optional_parser(ctx->p_and(s("<"), n("generic_instance_list"), s(">")))),
 				ctx->p_and(s("("), ctx->optional_parser(ctx->p_and(
-                ctx->lua_symbol_parser(), // FIXME: 这里要支持复杂泛型类型
+                ctx->lua_symbol_parser(), // FIXME: here to support complex generic types
                 ctx->repeatStar(ctx->p_and(s(","), ctx->lua_symbol_parser()))))->as("function_type_args"),
                 s(")"), s("=>"), ctx->lua_symbol_parser())->as("function_type"),
 					n("literal_value_type")
@@ -1421,7 +1421,7 @@ namespace glua {
 				));
 			ctx->cache("varname", ctx->p_or(
 				ctx->lua_symbol_parser(),
-				// 这里列出一些常误用成变量名的关键字，从而提供更友好的错误提示
+				// to provide more friendly error messages, here are some keywords that are often mistakenly used as variable names
 				s("do"), 
 				s("end"),
 				s("repeat"),
@@ -1469,7 +1469,7 @@ namespace glua {
                 ctx->p_and(s("for"), ctx->lua_symbol_parser(), s("="), n("explist"), s("do"), n("block"), s("end"))->as("for_step_stat"),
                 ctx->p_and(s("for"), n("namelist"), s("in"), n("explist"), s("do"), n("block"), s("end"))->as("for_range_stat"),
                 ctx->p_and(s("function"), n("funcname"), n("funcbody"))->as("named_function_def_stat")
-                , n("exp") // FIXME: 单独变量不能作为一个stat，暂时这里是为了更好做错误提示，在typechecker部分报错而不是不parse
+                , n("exp") // FIXME: individual variables can not be used as a stat, so here it is used temporarily to make better error report in typechecker part rather than not parse
                 ->post([](ParserFunctor *p, MatchResult *mr)
                 {
                     auto items = mr->as_complex()->items;
@@ -1688,7 +1688,7 @@ namespace glua {
 					});
 					/*if (res>= lookahead_tokens_not_eos)
 					result.push_back(p);*/
-					// FIXME: 要改成排除确定失败过（有concat失败token）
+					// FIXME: change to the exclusion failed (there is concat failed token)
 					if (p->is_fixed_length() && res < lookahead_tokens_not_eos && res < p->min_length())
 						continue;
 					if (res >= 1)
@@ -1734,12 +1734,12 @@ namespace glua {
 			if (first_token.token == "function")
 				printf("");
 
-			// FIXME: 使用更多lookahead tokens
+			// FIXME: use more lookahead tokens
 			/*auto may_take_first_token_parsers = ParserFunctor::get_parsers_having_first_token(_ctx, this, _parsers, first_tokens);
 
 			if (first_token.linenumber >= 6)
 				printf("");
-			// 根据curren和lookahead的token筛选
+			// according to the token selection of curren and lookahead
 			if(may_take_first_token_parsers.size() == 0)
 			{
 				return _ctx->failure_parser()->tryParse(input, 0, optional);
@@ -1777,7 +1777,7 @@ namespace glua {
                     auto *cached_p = (CachedParserFunctor*)p;
                     assert(cached_p->exist());
                 }
-				// FIXME: pprint(abc)的时候好像有问题
+				// FIXME: there seems something wrong when pprint(abc)
                 pr = _ctx->parse_with_cache(p, input, skip_end_size, true);
                 if (pr.state() != FAILURE)
                 {
@@ -1806,7 +1806,7 @@ namespace glua {
             bool success = pr.state() == ParserState::SUCCESS && pr.result()->next_input().pos() >= input.source()->size() && get_error().length() < 1;
             if (!success)
             {
-                // 如果pr.state是SUCCESS，则用last_error_token，如果pr.state不是SUCCESS,则用last_match_token
+                // if pr.state SUCCESS, then use last_error_token; if pr.state is not SUCCESS, then use last_match_token
                 std::cout << this->simple_token_error() << std::endl;
                 pr.set_state(ParserState::FAILURE);
             }

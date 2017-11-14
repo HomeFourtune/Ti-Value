@@ -1,4 +1,4 @@
-﻿/**
+/**
 * some lib for TiValue lua
 * @author 
 */
@@ -78,9 +78,9 @@ namespace TiValue
         namespace lib
         {
 
-			// 合约的特殊API名称列表
+		
 			extern std::vector<std::string> contract_special_api_names;
-			// 合约的参数是整数的特殊API名称列表
+			
 			extern std::vector<std::string> contract_int_argument_special_api_names;
 
             class GluaStateScope
@@ -163,7 +163,7 @@ namespace TiValue
                 /************************************************************************/
                 void resume_running();
 
-				// 添加合约中没有的更多的系统库，比如网络库，IO库，操作系统库等
+				
 				void add_system_extra_libs();
 
                 bool run_compiledfile(const char *filename);
@@ -222,7 +222,7 @@ namespace TiValue
                 int *get_repl_state();
             };
 
-			// glua中的字节流类型，可以在运行时使用
+			
 			class GluaByteStream
 			{
 			private:
@@ -373,13 +373,13 @@ namespace TiValue
 			
 			void remove_global_variable(lua_State *L, const char *name);
             void register_module(lua_State *L, const char *name, lua_CFunction openmodule_func);
-			// 添加更多系统库，包括网络，操作系统，http等合约中不适合存在的库
+			
 			void add_system_extra_libs(lua_State *L);
 
-			// 重置lvm执行的指令步数
+			
 			void reset_lvm_instructions_executed_count(lua_State *L);
 
-            // 给lvm执行的指令步数增加add_count条
+         
             void increment_lvm_instructions_executed_count(lua_State *L, int add_count);
 
             int execute_contract_api(lua_State *L, const char *contract_name, const char *api_name, const char *arg1, std::string *result_json_string);
@@ -406,18 +406,18 @@ namespace TiValue
             bool execute_contract_init_by_address(lua_State *L, const char *contract_address, const char *arg1, std::string *result_json_string);
             bool execute_contract_start_by_address(lua_State *L, const char *contract_address, const char *arg1, std::string *result_json_string);
 
-			// 此次调用合约是否是从init API开始调用的
+		
 			bool is_calling_contract_init_api(lua_State *L);
 
-			// 获取此次调用合约一开始调用的合约地址
+			
 			std::string get_starting_contract_address(lua_State *L);
 
             const std::map<std::string, std::string> *get_globalvar_type_infos();
 
-			// 获取当前合约调用API栈中栈中各函数代码定义所在的合约ID
+			
 			std::stack<std::string> *get_using_contract_id_stack(lua_State *L, bool init_if_not_exist=true);
 
-			// 获取当前栈中最上层的合约API（也就当前所处的合约API）代码定义所在的合约ID
+			
 			std::string get_current_using_contract_id(lua_State *L);
 
             /**
@@ -430,14 +430,10 @@ namespace TiValue
              */
             LClosure *luaU_undump_from_stream(lua_State *L, GluaModuleByteStreamP stream, const char *name);
 
-			/**
-			 * 把字节码流按比较对人可读的文本undump到文件中
-			 */
+			
 			bool undump_from_bytecode_stream_to_file(lua_State *L, GluaModuleByteStreamP stream, FILE *out);
 
-			/**
-			 * 把字节码文件按比较对人可读的文本undump到文件中
-			 */
+			
 			bool undump_from_bytecode_file_to_file(lua_State *L, const char *bytecode_filename, FILE *out);
 
             /**
@@ -459,26 +455,16 @@ namespace TiValue
              */
             bool check_contract_proto(lua_State *L, Proto *proto, char *error = nullptr, std::list<Proto*> *parents = nullptr);
 
-			/**
-			 * 反编译字节码到可读源码
-			 */
 			std::string decompile_bytecode_to_source_code(lua_State *L, GluaModuleByteStreamP stream,
 				std::string module_name, char *error = nullptr);
 
-			/**
-			 * 反编译字节码文件到可读源码
-			 */
+			
 			std::string decompile_bytecode_file_to_source_code(lua_State *L, std::string bytecode_filepath,
 				std::string module_name, char *error = nullptr);
 
-			/**
-			 * 反编译字节码到可读的汇编码
-			 */
+			
 			std::string disassemble_bytecode(lua_State *L, GluaModuleByteStreamP stream, std::string module_name, char *error = nullptr);
 			
-			/**
-			 * 反编译字节码文件到可读的汇编码
-			 */
 			std::string disassemble_bytecode_file(lua_State *L, std::string bytecode_filepath, std::string module_name, char *error = nullptr);
 
             /************************************************************************/

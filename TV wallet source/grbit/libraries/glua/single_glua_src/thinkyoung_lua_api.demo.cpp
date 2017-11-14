@@ -1,4 +1,4 @@
-﻿/**
+/**
 * lua module injector header in thinkyoung
 * @author zhouwei@thinkyoung
 */
@@ -24,7 +24,7 @@
 namespace thinkyoung {
 	namespace lua {
 		namespace api {
-			// 这里是demo实现，需要具体重新实现这里所有API
+			// Here is a demo implementation that needs to be reimplemented with all of the APIs here
 
 			static int has_error = 0;
 
@@ -228,8 +228,8 @@ namespace thinkyoung {
 				return 1;
 			}
 
-            // 模拟链上存储storage的上次的值,内部的map的key是 contract_id + "$" + storage_name
-            // TODO: lua_close的时候增加post_callback，用来清理这些垃圾
+            // 231 Simulate the last value in chain storage, the internal map key is contract_id + "$" + storage_name
+            // TODO: add post_callback when lua_close, to clean up the garbage
             static std::map<lua_State *, std::shared_ptr<std::map<std::string, GluaStorageValue>>> _demo_chain_storage_buffer;
 
 			GluaStorageValue get_storage_value_from_thinkyoung(lua_State *L, const char *contract_name, std::string name)
@@ -244,7 +244,7 @@ namespace thinkyoung {
               }
               auto cache = _demo_chain_storage_buffer[L];
               // auto key = std::string(contract_address) + "$" + name;
-              auto key = std::string("demo$") + name; // 这么做是因为demo情况下contract_id是id_+内存地址，会变
+              auto key = std::string("demo$") + name; // Here in demo, contract_id is id + storage address, but it will change
               if (cache->find(key) != cache->end())
               {
                 return (*cache)[key];
@@ -268,7 +268,7 @@ namespace thinkyoung {
                 }
                 auto cache = _demo_chain_storage_buffer[L];
                 // auto key = std::string(contract_address) + "$" + name;
-                auto key = std::string("demo$") + name; // 这么做是因为demo情况下contract_id是id_+内存地址，会变
+                auto key = std::string("demo$") + name; // Here in demo, contract_id is id + storage address, but it will change
                 if (cache->find(key) != cache->end())
                 {
                   return (*cache)[key];
@@ -299,8 +299,8 @@ namespace thinkyoung {
                     auto name = change_info.first;
                     auto change_item = change_info.second;
                     // auto key = contract_id + "$" + name;
-                    auto key =  std::string("demo$") + name; // 这么做是因为demo情况下contract_id是id_+内存地址，会变
-                    // FIIXME: 应该是merge后作为新值
+                    auto key =  std::string("demo$") + name; // Here in demo, contract_id is id + storage address, but it will change
+                    // FIIXME: Should be the new value after merge
                     GluaStorageValue value = change_item.after;
                     (*cache)[key] = value;
                   }
@@ -365,7 +365,7 @@ namespace thinkyoung {
 					return;
 				}
 				object_pools = (std::map<GluaOutsideObjectTypes, std::shared_ptr<std::map<intptr_t, intptr_t>>> *) node.value.pointer_value;
-				// TODO: 对于object_pools中不同类型的对象，分别释放
+				// TODO: For different types of objects in object_pools, release them one by one
 				for(const auto &p : *object_pools)
 				{
 					auto type = p.first;

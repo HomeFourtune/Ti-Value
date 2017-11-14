@@ -1,3 +1,16 @@
+Extract the following archive to the current directory:
+db_leveldb.7z
+fc.7z
+libs.7z
+libs_win_x64.7z
+OpenSSL.x64.7z
+vendor.7z
+
+Open .\ Grbit \ GRBit.sln with vs2013, select build-> build solution in the drop-down menu to compile.
+
+
+
+
 把以下压缩包解压到当前目录：
 db_leveldb.7z
 fc.7z

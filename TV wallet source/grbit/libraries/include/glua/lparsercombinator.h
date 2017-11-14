@@ -1,4 +1,4 @@
-﻿#ifndef lparsercombinator_h
+#ifndef lparsercombinator_h
 #define lparsercombinator_h
 
 #include <glua/lprefix.h>
@@ -175,9 +175,7 @@ namespace glua {
 				*/
 			}
 
-			/*
-			* @param ignore_end_size 表示从input中读取时忽略最后的ignore_end_size
-			*/
+			
 			inline Input skip_end()
 			{
 				Input input(*this);
@@ -188,7 +186,7 @@ namespace glua {
 				_end_skipped_size = new_end_skipped_size;
 			}
 
-			// 获取position位置后的下一个token，或者EOF
+			
 			inline GluaParserToken token_after_position(size_t position)
 			{
 				for (const auto &item : *(this->source()->all_tokens()))
@@ -219,9 +217,9 @@ namespace glua {
 			ParserFunctor *_parser;
 			void *_binding;	// binding data, such as table, literal, function, etc.
 			MatchResultBindingTypeEnum _binding_type; // binding data type 
-			bool _hidden; // 在从语法树dump出源代码时，这个mr是否隐藏
-			std::string _hidden_replace_string; // 如果这个mr是hidden的，那用这个字符串来作为mr的dump值
-			bool _need_end_of_line; // 这个mr是否是当前行的最后一项（也就是下一个mr如果有的话必须不同行号)
+			bool _hidden; 
+			std::string _hidden_replace_string; 
+			bool _need_end_of_line; 
 		public:
 			inline MatchResult()
 				:_node_name(""), _parser(nullptr), _binding(nullptr),
@@ -241,7 +239,7 @@ namespace glua {
 				return !is_final();
 			}
 
-			// 是否是AstNode类型或其子孙类型
+			
 			inline virtual bool is_ast_node_type() const
 			{
 				return false;
@@ -280,7 +278,7 @@ namespace glua {
 				return _need_end_of_line;
 			}
 
-			// 隐藏mr导致源代码少了多少行，需要mr的开头是一行的第一个字符
+			
 			virtual size_t linenumber_after_end(MatchResult *parent_mr) const;
 
 			inline virtual void set_node_name(std::string name)
@@ -554,7 +552,7 @@ namespace glua {
 				const auto &lines = str_lines();
 				return glua::util::string_join(lines.begin(), lines.end(), "\n");
 			}
-			// 转成多行字符串，每一项是转成最终字符串的每一行(这么做是为了方便增加缩进)
+			
 			virtual std::vector<std::string> str_lines() const = 0;
 
 			inline virtual bool is_literal() const
@@ -562,7 +560,7 @@ namespace glua {
 				return false;
 			}
 			ParserFunctor *set_result_requirement(std::function<bool(Input &, MatchResult*)> fn);
-			// 判断接下来的token是否是types中某个type开头或者换行
+		
 			ParserFunctor *set_next_token_types_in_types_or_newline(std::vector<int> types);
 			ParserFunctor *set_items_in_same_line();
 			inline std::function<bool(Input &, MatchResult*)> result_requirement() const
@@ -614,14 +612,13 @@ namespace glua {
 					return mr;
 			}
 
-			// 这个parserfunctor能接受参数中的tokens的数量
+			
 			inline virtual int can_take_first_token(std::vector<GluaParserToken> tokens)
 			{
 				return 0;
 			}
 
-			// 把parsers按first token分组，只考虑其中的concat parser和concat cached parsers, 但是可能有子orParser，
-			// 里面也可能包含这些first token的parser
+			
 			static std::vector<ParserFunctor*> get_parsers_having_first_token(
 				ParserContext *ctx, ParserFunctor *parsers_key, std::vector<ParserFunctor*> &parsers, std::vector<GluaParserToken> first_tokens);
 		};
@@ -647,19 +644,19 @@ namespace glua {
 			ParserFunctor *_string_parser;
 			ParserFunctor *_number_parser;
 			std::string _error;
-			GluaParserToken _last_error_token; // 遇到某个concat规则匹配first 规则成功，follow规则失败时，用这个记录错误token
-			GluaParserToken _last_second_error_token; // 倒数第二个_last_error_token，当_last_error_token被赋新值时旧值放入这里，这是考虑到一些相同first rule有多重follow，方便
-			GluaParserToken _last_match_token; // 最后一个尝试匹配的token. 最终取错误语法所在token时，如果_last_error_token的position超过_last_match_token的position就用_last_error_token，否则用_last_match_token
-			std::vector<std::string> _maybe_errors; // 可能的错误原因
+			GluaParserToken _last_error_token; 
+			GluaParserToken _last_second_error_token;
+			GluaParserToken _last_match_token; 
+			std::vector<std::string> _maybe_errors; 
 			std::unordered_map<std::string, ParserFunctor*> _literal_parser_functors;
 			std::unordered_map<int, ParserFunctor*> _token_type_parser_functors;
 			std::unordered_map<std::string, ParserFunctor*> _named_parser_functors;
 			std::unordered_map<ParserFunctor*, size_t> _parsers_min_length_cache;
 			std::unordered_map<ParserFunctor*, std::shared_ptr<std::unordered_map<size_t, ParseResult>>> _parsers_parse_result_cache;
 
-			size_t _inner_lib_code_lines = 0; // 内置库有多少行
+			size_t _inner_lib_code_lines = 0;
 
-			// 每个parser functor的执行次数，方便调试用
+			
 			std::unordered_map<std::string, size_t> _parser_functors_executed_count;
 
 		public:
@@ -1039,10 +1036,10 @@ namespace glua {
 			{
 				if (size() < 1 || tokens.size()<1)
 					return 0;
-				// TODO: 如果能确认某次take失败(确认concat没有结束)，直接返回0
-				// 能确认take失败的情况：前面几项都是单token parse
+				
+				
 				auto remaining_tokens_count = tokens.size();
-				bool end_fixed_length_token_parser = false; // 是否结束了从头开始连续的定长parser
+				bool end_fixed_length_token_parser = false;
 				for (const auto &parser : _parsers)
 				{
 					if (!parser->is_fixed_length() && !end_fixed_length_token_parser)
@@ -1067,7 +1064,7 @@ namespace glua {
 		};
 
 		// TODO: test
-		// 减法的parser functor, a - b - c表示满足parser functor a但是不满足b且不满足c
+		
 		class SubtractionParserFunctor : public ParserFunctor
 		{
 		private:
@@ -1201,7 +1198,7 @@ namespace glua {
 				return _parsers;
 			}
 
-			// 找到parser在union parser中_parsers中的索引，没找到返回负数(-1)
+			
 			inline int find_index_of_parser(ParserFunctor *parser) const
 			{
 				for(size_t i=0;i<_parsers.size();++i)
@@ -1240,7 +1237,7 @@ namespace glua {
 				int min_length_last = -1;
 				for(const auto &p : _parsers)
 				{
-					// 这里为了避免循环递归调用is_fixed_length(循环引用情况下)，暂时只考虑都是literal的情况
+					
 					if (!p->is_literal())
 						return false;
 				}

@@ -1,6 +1,6 @@
-﻿--[[
-合约内所有的alp以及asset都是默认10^5，注意
---ico成功
+--[[
+Note that all alp and asset in the contract are default 10 ^ 5
+--ico succeeds.
 ]]
 
 
@@ -52,7 +52,7 @@ type Storage = {
 var M = Contract<Storage>()
 
 function M:init()
-    print("初始化",caller_address)
+    print("initialization",caller_address)
     -- insert init code of contract here
     self.storage.contract_owner=caller_address
     self.storage.users={}
@@ -68,7 +68,7 @@ function M:init()
 end
 
 let function find_array_string_for_addr(array:Array<string> ,target:string)
-    --实行find接口用于Arrray<string>
+    --Implement the find interface for Arrray<string>.
     for k,value in pairs(array) do
         if value==target then
             return k
@@ -339,7 +339,7 @@ function M:set_ICO_flag_contract(info:string)
     var json_info=json.loads(info)
     var flag:string=tostring(json_info['flag'])
     --false or true
-    --ico 成功还是失败
+    --ico succeeds or fails
     if flag=='true' then
         self.storage.ICO_success=true
     else
@@ -348,7 +348,7 @@ function M:set_ICO_flag_contract(info:string)
 end
 
 function M:on_upgrade()
-   --判断ico是否成功
+   --determine if ico succeeds or fails
    if self.storage.ICO_success== true then
        var result:Event={}
 	   result.operation='upgrade'
@@ -359,7 +359,7 @@ function M:on_upgrade()
 end
 
 function M:ICO_withdraw_contract(info:string)
-    --ico资金取出，仅允许合约创建者在ico成功时操作
+    --take out ico funds, and this is only allowed by the contract creator when ico succeeds
     if self.storage.ICO_begin == false then
 	    return 
 	end
@@ -387,7 +387,7 @@ end
 
 
 function M:on_destroy()
-    --若ico失败，则ico资金退回
+    --If ico fails, ico funds will be returned
 	var k:string=''
 	var v:int =0
     for k,v in pairs(self.storage.ICO_participate) do
@@ -431,7 +431,7 @@ end
 
 
 let function modify_users(trade:Trade,users:Map<string>,asset:int,alp:int)
-    --修改users用户下的asset and alp 
+    --modify users' asset and alp 
     if asset ==0 and alp ==0 then 
         return
     end
@@ -454,7 +454,7 @@ let function modify_users(trade:Trade,users:Map<string>,asset:int,alp:int)
 end
 
 let function match(trade:Trade,users:Map<string>,bids:Map<string>,asks:Map<string>,trade_id_trade:Map<string>)
-    --挂买卖单之后进行撮合，抛出撮合之后event结果作为最终成交记录
+    --match after there are buy & sale order, throw the event result after match as the final transaction record
     var t_asset_alp:Array<int> = [trade.asset,trade.alp]
     var temp:Map<string>
     var result:Event ={}
@@ -603,8 +603,8 @@ let function match(trade:Trade,users:Map<string>,bids:Map<string>,asks:Map<strin
 end
 
 function M:sell_contract(info:string)
-    --sell卖出asset
-    --生成trade_id
+    --sell asset
+    --generate trade_id
 	if self.storage.ICO_begin == false or self.storage.ICO_success == false then
 	    return 
 	end
@@ -641,7 +641,7 @@ function M:sell_contract(info:string)
     end
     
     --self.asks[t_price]=tojsonstring(t_trade_user)
-    --修改user下币值
+    --modify coin value of the user
     var t_user_info:User = totable(json.loads(self.storage.users[user]))
 	
     t_user_info.avi_asset=t_user_info.avi_asset-amount
@@ -667,8 +667,8 @@ end
 
 
 function M:buy_contract(info:string)
-    --buy 买入 asset
-    --生成trade_id
+    --buy asset
+    --generate trade_id
 	if self.storage.ICO_begin == false or self.storage.ICO_success == false then
 	    return 
 	end
@@ -700,14 +700,14 @@ function M:buy_contract(info:string)
     else
         t_trade_user=totable(json.loads(self.storage.bids[t_price]))
     end
-    --修改user下币值
-	
+    --modify the coin value of the user
+		
     var t_user_info:User = totable(json.loads(self.storage.users[user]))
     t_user_info.avi_alp=t_user_info.avi_alp-alp
     t_user_info.frozen_alp=t_user_info.frozen_alp+alp
     self.storage.users[user]=tojsonstring(t_user_info)
     match(trade,self.storage.users,self.storage.bids,self.storage.asks,self.storage.trade_id_trade)
-    --判断是否需要将trade添加至bids or asks队列中
+    --Determine if trade needs to be added to bids or asks queue
     if trade.alp ~=0 then
         table.append(t_trade_user,trade)
 		var id:string=trade.trade_id
@@ -724,7 +724,7 @@ function M:buy_contract(info:string)
 end
 
 function M:cancel_contract(info:string)
-    --针对特定的买卖单(trade_id)进行撤销
+    --Withdrawal of specific trade orders(trade_id)
 	if self.storage.ICO_begin == false or self.storage.ICO_success == false then
 	    return 
 	end
@@ -773,7 +773,7 @@ function M:cancel_contract(info:string)
             self.storage.bids[price]=tojsonstring(t_trade_array)
         end
     end
-    --恢复users中数据
+    --recover data of users
     user=trade.user
     var t_user_info:User = totable(json.loads(self.storage.users[user]))
     if trade.operation ==0 then
@@ -828,7 +828,7 @@ function M:bonus_contract(info:string)
 	end
 	--var bonus_user:Bonus_user=totable(json.loads(self.storage.bonus_user))
 	--[[
-	判断当前owner地址是否存在
+	Determine whether the current owner address exists
 	]]--
 	
 	if bonus_user.avi_alp<amount then

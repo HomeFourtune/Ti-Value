@@ -1,4 +1,4 @@
-﻿#ifndef lthinkyounglib_h
+#ifndef lthinkyounglib_h
 #define lthinkyounglib_h
 
 #include <glua/lprefix.h>
@@ -23,7 +23,7 @@ namespace glua
 	namespace lib
 	{
 		int thinkyounglib_get_storage(lua_State *L);
-		// thinkyoung.get_storage具体的实现
+	
 		int thinkyounglib_get_storage_impl(lua_State *L,
 			const char *contract_id, const char *name);
 
