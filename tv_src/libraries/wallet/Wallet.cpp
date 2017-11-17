@@ -6160,7 +6160,7 @@ namespace TiValue {
 				param += my->_wallet_db.get_property(PropertyEnum::node_id).as_string();
 			}
 			auto res= 	call_contract(requester, contract_upload->id, TIV_FILE_STORE_INTERFACE, param, TIV_BLOCKCHAIN_SYMBOL, exec_limit);
-			my->_wallet_db.store_local_store_req(LocalStoreRequestInfo(file_id,file_piece_id,upload_node, piece_index,piece_size,file_upload_entry->filename,requester));
+			my->_wallet_db.store_local_store_req(LocalStoreRequestInfo(file_id,file_piece_id,upload_node, piece_index,piece_size,file_upload_entry->filename));
 			return res;
 		}
         void Wallet::allow_store(const std::string& file_id, const std::string& piece_id, const std::string& storer)

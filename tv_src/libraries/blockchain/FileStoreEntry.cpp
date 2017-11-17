@@ -1,6 +1,6 @@
-#include <blockchain\FileStoreEntry.hpp>
+#include <blockchain/FileStoreEntry.hpp>
 #include <blockchain/ChainInterface.hpp>
-#include <fc\crypto\base58.hpp>
+#include <fc/crypto/base58.hpp>
 namespace TiValue {
 	namespace blockchain {
 		oUploadRequestEntry UploadRequestEntry::lookup(const ChainInterface &db , const FileIdType &id)
@@ -204,8 +204,11 @@ namespace TiValue {
 		{
 		}
 
-		LocalStoreRequestInfo::LocalStoreRequestInfo(const const FileIdType& fid, const FilePieceIdType& piece_id, const NodeIdType& node, int piece_index, size_t piece_size, const string& filename, string requester) :
-			file_id(fid),piece_id(piece_id),node_id(node),requester(requester),c_id(fid.file_id),piece_index(piece_index), piece_size(piece_size),filename(filename)
+        LocalStoreRequestInfo::LocalStoreRequestInfo(const FileIdType& fid, const FilePieceIdType& piece_id,
+                                                     const NodeIdType& node, int piece_index, size_t piece_size,
+                                                     const string& filename) :
+            file_id(fid),piece_id(piece_id),node_id(node),c_id(fid.file_id),
+            piece_index(piece_index), piece_size(piece_size),filename(filename)
 		{
 
 		}
@@ -250,7 +253,7 @@ namespace TiValue {
 			return false;
 		}
 
-        AllowedStoreRequest::AllowedStoreRequest(const const FileIdType & fid, const FilePieceIdType & piece_id, const PublicKeyType storer):file_id(file_id), piece_id(piece_id),storer(storer)
+        AllowedStoreRequest::AllowedStoreRequest(const FileIdType & fid, const FilePieceIdType & piece_id, const PublicKeyType storer):file_id(file_id), piece_id(piece_id),storer(storer)
         {
         }
 

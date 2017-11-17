@@ -212,7 +212,7 @@ namespace TiValue {
         struct AllowedStoreRequest
         {
             AllowedStoreRequest() {};
-            AllowedStoreRequest(const const FileIdType& fid, const FilePieceIdType& piece_id, const PublicKeyType storer);
+            AllowedStoreRequest(const FileIdType& fid, const FilePieceIdType& piece_id, const PublicKeyType storer);
             FileIdType file_id;
             FilePieceIdType piece_id;
             PublicKeyType storer;

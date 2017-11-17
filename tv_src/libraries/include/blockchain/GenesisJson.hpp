@@ -1,4 +1,5 @@
 #pragma once
+
 #include <blockchain/GenesisState.hpp>
 #include <sstream>
 
@@ -10,3 +11,4 @@ namespace TiValue {
 
     }
 } // TiValue::blockchain
+

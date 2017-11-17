@@ -967,12 +967,12 @@ namespace TiValue {
 		void WalletDb::store_local_store_req(const blockchain::LocalStoreRequestInfo & info) 
 		{
 			this->local_store_requests.insert(info);
-			store_and_reload_entry(LocalStoreRequestEntry(info));
+			//store_and_reload_entry(LocalStoreRequestEntry(info));
 		}
         void WalletDb::store_allow_store_req(const AllowedStoreRequest& info)
         {
             this->allow_store_requests.insert(info);
-            store_and_reload_entry(AllowedStoreRequestEntry(info));
+            //store_and_reload_entry(AllowedStoreRequestEntry(info));
         }
         oWalletKeyEntry WalletDb::lookup_key(const Address& derived_address)const
         {

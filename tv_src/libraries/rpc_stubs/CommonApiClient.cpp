@@ -7419,6 +7419,10 @@ TiValue::wallet::WalletTransactionEntry CommonApiClient::declare_piece_saved(con
   }
   FC_RETHROW_EXCEPTIONS(warn, "")
 }
+void CommonApiClient::wallet_allow_store_request(const std::string& file_id, const std::string& piece_id, const std::string& storer)
+{
+    return;
+}
 
 std::set<TiValue::blockchain::PieceStoreInfo> CommonApiClient::blockchain_list_file_save_declare(const std::string& file_id)
 {

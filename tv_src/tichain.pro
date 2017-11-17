@@ -3,14 +3,14 @@
 ######################################################################
 
 TEMPLATE = app
-TARGET = tichain
+TARGET = tiValue
 DEFINES += LEVELDB_PLATFORM_POSIX  TIV_GLOBAL_API_LOG NOMINMAX
 CONFIG += c++11
-QMAKE_CXXFLAGS += -fnon-call-exceptions
+QMAKE_CXXFLAGS += -fnon-call-exceptions -std=c++11
 INCLUDEPATH += . \
                libraries/include \
                libraries/ \
-               ../fc/include \
+               fc/include \
                libraries/leveldb/include \
                utilities/include \
                leveldb \
@@ -98,6 +98,8 @@ HEADERS += leveldb/db/builder.h \
            libraries/include/blockchain/EventOperations.hpp \
            libraries/include/blockchain/Exceptions.hpp \
            libraries/include/blockchain/ExtendedAddress.hpp \
+           libraries/include/blockchain/FileStoreEntry.hpp \
+           libraries/include/blockchain/FileStoreOperations.hpp \
            libraries/include/blockchain/ForkBlocks.hpp \
            libraries/include/blockchain/GenesisJson.hpp \
            libraries/include/blockchain/GenesisState.hpp \
@@ -288,6 +290,7 @@ HEADERS += leveldb/db/builder.h \
            utilities/include/bts/utilities/padding_ostream.hpp \
            utilities/include/bts/utilities/string_escape.hpp \
            utilities/include/bts/utilities/words.hpp \
+    libraries/include/blockchain/FileStoreEntry.hpp
      
 
 SOURCES += main.cpp \
@@ -480,7 +483,8 @@ SOURCES += main.cpp \
            libraries/leveldb/util/status.cc \
     libraries/contract_engine/contract_engine.cpp \
     libraries/contract_engine/contract_engine_builder.cpp \
-    libraries/contract_engine/glua_contract_engine.cpp
+    libraries/contract_engine/glua_contract_engine.cpp \
+    libraries/blockchain/GenesisJson.cpp
           
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../fc/build/release/ -lfc
@@ -491,7 +495,7 @@ INCLUDEPATH += $$PWD/../fc/build
 DEPENDPATH += $$PWD/../fc/build
 
 
- LIBS += /home/lih/Documents/build/libfc.a
+ LIBS += ./lib/libfc.a
  LIBS += /usr/lib/x86_64-linux-gnu/libboost_atomic.a
  LIBS += /usr/lib/x86_64-linux-gnu/libboost_chrono.a
  LIBS += /usr/lib/x86_64-linux-gnu/libboost_context.a
@@ -531,13 +535,18 @@ DEPENDPATH += $$PWD/../fc/build
  LIBS += /usr/lib/x86_64-linux-gnu/libboost_unit_test_framework.a
  LIBS += /usr/lib/x86_64-linux-gnu/libboost_wave.a
  LIBS += /usr/lib/x86_64-linux-gnu/libboost_wserialization.a
- LIBS += /usr/lib/x86_64-linux-gnu/libssl.a
- LIBS += /usr/lib/x86_64-linux-gnu/libcrypt.a
- LIBS += /usr/lib/x86_64-linux-gnu/libcrypto.a
- LIBS += /home/lih/Documents/build/vendor/easylzma/src/libeasylzma_static.a
- LIBS += /home/lih/Documents/tic/src/leveldb/libleveldb.a
- LIBS += /usr/lib/libminiupnpc.a
+ #LIBS += /usr/lib/x86_64-linux-gnu/libssl.a
+ #LIBS += /usr/lib/x86_64-linux-gnu/libcrypt.a
+ #LIBS += /usr/lib/x86_64-linux-gnu/libcrypto.a
+ LIBS += ./lib/libeasylzma_static.a
+ LIBS += ./lib/libleveldb.a
+ LIBS += ./lib/libcrypto.a
+ LIBS += ./lib/libssl.a
+ LIBS += ./lib/libminiupnpc.a
  LIBS += /usr/lib/x86_64-linux-gnu/libdl.so
+ CONFIG += dll
+ QT -= gui core
+ LIBS -= -lQtGui -lQtCore
 INCLUDEPATH += $$PWD/../../../../usr/lib/x86_64-linux-gnu
 DEPENDPATH += $$PWD/../../../../usr/lib/x86_64-linux-gnu
 

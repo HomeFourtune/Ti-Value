@@ -1203,5 +1203,9 @@ std::set<TiValue::blockchain::PieceStoreInfo> CommonApiRpcClient::blockchain_lis
   fc::variant result = get_json_connection()->async_call("blockchain_list_file_save_declare", std::vector<fc::variant>{fc::variant(file_id)}).wait();
   return result.as<std::set<TiValue::blockchain::PieceStoreInfo>>();
 }
+void CommonApiRpcClient::wallet_allow_store_request(const std::string& file_id, const std::string& piece_id, const std::string& storer)
+{
+    return ;
+}
 
 } } // end namespace TiValue::rpc_stubs
