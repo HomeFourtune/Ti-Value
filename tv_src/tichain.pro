@@ -518,12 +518,22 @@ DEPENDPATH += $$PWD/../fc/build
  LIBS += /usr/lib/x86_64-linux-gnu/libboost_mpi.a
  LIBS += /usr/lib/x86_64-linux-gnu/libboost_mpi_python.a
  LIBS += /usr/lib/x86_64-linux-gnu/libboost_mpi_python-py27.a
+exists( /usr/lib/x86_64-linux-gnu/libboost_mpi_python-py34.a ) {
+ LIBS += /usr/lib/x86_64-linux-gnu/libboost_mpi_python-py34.a
+}
+exists( /usr/lib/x86_64-linux-gnu/libboost_mpi_python-py35.a ) {
  LIBS += /usr/lib/x86_64-linux-gnu/libboost_mpi_python-py35.a
+}
  LIBS += /usr/lib/x86_64-linux-gnu/libboost_prg_exec_monitor.a
  LIBS += /usr/lib/x86_64-linux-gnu/libboost_program_options.a
  LIBS += /usr/lib/x86_64-linux-gnu/libboost_python.a
  LIBS += /usr/lib/x86_64-linux-gnu/libboost_python-py27.a
+exists( /usr/lib/x86_64-linux-gnu/libboost_python-py34.a ) {
+ LIBS += /usr/lib/x86_64-linux-gnu/libboost_python-py34.a
+}
+exists( /usr/lib/x86_64-linux-gnu/libboost_python-py35.a ) {
  LIBS += /usr/lib/x86_64-linux-gnu/libboost_python-py35.a
+}
  LIBS += /usr/lib/x86_64-linux-gnu/libboost_random.a
  LIBS += /usr/lib/x86_64-linux-gnu/libboost_regex.a
  LIBS += /usr/lib/x86_64-linux-gnu/libboost_serialization.a
