@@ -1,6 +1,6 @@
 #include <blockchain/StorageTypes.hpp>
 #include <glua/tichain_lua_api.h>
-
+#include <algorithm>
 
 namespace TiValue {
     namespace blockchain {

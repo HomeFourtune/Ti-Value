@@ -8,7 +8,7 @@
 #include "blockchain/BalanceOperations.hpp"
 #include <sstream>
 #include <blockchain/TransactionOperations.hpp>
-
+#include <algorithm>
 #include <contract_engine/contract_engine_builder.hpp>
 
 namespace TiValue
